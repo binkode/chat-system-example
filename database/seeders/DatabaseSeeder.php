@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Myckhel\ChatSystem\Database\Seeders\ConversationSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+      ini_set('memory_limit', '4G');
+      $this->call([
+        UserSeeder::class,
+        ConversationSeeder::class,
+      ]);
     }
 }
