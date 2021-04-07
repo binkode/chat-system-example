@@ -6,10 +6,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Myckhel\ChatSystem\Traits\Message\HasMessage;
+use Myckhel\ChatSystem\Traits\ChatEvent\CanMakeChatEvent;
+use Myckhel\ChatSystem\Traits\ChatEvent\HasMakeChatEvent;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements HasMakeChatEvent
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens, HasMessage, CanMakeChatEvent;
 
     /**
      * The attributes that are mass assignable.
@@ -40,4 +45,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function grantMeToken($name = 'PAT'){
+        $token          =  $this->createToken($name);
+
+        return [
+          'token'       => $token->plainTextToken,
+          'token_type'  => 'Bearer',
+        ];
+    }
 }

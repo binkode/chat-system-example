@@ -13,8 +13,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
+        "laravel/sanctum": "^2.9",
+        "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
-        "myckhel/chatsystem": "@dev"
+        "myckhel/laravel-chat-system": "@dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -62,7 +64,7 @@
         ]
     },
     "repositories": {
-        "myckhel/chatsystem": {
+        "myckhel/laravel-chat-system": {
             "type": "path",
             "url": "/Applications/XAMPP/xamppfiles/htdocs/chat-system/packages/Myckhel/ChatSystem",
             "options": {
