@@ -67,7 +67,7 @@
     "repositories": {
         "myckhel/laravel-chat-system": {
             "type": "path",
-            "url": "/Applications/XAMPP/xamppfiles/htdocs/chat-system/packages/Myckhel/ChatSystem",
+            "url": "../",
             "options": {
                 "symlink": true
             }
