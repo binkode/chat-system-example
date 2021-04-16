@@ -67,10 +67,7 @@
     "repositories": {
         "myckhel/laravel-chat-system": {
             "type": "path",
-            "url": "../",
-            "options": {
-                "symlink": true
-            }
+            "url": "../"
         }
     }
 }
