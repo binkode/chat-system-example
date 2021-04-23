@@ -5,8 +5,11 @@ import "./bootstrap";
 
 import { render } from "react-dom";
 import { App } from "@inertiajs/inertia-react";
+import { InertiaProgress } from '@inertiajs/progress'
 
 const el = document.getElementById("app");
+
+InertiaProgress.init()
 
 render(
   <App
