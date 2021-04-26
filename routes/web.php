@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return inertia('Home/index', []);
-})->name('home');
+Route::get('/', fn () => inertia('Home/index', []))->name('home');
 
-Route::get('/login', function () {
-    return inertia('Login', []);
-})->name('login');
+Route::get('/login', fn () => inertia('Login', []))->name('login');
+
+Route::get('/messages', fn () => inertia('Message', []))->name('messages');
