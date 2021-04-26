@@ -19,7 +19,7 @@
         "laravel/sanctum": "^2.9",
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
-        "myckhel/laravel-chat-system": "*",
+        "myckhel/laravel-chat-system": "dev-master",
         "tightenco/ziggy": "^1.1"
     },
     "require-dev": {
@@ -69,11 +69,8 @@
     },
     "repositories": {
         "myckhel/laravel-chat-system": {
-            "type": "path",
-            "url": "packages/myckhel/laravel-chat-system",
-            "options": {
-                "symlink": true
-            }
+            "type": "vcs",
+            "url": "https://github.com/myckhel/laravel-chat-system.git"
         }
     }
 }
