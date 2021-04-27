@@ -1,5 +1,5 @@
-import React from "react";
 import "vite/dynamic-import-polyfill";
+import React from "react";
 import "../css/app.css";
 import "./bootstrap";
 
@@ -15,17 +15,14 @@ InertiaProgress.init();
 render(
   <App
     initialPage={JSON.parse(el.dataset.page)}
-    // resolveComponent={(name) =>
-    //   import(`./Pages/${name}.jsx`).then(({ default: page }) => {
-    //     if (page.layout === undefined) {
-    //       page.layout = page => <Layout children={page} />;
-    //     }
-    //     return page;
-    //   })
-    // }
-    resolveComponent={async (name) =>
-      (await import(`./Pages/${name}.jsx`)).default
-    }
+    resolveComponent={async name => {
+      const pages = import.meta.glob("./Pages/**/*.jsx");
+      const page = Object.keys(pages).find(page =>
+        page.endsWith(`${name}.jsx`)
+      );
+
+      return (await pages[page]()).default;
+    }}
   />,
   el
 );
