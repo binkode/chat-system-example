@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "842c9a34ef318755164b120967403439",
+    "content-hash": "bbf37611acf718d9d9c35e05b9e0eeed",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1216,16 +1216,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.38.0",
+            "version": "v8.39.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba"
+                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/26a73532c54d2c090692bf2e3e64e449669053ba",
-                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
+                "reference": "0c6f9acb55c8d1621b6f42e3dd5e242cf3b17680",
                 "shasum": ""
             },
             "require": {
@@ -1380,7 +1380,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-20T13:50:21+00:00"
+            "time": "2021-04-27T14:24:05+00:00"
         },
         {
             "name": "laravel/octane",
@@ -3080,16 +3080,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "4bb554dc9870127606c34d906a602989b8b376ff"
+                "reference": "97b53951e9623b3e38babf274c335913bf320a1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/4bb554dc9870127606c34d906a602989b8b376ff",
-                "reference": "4bb554dc9870127606c34d906a602989b8b376ff",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/97b53951e9623b3e38babf274c335913bf320a1a",
+                "reference": "97b53951e9623b3e38babf274c335913bf320a1a",
                 "shasum": ""
             },
             "require": {
@@ -3128,7 +3128,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.6.2"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.6.3"
             },
             "funding": [
                 {
@@ -3136,7 +3136,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-25T08:05:55+00:00"
+            "time": "2021-04-27T06:17:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

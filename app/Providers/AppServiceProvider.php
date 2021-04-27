@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      if (config('app.env') !== 'local') {
+        $this->app['request']->server->set('HTTPS', true);
+      }
+
       ChatSystem::registerObservers();
     }
 }
