@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => inertia('Home/index', []))->name('home');
 
-Route::get('/login', fn () => inertia('Login', []))->name('login');
+Route::get('/login', [AuthController::class, 'showLogin'])->middleware('guest')->name('login');
+Route::get('/users', [UserController::class, 'index'])->name('users');
 
-Route::get('/messages', fn () => inertia('Message', []))->name('messages');
+Route::group(['middleware' => ['auth:web']], function () {
+  Route::get('/chat', fn () => inertia('Chat', []))->name('chat');
+  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});

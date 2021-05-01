@@ -1,8 +1,8 @@
 import React from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 
-import NotificationDropdown from "./NotificationDropdown";
-import UserDropdown from "./UserDropdown";
+import NotificationDropdown from "./NotificationDropdown.jsx";
+import UserDropdown from "./UserDropdown.jsx";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -78,7 +78,7 @@ export default function Sidebar() {
               <li className="items-center">
                 <InertiaLink
                   className="text-pink-500 hover:text-pink-600 text-xs uppercase py-3 font-bold block"
-                  href={route("messages")}
+                  href={route("chat")}
                 >
                   <i className="fas fa-tv opacity-75 mr-2 text-sm"></i>{" "}
                   Dashboard
