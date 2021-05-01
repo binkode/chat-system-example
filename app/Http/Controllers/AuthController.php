@@ -10,7 +10,19 @@ use \Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+  function showLogin() {
+    return inertia('Login');
+  }
+
   public function login(Request $request){
+    if (!$request->wantsJson()) {
+      if(auth('web')->attempt($request->only(['password', 'email']))){
+        return redirect('/chat');
+      } else {
+        return redirect()->back()->withErrors(['message' => 'credentials does not match']);
+      }
+    }
+
     $request->validate([
       'email'       => 'email',
       'name'        => Rule::requiredIf(!$request->email),
@@ -38,5 +50,18 @@ class AuthController extends Controller
             'status'  => false,
         ], 401);
       }
-  }
+    }
+
+    public function logout(Request $request)
+    {
+      if (!$request->wantsJson()) {
+        auth('web')->logout();
+        return redirect('login');
+      }
+
+      $request->user()->currentAccessToken()->delete();
+      return response()->json([
+          'message' => 'Successfully logged out'
+      ]);
+    }
 }

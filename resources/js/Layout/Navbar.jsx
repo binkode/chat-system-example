@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { InertiaLink } from "@inertiajs/inertia-react";
+import { usePage } from "@inertiajs/inertia-react";
 
 export default function Navbar(props) {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const {
+    url,
+    props: { auth }
+  } = usePage();
+
+  const btnValue = auth && auth.user ? "Logout" : "Login";
+
   return (
     <nav
       className={
@@ -34,7 +42,9 @@ export default function Navbar(props) {
                 (props.transparent ? "text-white" : "text-gray-800") +
                 " fas fa-bars"
               }
-            ></i>
+            >
+              iii
+            </i>
           </button>
         </div>
         <div
@@ -53,7 +63,7 @@ export default function Navbar(props) {
                     : "text-gray-800 hover:text-gray-600") +
                   " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                 }
-                href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/landing"
+                href="https://myckhel.github.io/laravel-chat-system-docs"
               >
                 <i
                   className={
@@ -66,86 +76,49 @@ export default function Navbar(props) {
                 Docs
               </a>
             </li>
+            {auth.user && !route().current("chat") && (
+              <li className="flex items-center">
+                <a
+                  className={
+                    (props.transparent
+                      ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
+                      : "text-gray-800 hover:text-gray-600") +
+                    " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                  }
+                  href={route("chat")}
+                >
+                  <i
+                    className={
+                      (props.transparent
+                        ? "lg:text-gray-300 text-gray-500"
+                        : "text-gray-500") +
+                      " far fa-file-alt text-lg leading-lg mr-2"
+                    }
+                  />{" "}
+                  Chat
+                </a>
+              </li>
+            )}
           </ul>
           <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-            <li className="flex items-center">
-              <a
-                className={
-                  (props.transparent
-                    ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
-                    : "text-gray-800 hover:text-gray-600") +
-                  " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                }
-                href="#pablo"
-              >
-                <i
+            {(!!auth.user || !route().current("login")) && (
+              <li className="flex items-center">
+                <InertiaLink
+                  as="button"
+                  type="button"
+                  method={auth.user ? "post" : undefined}
+                  href={route(auth.user ? "logout" : "login")}
                   className={
                     (props.transparent
-                      ? "lg:text-gray-300 text-gray-500"
-                      : "text-gray-500") +
-                    " fab fa-facebook text-lg leading-lg "
+                      ? "bg-white text-gray-800 active:bg-gray-100"
+                      : "bg-pink-500 text-white active:bg-pink-600") +
+                    " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
                   }
-                />
-                <span className="lg:hidden inline-block ml-2">Share</span>
-              </a>
-            </li>
-
-            <li className="flex items-center">
-              <a
-                className={
-                  (props.transparent
-                    ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
-                    : "text-gray-800 hover:text-gray-600") +
-                  " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                }
-                href="#pablo"
-              >
-                <i
-                  className={
-                    (props.transparent
-                      ? "lg:text-gray-300 text-gray-500"
-                      : "text-gray-500") + " fab fa-twitter text-lg leading-lg "
-                  }
-                />
-                <span className="lg:hidden inline-block ml-2">Tweet</span>
-              </a>
-            </li>
-
-            <li className="flex items-center">
-              <a
-                className={
-                  (props.transparent
-                    ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
-                    : "text-gray-800 hover:text-gray-600") +
-                  " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                }
-                href="#pablo"
-              >
-                <i
-                  className={
-                    (props.transparent
-                      ? "lg:text-gray-300 text-gray-500"
-                      : "text-gray-500") + " fab fa-github text-lg leading-lg "
-                  }
-                />
-                <span className="lg:hidden inline-block ml-2">Star</span>
-              </a>
-            </li>
-
-            <li className="flex items-center">
-              <InertiaLink
-                type="button"
-                href={route("login")}
-                className={
-                  (props.transparent
-                    ? "bg-white text-gray-800 active:bg-gray-100"
-                    : "bg-pink-500 text-white active:bg-pink-600") +
-                  " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
-                }
-              >
-                <i className="fas fa-arrow-alt-circle-down"></i> Login
-              </InertiaLink>
-            </li>
+                >
+                  <i className="fas fa-arrow-alt-circle-down"></i> {btnValue}
+                </InertiaLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>
