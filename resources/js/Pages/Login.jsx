@@ -1,4 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
+import Helmet from "react-helmet";
 import FooterSmall from "../Layout/FooterSmall.jsx";
 import Navbar from "../Layout/Navbar.jsx";
 import { InertiaLink } from "@inertiajs/inertia-react";
@@ -39,6 +40,7 @@ const Login = props => {
 
   return (
     <>
+      <Helmet titleTemplate="%s | ChatSystem" title="Login" />
       <Navbar transparent />
       <main>
         <section className="absolute w-full h-full">
