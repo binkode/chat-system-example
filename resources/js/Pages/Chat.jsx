@@ -1,11 +1,13 @@
 import React from "react";
+import Helmet from "react-helmet";
 
-import Navbar from "../Layout/Navbar";
-import Sidebar from "../Layout/Sidebar";
+import Navbar from "../Layout/Navbar.jsx";
+import Sidebar from "../Layout/Sidebar.jsx";
 
 export default function Dashboard() {
   return (
     <>
+      <Helmet titleTemplate="%s | ChatSystem" title="Chat" />
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100">
         <Navbar />
@@ -14,9 +16,7 @@ export default function Dashboard() {
           <div className="px-4 md:px-10 mx-auto w-full">
             <div>
               {/* Card stats */}
-              <div className="flex flex-wrap">
-
-              </div>
+              <div className="flex flex-wrap"></div>
             </div>
           </div>
         </div>
@@ -44,7 +44,6 @@ export default function Dashboard() {
                 </div>
                 <div className="block w-full overflow-x-auto">
                   {/* Projects table */}
-                  
                 </div>
               </div>
             </div>

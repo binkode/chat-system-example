@@ -1,20 +1,22 @@
 import React from "react";
-import Layout from "../../Layout";
+import Helmet from "react-helmet";
+import Layout from "../../Layout/index.jsx";
 
-const App = (props) => {
+const App = props => {
   return (
     <>
+      <Helmet title="ChatSystem" />
       <div
         className="relative pt-16 pb-32 flex content-center items-center justify-center"
         style={{
-          minHeight: "75vh",
+          minHeight: "75vh"
         }}
       >
         <div
           className="absolute top-0 w-full h-full bg-center bg-cover"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80')",
+              "url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80')"
           }}
         >
           <span
@@ -149,7 +151,7 @@ const App = (props) => {
                     className="absolute left-0 w-full block"
                     style={{
                       height: "95px",
-                      top: "-94px",
+                      top: "-94px"
                     }}
                   >
                     <polygon
@@ -569,6 +571,6 @@ const App = (props) => {
   );
 };
 
-App.layout = page => <Layout children={page} />
+App.layout = page => <Layout children={page} />;
 
 export default App;
