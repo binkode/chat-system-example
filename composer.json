@@ -19,12 +19,12 @@
         "laravel/sanctum": "^2.9",
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
+        "fakerphp/faker": "^1.9.1",
         "myckhel/laravel-chat-system": "dev-master",
         "tightenco/ziggy": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "jeroen-g/laravel-packager": "^2.5",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
