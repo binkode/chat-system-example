@@ -4,106 +4,105 @@ import Helmet from "react-helmet";
 import Navbar from "../Layout/Navbar.jsx";
 import Sidebar from "../Layout/Sidebar.jsx";
 
+const messages = [
+  {
+    id: 1,
+    text: "this is a basic mobile chat layout, build with tailwind css"
+  },
+  {
+    id: 2,
+    text:
+      "It will be used for a full tutorial about building a chat app with vue, tailwind and firebase."
+  },
+  {
+    id: 3,
+    right: true,
+    text: "check my twitter to see when it will be released."
+  },
+  {
+    id: 4,
+    right: true,
+    text: "check my twitter to see when it will be released."
+  },
+  {
+    id: 5,
+    right: true,
+    text: "check my twitter to see when it will be released."
+  },
+];
+
 export default function Dashboard() {
   return (
     <>
       <Helmet titleTemplate="%s | ChatSystem" title="Chat" />
       <Sidebar />
-      <div className="relative md:ml-64 bg-blueGray-100">
+      <div className="md:ml-64 bg-blue-100">
         <Navbar />
         {/* Header */}
-        <div className="relative bg-pink-600 md:pt-32 pb-32 pt-12">
-          <div className="px-4 md:px-10 mx-auto w-full">
-            <div>
-              {/* Card stats */}
-              <div className="flex flex-wrap"></div>
+        <div className="relative bg-red-200 h-full">
+          <div className="relative top-0 overscroll-none w-full bg-green-400 h-16 pt-2 text-white flex justify-between shadow-md">
+            <div className="ml-3 my-3 text-green-100 font-bold text-lg tracking-wide">
+              @rallipi
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="icon-dots-vertical w-8 h-8 mt-2 mr-2"
+            >
+              <path
+                className="text-green-100 fill-current"
+                fillRule="evenodd"
+                d="M12 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+              />
+            </svg>
+          </div>
+          {/* conversation */}
+          <div className="overscroll-none">
+            <div className="mt-20 mb-16">
+              {messages.map(({ id, ...p }) => (
+                <Message key={"" + id} {...p} />
+              ))}
             </div>
           </div>
-        </div>
-        <div className="px-4 md:px-10 mx-auto w-full -m-24">
-          <div className="flex flex-wrap mt-4">
-            <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                <div className="rounded-t mb-0 px-4 py-3 border-0">
-                  <div className="flex flex-wrap items-center">
-                    <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                      <h3 className="font-semibold text-base text-blueGray-700">
-                        Page visits
-                      </h3>
-                    </div>
-                    <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                      <button
-                        className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        style={{ transition: "all .15s ease" }}
-                      >
-                        See all
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="block w-full overflow-x-auto">
-                  {/* Projects table */}
-                </div>
-              </div>
-            </div>
+          {/* input */}
+          <div className="relative bottom-0 w-full flex justify-between bg-green-100">
+            <textarea
+              className="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
+              rows="1"
+              placeholder="Message..."
+            ></textarea>
+            <button className="m-2">
+              <svg
+                className="svg-inline--fa text-green-400 fa-paper-plane fa-w-16 w-12 h-12 py-2 mr-2"
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="paper-plane"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"
+                />
+              </svg>
+            </button>
           </div>
-          <footer className="block py-4">
-            <div className="container mx-auto px-4">
-              <hr className="mb-4 border-b-1 border-blueGray-200" />
-              <div className="flex flex-wrap items-center md:justify-between justify-center">
-                <div className="w-full md:w-4/12 px-4">
-                  <div className="text-sm text-blueGray-500 font-semibold py-1">
-                    Copyright © {new Date().getFullYear()}{" "}
-                    <a
-                      href="https://www.creative-tim.com"
-                      className="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
-                    >
-                      Creative Tim
-                    </a>
-                  </div>
-                </div>
-                <div className="w-full md:w-8/12 px-4">
-                  <ul className="flex flex-wrap list-none md:justify-end  justify-center">
-                    <li>
-                      <a
-                        href="https://www.creative-tim.com"
-                        className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        Creative Tim
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://www.creative-tim.com/presentation"
-                        className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        About Us
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="http://blog.creative-tim.com"
-                        className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://github.com/creativetimofficial/tailwind-starter-kit/blob/main/LICENSE.md"
-                        className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        MIT License
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
     </>
   );
 }
+
+const Message = ({ right, text }) => (
+  <div className="clearfix">
+    <div
+      className={` w-3/4 ${
+        right ? "float-right bg-green-300" : "bg-gray-300"
+      } mx-4 my-2 p-2 rounded-lg`}
+    >
+      {text}
+    </div>
+  </div>
+);
