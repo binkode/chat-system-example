@@ -20,10 +20,10 @@
         "laravel-vite": "^0.0.8",
         "lodash": "^4.17.19",
         "postcss": "^8.2.12",
-        "vite": "^2.2.1"
+        "vite": "^2.3.3"
     },
     "dependencies": {
-        "@headlessui/react": "^1.0.0",
+        "@headlessui/react": "^1.2.0",
         "@inertiajs/inertia": "^0.8.7",
         "@inertiajs/inertia-react": "^0.5.12",
         "@inertiajs/progress": "^0.2.4",
@@ -33,9 +33,9 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-helmet": "^6.1.0",
-        "react-redux": "^7.2.3",
+        "react-redux": "^7.2.4",
         "redux": "^4.0.5",
-        "tailwindcss": "^2.1.1",
+        "tailwindcss": "^2.1.2",
         "ziggy-js": "^1.1.0"
     }
 }
