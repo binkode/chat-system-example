@@ -13,4 +13,14 @@ return [
     "middlewares" => ['auth:sanctum', 'api'],
     "prefix" => 'api'
   ],
+
+  /*
+  * Model Observers
+  */
+  "observers"         => [
+    "models"          => [
+      "chat_event"    => 'Myckhel\\ChatSystem\\Observers\\ChatEventObserver',
+      "conversation"  => 'App\\Observers\\ConversationObserver',
+    ]
+  ]
 ];
