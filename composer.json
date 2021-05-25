@@ -20,7 +20,7 @@
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "myckhel/laravel-chat-system": "dev-master",
+        "myckhel/laravel-chat-system": "dev-contracts",
         "tightenco/ziggy": "^1.1"
     },
     "require-dev": {
