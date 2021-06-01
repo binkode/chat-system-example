@@ -20,7 +20,7 @@
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "myckhel/laravel-chat-system": "dev-contracts",
+        "myckhel/laravel-chat-system": "dev-master",
         "tightenco/ziggy": "^1.1"
     },
     "require-dev": {
@@ -65,7 +65,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "dev": "php artisan octane:start --workers=1 --task-workers=1 --watch"
     },
     "repositories": {
         "myckhel/laravel-chat-system": {

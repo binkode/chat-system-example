@@ -11,7 +11,7 @@ export const useMergeState = initialState => {
       setState(prevState =>
         typeof newState === "function"
           ? newState(stateRef.current)
-          : merge(prevState, newState)
+          : merge({}, prevState, newState)
       );
       callback && callback(stateRef.current);
     },

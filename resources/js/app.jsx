@@ -1,28 +1,33 @@
 import "vite/dynamic-import-polyfill";
-import React from "react";
 import "../css/app.css";
 import "./bootstrap";
 
 import { render } from "react-dom";
-import { App } from "@inertiajs/inertia-react";
+import { App, createInertiaApp } from "@inertiajs/inertia-react";
 import { InertiaProgress } from "@inertiajs/progress";
-// import Layout from "./Layout";
-
+import { SidebarProvider } from "./context/SidebarContext";
+import { Windmill } from "@windmill/react-ui";
 const el = document.getElementById("app");
 
 InertiaProgress.init();
 
-render(
-  <App
-    initialPage={JSON.parse(el.dataset.page)}
-    resolveComponent={async name => {
-      const pages = import.meta.glob("./Pages/**/*.jsx");
-      const page = Object.keys(pages).find(page =>
-        page.endsWith(`${name}.jsx`)
-      );
+createInertiaApp({
+  resolve: async (name) => {
+    const pages = import.meta.glob("./Pages/**/*.jsx");
+    const page = Object.keys(pages).find((page) =>
+      page.endsWith(`${name}.jsx`)
+    );
 
-      return (await pages[page]()).default;
-    }}
-  />,
-  el
-);
+    return (await pages[page]()).default;
+  },
+  setup({ el, App, props }) {
+    render(
+      <SidebarProvider>
+        <Windmill>
+          <App {...props} />
+        </Windmill>
+      </SidebarProvider>,
+      el
+    );
+  },
+});
