@@ -12,13 +12,13 @@ export const useRequest = ({ request, onSuccess, params }, dep) => {
     data: undefined,
     error: null,
     status: null,
-    loading: false
+    loading: false,
   });
   useEffect(() => {
     makeRequest(params);
   }, dep);
 
-  const makeRequest = async params => {
+  const makeRequest = async (params) => {
     try {
       setState({ loading: true });
       const data = await request(params);
@@ -29,7 +29,7 @@ export const useRequest = ({ request, onSuccess, params }, dep) => {
     }
   };
 
-  return { state };
+  return { ...state };
 };
 
 const request = async (route, data = {}, method = "get", config = {}) => {
