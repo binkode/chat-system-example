@@ -1,14 +1,14 @@
 import Http from "../Http";
 import { useEffect } from "react";
-import { useMergeState } from "../hooks";
+import useState from "use-react-state";
 
 // import {readErrors} from "../";
 
 // const store = window.store
 // const Notify = window.Notify
 
-export const useRequest = ({ request, onSuccess, params }, dep) => {
-  const [state, setState] = useMergeState({
+export const useRequest = ({ request, onSuccess, params }, dep = []) => {
+  const [state, setState] = useState({
     data: undefined,
     error: null,
     status: null,
@@ -21,9 +21,9 @@ export const useRequest = ({ request, onSuccess, params }, dep) => {
   const makeRequest = async (params) => {
     try {
       setState({ loading: true });
-      const data = await request(params);
+      const { data, status } = await request(params);
       onSuccess && onSuccess(data);
-      setState({ data, loading: false });
+      setState({ data, status, loading: false });
     } catch (e) {
       setState({ error: e, loading: false });
     }
@@ -39,7 +39,7 @@ const request = async (route, data = {}, method = "get", config = {}) => {
     console.log(params);
     const res = await Http[method](route, params, config);
     console.log(res);
-    return res.data;
+    return res;
   } catch (e) {
     if (e.message) {
       e.message === "Networ Error" && Notify({ type: "error", msg: e.message });
@@ -53,5 +53,8 @@ const request = async (route, data = {}, method = "get", config = {}) => {
     return Promise.reject(e);
   }
 };
+
+export const apiRequest = (endpoint, ...args) =>
+  request(`api/${endpoint}`, ...args);
 
 export default request;
