@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6fe76af9e85f00a0b9c49fe94ffcd53",
+    "content-hash": "701a1316d2384719e5de08346f3ad394",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2141,10 +2141,16 @@
         {
             "name": "myckhel/laravel-chat-system",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/laravel-chat-system",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myckhel/laravel-chat-system.git",
                 "reference": "76e109922b901a1d50e24bc6e4570152ddc28752"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/76e109922b901a1d50e24bc6e4570152ddc28752",
+                "reference": "76e109922b901a1d50e24bc6e4570152ddc28752",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "~7|~8",
@@ -2157,6 +2163,7 @@
                 "php": "^8",
                 "phpunit/phpunit": "~9.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -2202,10 +2209,11 @@
                 "ChatSystem",
                 "Laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/myckhel/laravel-chat-system/tree/master",
+                "issues": "https://github.com/myckhel/laravel-chat-system/issues"
+            },
+            "time": "2021-05-25T23:03:51+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -8247,7 +8255,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "myckhel/laravel-chat-system": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
