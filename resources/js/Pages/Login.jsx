@@ -1,5 +1,5 @@
 import { memo, useState, useEffect } from "react";
-import Helmet from "react-helmet";
+import Head from "../components/Head.jsx";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import ImageLight from "../assets/img/login-office.jpeg";
 import { Label, Input, Button, Select } from "@windmill/react-ui";
@@ -40,7 +40,7 @@ const Login = memo(() => {
   return (
     <form onSubmit={submit}>
       <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
-        <Helmet titleTemplate="%s | ChatSystem" title="Login" />
+        <Head title="Login" />
         <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
