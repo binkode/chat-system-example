@@ -9,6 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "ext-pcntl": "*",
+        "ext-swoole": "*",
+        "fakerphp/faker": "^1.9.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -19,7 +22,6 @@
         "laravel/sanctum": "^2.9",
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
-        "fakerphp/faker": "^1.9.1",
         "myckhel/laravel-chat-system": "*",
         "tightenco/ziggy": "^1.1"
     },
