@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
 import {
@@ -12,80 +13,30 @@ import { SearchIcon, MenuDotX, Send } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useMergeState } from "../func/hooks";
 import { useRef, useState } from "react";
+import { useProps } from "../func/hooks";
 
-function Dashboard() {
+const Dashboard = memo(() => {
+  const { messages: { data: messages } = { data: [] } } = useProps();
+
   const input = useRef();
-  const [{ messages }, setState] = useMergeState({
-    messages: [
-      {
-        id: 1,
-        text: "this is a basic mobile chat layout, build with tailwind css",
-      },
-      {
-        id: 2,
-        text:
-          "It will be used for a full tutorial about building a chat app with vue, tailwind and firebase.",
-      },
-      {
-        id: 3,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 4,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 5,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 6,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 7,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 8,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 9,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 10,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-    ],
-  });
 
   const send = () => {
     const text = input.current.value;
     if (text?.length) {
       input.current.value = "";
-      setState(({ messages, ...s }) => {
-        return {
-          ...s,
-          messages: [
-            ...messages,
-            {
-              id: (messages.pop()?.id || 0) + 1,
-              text,
-              right: true,
-            },
-          ],
-        };
-      });
+      // setState(({ messages, ...s }) => {
+      //   return {
+      //     ...s,
+      //     messages: [
+      //       ...messages,
+      //       {
+      //         id: (messages.pop()?.id || 0) + 1,
+      //         text,
+      //         right: true,
+      //       },
+      //     ],
+      //   };
+      // });
     }
   };
 
@@ -124,21 +75,21 @@ function Dashboard() {
       </div>
     </div>
   );
-}
+});
 
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
 
 export default Dashboard;
 
-const Message = ({ right, text }) => (
+const Message = ({ isSender, message }) => (
   <div className="clearfix">
     <div
       // style={{ transform: "scaleY(-1)" }}
       className={` w-3/4 ${
-        right ? "float-right bg-green-300" : "bg-gray-300"
+        isSender ? "float-right bg-green-300" : "bg-gray-300"
       } mx-4 my-2 p-2 rounded-lg`}
     >
-      {text}
+      {message}
     </div>
   </div>
 );
