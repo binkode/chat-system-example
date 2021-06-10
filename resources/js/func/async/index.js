@@ -29,7 +29,7 @@ export const useRequest = ({ request, onSuccess, params }, dep = []) => {
     }
   };
 
-  return { ...state };
+  return { setState, request: makeRequest, ...state };
 };
 
 const request = async (route, data = {}, method = "get", config = {}) => {
