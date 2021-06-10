@@ -39,10 +39,11 @@
         "react-fast-compare": "^3.2.0",
         "react-helmet": "^6.1.0",
         "react-redux": "^7.2.4",
-        "redux": "^4.0.5",
+        "redux-persist": "^6.0.0",
         "runes": "^0.4.3",
         "tailwindcss": "^2.1.2",
         "use-react-state": "^0.0.1",
+        "use-redux-states": "^1.0.1",
         "ziggy-js": "^1.1.0"
     }
 }
