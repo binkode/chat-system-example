@@ -38,6 +38,7 @@
         "react-dom": "^17.0.2",
         "react-fast-compare": "^3.2.0",
         "react-helmet": "^6.1.0",
+        "react-native-event-listeners": "^1.0.7",
         "react-redux": "^7.2.4",
         "redux-persist": "^6.0.0",
         "runes": "^0.4.3",
