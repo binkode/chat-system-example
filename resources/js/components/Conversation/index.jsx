@@ -1,12 +1,14 @@
 import { memo } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import { trunc } from "../../func";
-import { useProps } from "../../func/hooks";
+import { useConversations } from "../../func/async/msg";
 import moment from "moment";
-import { Inertia } from "@inertiajs/inertia";
 
 export default memo(() => {
-  const { conversations: { data: conversations } = { data: [] } } = useProps();
+  const { data: { data: conversations } = { data: [] } } = useConversations(
+    {},
+    []
+  );
 
   return (
     <ul className="flex flex-col p-1">
