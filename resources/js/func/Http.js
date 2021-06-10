@@ -19,6 +19,7 @@ axios.interceptors.response.use(
 );
 
 window.Http = axios.create({
+  withCredentials: true,
   // baseURL : env.API_URL,
   headers: {
     'Accept': 'application/json',
