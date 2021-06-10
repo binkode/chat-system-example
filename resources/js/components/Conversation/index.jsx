@@ -3,15 +3,17 @@ import { InertiaLink } from "@inertiajs/inertia-react";
 import { trunc } from "../../func";
 import { useConversations } from "../../func/async/msg";
 import moment from "moment";
+import Loader from "../Loader.jsx";
 
 export default memo(() => {
-  const { data: { data: conversations } = { data: [] } } = useConversations(
-    {},
-    []
-  );
+  const {
+    loading,
+    data: { data: conversations } = { data: [] },
+  } = useConversations({}, []);
 
   return (
     <ul className="flex flex-col p-1">
+      {loading && <Loader />}
       {conversations.map((p, i) => (
         <Conversation key={"" + i} {...p} />
       ))}

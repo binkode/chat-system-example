@@ -15,6 +15,7 @@ import { useRef } from "react";
 import useState from "use-react-state";
 import { useProps, useRoute } from "../func/hooks";
 import { useMessages, send } from "../func/async/msg";
+import Loader from "../components/Loader.jsx";
 import { Inertia } from "@inertiajs/inertia";
 
 const Dashboard = memo(() => {
@@ -23,7 +24,11 @@ const Dashboard = memo(() => {
     conversations: { data: conversations } = { data: [] },
     ...l
   } = useProps();
-  const { setState, data: { data: messages } = { data: [] } } = useMessages(
+  const {
+    loading,
+    setState,
+    data: { data: messages } = { data: [] },
+  } = useMessages(
     {
       params: { conversation_id: params.get("conversation_id") },
     },
@@ -73,6 +78,7 @@ const Dashboard = memo(() => {
         }}
         className="overflow-y-auto py-6"
       >
+        {loading && <Loader />}
         <div
           style={{
             transform: "scaleY(-1)",
