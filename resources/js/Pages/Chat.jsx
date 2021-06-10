@@ -13,37 +13,44 @@ import { SearchIcon, MenuDotX, Send } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import useState from "use-react-state";
-import { useProps, useRoute } from "../func/hooks";
+import { useRoute, useProps } from "../func/hooks";
 import { useMessages, send } from "../func/async/msg";
 import Loader from "../components/Loader.jsx";
 import { Inertia } from "@inertiajs/inertia";
+import { useGetState, useSetState } from "use-redux-states";
 
 const Dashboard = memo(() => {
   const { params } = useRoute();
-  const {
-    conversations: { data: conversations } = { data: [] },
-    ...l
-  } = useProps();
+  useProps();
+
+  const getConversationsStateData = useGetState(
+    "conversations.order.data.data"
+  );
+  const setMessagesStateData = useSetState("messages.order.data.data");
+
+  const conversation_id = useMemo(
+    () => parseInt(params.get("conversation_id")),
+    [params.get("conversation_id")]
+  );
+
   const {
     loading,
     setState,
     data: { data: messages } = { data: [] },
   } = useMessages(
     {
-      params: { conversation_id: params.get("conversation_id") },
+      params: { conversation_id },
     },
-    [params.get("conversation_id")]
+    [conversation_id]
   );
 
   const input = useRef();
 
   const conversationName = useMemo(
     () =>
-      conversations.find(
-        ({ id }) => id === parseInt(params.get("conversation_id")),
-        5
-      )?.name,
-    [messages]
+      getConversationsStateData()?.find(({ id }) => id === conversation_id)
+        ?.name,
+    [conversation_id]
   );
 
   const sendMessage = async () => {
@@ -54,11 +61,9 @@ const Dashboard = memo(() => {
       const { data: message } = await send({
         token: unique,
         message: text,
-        conversation_id: params.get("conversation_id"),
+        conversation_id,
       });
-      setState(({ data }) => {
-        data.data.unshift(message);
-      });
+      setMessagesStateData((data = []) => [message, ...data]);
     }
   };
 
@@ -74,6 +79,7 @@ const Dashboard = memo(() => {
       {/* conversation */}
       <div
         style={{
+          // transform: "scaleY(-1)",
           height: "calc(100vh - 155px - 4rem)",
         }}
         className="overflow-y-auto py-6"

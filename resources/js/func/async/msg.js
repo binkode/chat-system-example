@@ -1,14 +1,14 @@
-import request, { useRequest } from "./";
+import request, { useRequest, useReduxRequest } from "./";
 
 const msgs = (params) => request("api/messages", params);
 
 export const conversations = (params) => request("api/conversations", params);
 
 export const useMessages = (props = {}, dep) =>
-  useRequest({ request: msgs, ...props }, dep);
+  useReduxRequest({ name: 'messages.order', ...props, request: msgs }, dep);
 
 export const useConversations = (props = {}, dep) =>
-  useRequest({ request: conversations, ...props }, dep);
+  useReduxRequest({ name: 'conversations.order', request: conversations, ...props }, dep);
 
 export const send = (params) => request("api/messages", params, 'post');
 
