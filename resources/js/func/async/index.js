@@ -1,14 +1,14 @@
-import Http from "../Http";
-import { useEffect, useCallback, useLayoutEffect } from "react";
-import useState from "use-react-state";
-import { EventRegister } from "react-native-event-listeners";
-import { useReduxState } from "use-redux-states";
+import Http from '../Http'
+import { useCallback, useLayoutEffect } from 'react'
+import useState from 'use-react-state'
+import { EventRegister } from 'react-native-event-listeners'
+import { useReduxState } from 'use-redux-states'
 
 export const useEventListener = ({
   names = [],
   params,
   callback,
-  removeCallback,
+  removeCallback
 }) => {
   useLayoutEffect(() => {
     if (names?.length && names.map) {
@@ -17,20 +17,20 @@ export const useEventListener = ({
           name,
           (payload) => callback && callback(name, payload, params)
         )
-      );
+      )
 
       return () =>
         listeners.map((listener, i) => {
-          EventRegister.rm(listener);
-          removeCallback && removeCallback(names[i], params);
-        });
+          EventRegister.rm(listener)
+          return removeCallback && removeCallback(names[i], params)
+        })
     }
-  }, names);
+  }, names)
 
-  const emit = (...props) => EventRegister.emit(...props);
+  const emit = (...props) => EventRegister.emit(...props)
 
-  return { emit };
-};
+  return { emit }
+}
 
 const useBaseRequest = ({
   setState,
@@ -45,53 +45,52 @@ const useBaseRequest = ({
   eventRemoveCallback,
   eventParams,
   onSuccess,
-  setData = (data) => data,
+  setData = (data) => data
 }) => {
   const { emit } = useEventListener({
     names: eventNames,
     params: eventParams,
     callback: eventCallback,
-    removeCallback: eventRemoveCallback,
-  });
+    removeCallback: eventRemoveCallback
+  })
 
   const request = useCallback(
     async (...p) => {
       try {
-        setState({ loading: true });
-        const { data, status } = await asyncRequest(...p);
+        setState({ loading: true })
+        const { data, status } = await asyncRequest(...p)
 
-        onSuccess && onSuccess(data);
+        onSuccess && onSuccess(data)
 
-        emits.map((event) => emit(event, data));
+        emits.map((event) => emit(event, data))
 
-        setState({ loading: false, status, data: setData(data) });
+        setState({ loading: false, status, data: setData(data) })
       } catch (e) {
-        setState({ error: e, loading: false });
-        console.log({ e });
+        setState({ error: e, loading: false })
+        console.log({ e })
       }
     },
     [asyncRequest]
-  );
+  )
 
   useLayoutEffect(() => {
     if (loadOnMount) {
-      request(...params);
+      request(...params)
     }
-  }, dep);
+  }, dep)
 
-  return { ...state, setState, request };
-};
+  return { ...state, setState, request }
+}
 
 const defaultRequestState = {
   timestamp: new Date().getTime(),
   error: null,
-  error: null,
   status: null,
-  loading: false,
-};
+  loading: false
+}
 
 export const useRequest = ({ request, params, ...props }, dep = []) => {
-  const [state, setState] = useState(defaultRequestState);
+  const [state, setState] = useState(defaultRequestState)
 
   return useBaseRequest({
     setState,
@@ -99,11 +98,11 @@ export const useRequest = ({ request, params, ...props }, dep = []) => {
     params: [params],
     state,
     dep,
-    ...props,
-  });
-};
+    ...props
+  })
+}
 
-const stateSelector = (s) => s || defaultRequestState;
+const stateSelector = (s) => s || defaultRequestState
 
 export const useReduxRequest = (
   {
@@ -120,45 +119,45 @@ export const useReduxRequest = (
   const { setState, useMemoSelector, selector } = useReduxState({
     name,
     state: reduxState,
-    reducer,
-  });
+    reducer
+  })
 
-  const state = useMemoSelector(selector, resolver);
+  const state = useMemoSelector(selector, resolver)
   const rest = useBaseRequest({
     setState,
     asyncRequest,
     params: [params],
     state,
     dep,
-    ...props,
-  });
+    ...props
+  })
 
-  return { ...rest, selector };
-};
+  return { ...rest, selector }
+}
 
-const request = async (route, data = {}, method = "get", config = {}) => {
+const request = async (route, data = {}, method = 'get', config = {}) => {
   try {
     const params =
-      method === "post" || method === "put" ? data : { params: data };
-    console.log(params);
-    const res = await Http[method](route, params, config);
-    console.log(res);
-    return res;
+      method === 'post' || method === 'put' ? data : { params: data }
+    console.log(params)
+    const res = await Http[method](route, params, config)
+    console.log(res)
+    return res
   } catch (e) {
     if (e.message) {
-      e.message === "Networ Error" && Notify({ type: "error", msg: e.message });
+      // e.message === 'Networ Error' && Notify({ type: 'error', msg: e.message })
       if (e?.response?.status === 422) {
         // readErrors(e).map((err, i) => Notify({type: 'error', msg: err, title: i === 0 && e.response.data.message}))
       } else if (e?.response?.status === 401) {
         // Notify({type: 'error', msg: e.response.data.message, title: e.message})
       }
     }
-    console.log({ e });
-    return Promise.reject(e);
+    console.log({ e })
+    return Promise.reject(e)
   }
-};
+}
 
 export const apiRequest = (endpoint, ...args) =>
-  request(`api/${endpoint}`, ...args);
+  request(`api/${endpoint}`, ...args)
 
-export default request;
+export default request

@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "extends": [
+    "standard",
+    "standard-react",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "globals": {},
+  "plugins": ["react", "jest"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "17"
+    },
+    "jest": {
+      "version": "latest"
+    }
+  },
+  "rules": {
+    "no-shadow": 0,
+    "no-eval": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "import/no-cycle": "error",
+    "jest/no-commented-out-tests": 0
+  }
+}

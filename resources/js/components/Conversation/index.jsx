@@ -34,7 +34,7 @@ const Conversation = memo(
           <div className="flex flex-shrink-0 rounded-md w-10 h-10 bg-gray-300 justify-center items-center mr-4">
             {image ||
               ["⚽️", "💧", "📖"].find(
-                (_, i) => Math.floor(Math.random() * 2) === i
+                (_, i) => Math.floor(Math.random() * 3) === i
               )}
           </div>
           <div className="flex-grow">

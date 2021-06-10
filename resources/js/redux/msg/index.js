@@ -1,16 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const INIT_STATE = {
   conversations: {},
-  msgs: {},
-};
+  msgs: {}
+}
 
 const { actions, reducer } = createSlice({
-  name: "msg",
+  name: 'msg',
   initialState: INIT_STATE,
-  reducers: {},
-});
+  reducers: { add: () => {} }
+})
 
-export const {} = actions;
+export const { add } = actions
 
-export default reducer;
+export default reducer

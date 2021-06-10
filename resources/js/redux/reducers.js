@@ -1,6 +1,6 @@
-import msg from './msg';
+import msg from './msg'
 import { mergeReducers } from 'use-redux-states'
 
-const appReducer = mergeReducers({msg});
+const appReducer = mergeReducers({ msg })
 
-export default appReducer;
+export default appReducer
