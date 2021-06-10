@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
 import {
@@ -11,31 +11,49 @@ import {
 } from "@windmill/react-ui";
 import { SearchIcon, MenuDotX, Send } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
-import { useRef, useState } from "react";
-import { useProps } from "../func/hooks";
+import { useRef } from "react";
+import useState from "use-react-state";
+import { useProps, useRoute } from "../func/hooks";
+import { useMessages, send } from "../func/async/msg";
+import { Inertia } from "@inertiajs/inertia";
 
 const Dashboard = memo(() => {
-  const { messages: { data: messages } = { data: [] } } = useProps();
+  const { params } = useRoute();
+  const {
+    conversations: { data: conversations } = { data: [] },
+    ...l
+  } = useProps();
+  const { setState, data: { data: messages } = { data: [] } } = useMessages(
+    {
+      params: { conversation_id: params.get("conversation_id") },
+    },
+    [params.get("conversation_id")]
+  );
 
   const input = useRef();
 
-  const send = () => {
+  const conversationName = useMemo(
+    () =>
+      conversations.find(
+        ({ id }) => id === parseInt(params.get("conversation_id")),
+        5
+      )?.name,
+    [messages]
+  );
+
+  const sendMessage = async () => {
     const text = input.current.value;
     if (text?.length) {
       input.current.value = "";
-      // setState(({ messages, ...s }) => {
-      //   return {
-      //     ...s,
-      //     messages: [
-      //       ...messages,
-      //       {
-      //         id: (messages.pop()?.id || 0) + 1,
-      //         text,
-      //         right: true,
-      //       },
-      //     ],
-      //   };
-      // });
+      const unique = new Date().getTime();
+      const { data: message } = await send({
+        token: unique,
+        message: text,
+        conversation_id: params.get("conversation_id"),
+      });
+      setState(({ data }) => {
+        data.data.unshift(message);
+      });
     }
   };
 
@@ -44,21 +62,26 @@ const Dashboard = memo(() => {
       {/* Header */}
       <div className="flex-shrink-0 w-full bg-purple-600 h-16 pt-2 text-white flex justify-between shadow-md">
         <div className="ml-3 my-3 text-purple-100 font-bold text-lg tracking-wide">
-          @rallipi
+          @{conversationName}
         </div>
         <Menu />
       </div>
       {/* conversation */}
       <div
         style={{
-          // transform: "scaleY(-1)",
           height: "calc(100vh - 155px - 4rem)",
         }}
-        className="overflow-y-auto"
+        className="overflow-y-auto py-6"
       >
-        {messages.map(({ id, ...p }) => (
-          <Message key={"" + id} {...p} />
-        ))}
+        <div
+          style={{
+            transform: "scaleY(-1)",
+          }}
+        >
+          {messages.map(({ id, ...p }) => (
+            <Message key={"" + id} {...p} />
+          ))}
+        </div>
       </div>
       {/* input */}
       <div className="flex-shrink-0 w-full flex align-center justify-between bg-green-100">
@@ -68,7 +91,7 @@ const Dashboard = memo(() => {
           rows="2"
           placeholder="Enter some long form content."
         />
-        <Button onClick={() => send()} className="m-2">
+        <Button onClick={() => sendMessage()} className="m-2">
           <Send />
         </Button>
       </div>
@@ -79,11 +102,9 @@ const Dashboard = memo(() => {
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
 
 export default Dashboard;
-
 const Message = ({ isSender, message }) => (
-  <div className="clearfix">
+  <div className="clearfix" style={{ clear: "both", transform: "scaleY(-1)" }}>
     <div
-      // style={{ transform: "scaleY(-1)" }}
       className={` w-3/4 ${
         isSender ? "float-right bg-green-300" : "bg-gray-300"
       } mx-4 my-2 p-2 rounded-lg`}

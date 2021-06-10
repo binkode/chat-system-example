@@ -22,6 +22,6 @@ Route::get('/login', [AuthController::class, 'showLogin'])->middleware('guest')-
 Route::get('/users', [UserController::class, 'index'])->name('users');
 
 Route::group(['middleware' => ['auth:web']], function () {
-  Route::get('/chat', [ChatController::class, 'chat'])->name('chat');
-  Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+  Route::get('/chat',     [ChatController::class, 'chat'])->name('chat');
+  Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
 });
