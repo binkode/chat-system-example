@@ -32,6 +32,7 @@
   "rules": {
     "no-shadow": 0,
     "no-eval": 0,
+    "camelcase": 0,
     "react-hooks/exhaustive-deps": 0,
     "import/no-cycle": "error",
     "jest/no-commented-out-tests": 0
