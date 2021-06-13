@@ -1,5 +1,5 @@
 import Http from '../Http'
-import { useCallback, useLayoutEffect } from 'react'
+import { useCallback, useLayoutEffect, useEffect } from 'react'
 import useState from 'use-react-state'
 import { EventRegister } from 'react-native-event-listeners'
 import { useReduxState } from 'use-redux-states'
@@ -112,14 +112,16 @@ export const useReduxRequest = (
     params,
     state: reduxState = stateSelector,
     reducer,
+    unmount,
     ...props
   },
   dep
 ) => {
-  const { setState, useMemoSelector, selector } = useReduxState({
+  const { setState, getState, useMemoSelector, selector } = useReduxState({
     name,
     state: reduxState,
-    reducer
+    reducer,
+    unmount
   })
 
   const state = useMemoSelector(selector, resolver)
@@ -132,7 +134,7 @@ export const useReduxRequest = (
     ...props
   })
 
-  return { ...rest, selector }
+  return { ...rest, selector, getState }
 }
 
 const request = async (route, data = {}, method = 'get', config = {}) => {
@@ -154,6 +156,239 @@ const request = async (route, data = {}, method = 'get', config = {}) => {
     }
     console.log({ e })
     return Promise.reject(e)
+  }
+}
+
+export const usePagination = (
+  {
+    request,
+    name,
+    dataPoint,
+    params = {},
+    initData = [],
+    loadOnMount = true,
+    setData,
+    defaultPagination = {},
+    reducer = (s, p) => s || p,
+    unmount,
+    dataSelector,
+    onCatch,
+    onFinally,
+    onSuccess,
+    before,
+    ...props
+  } = {},
+  dep = []
+) => {
+  const {
+    selector,
+    setState,
+    getState,
+    cleanup,
+    loading,
+    data,
+    loaded,
+    isLoading,
+    pagination,
+    nextable,
+    error,
+    ...rest
+  } = useReduxRequest(
+    {
+      loadOnMount: false,
+      name,
+      request,
+      state: {
+        timestamp: new Date().getTime(),
+        error: null,
+        status: null,
+        loading: false,
+        isLoading: false,
+        data: initData,
+        loaded: false,
+        nextable: false,
+        pagination: {
+          order: 'desc',
+          page: 0,
+          pageSize: 20,
+          ...defaultPagination
+        }
+      },
+      unmount,
+      reducer,
+      resolver: ({
+        loading,
+        data,
+        loaded,
+        isLoading,
+        pagination,
+        nextable
+      }) => ({
+        loading,
+        data: dataSelector ? dataSelector(data) : data,
+        loaded,
+        isLoading,
+        pagination,
+        nextable
+      }),
+      ...props
+    },
+    []
+  )
+
+  const setStateData = useCallback(
+    (payload, reducer) =>
+      setState(payload, (s, payload) => ({
+        ...s,
+        data: reducer
+          ? reducer(s?.data, payload)
+          : typeof payload === 'function'
+            ? payload(s?.data)
+            : payload
+      })),
+    []
+  )
+
+  useLayoutEffect(() => {
+    if (loading || isLoading) {
+      setState({ loading: false, isLoading: false })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (loadOnMount) {
+      current(false, { params })
+    }
+  }, [name, ...dep])
+
+  const hackData = useCallback((data) => (setData ? setData(data) : data), [
+    setData
+  ])
+
+  const current = useCallback(
+    async (more = false, { params = {} } = {}, events = {}) => {
+      const { isLoading, loading, pagination } = getState()
+      if (
+        loading ||
+        isLoading ||
+        (more && pagination?.last_page === pagination?.current_page)
+      ) {
+        return
+      }
+
+      try {
+        setState((s) => ({
+          ...s,
+          loading: more ? !!more : s.loading,
+          isLoading: more ? s.isLoading : true,
+          e: null,
+          status: null
+        }))
+
+        before && before(more, pagination.last_page)
+
+        const { data: resData, status } = await request({
+          page: !more ? 1 : (pagination?.current_page || 0) + 1,
+          ...params
+        })
+
+        if (!resData) {
+          return
+        }
+
+        const { data, last_page, total, current_page } = dataPoint
+          ? resData[dataPoint]
+          : resData
+
+        onSuccess && onSuccess(data, current_page)
+
+        events.onSuccess && events.onSuccess(data, current_page)
+
+        setState(
+          {
+            status,
+            nextable: current_page < last_page,
+            data: data,
+            count: total,
+            loaded: true,
+            isLoading: false,
+            loading: false,
+            pagination: {
+              last_page,
+              total,
+              current_page
+            },
+            more
+          },
+          (state, { pagination, data, more, ...p }) => ({
+            ...state,
+            ...p,
+            data: more
+              ? [...state.data, ...hackData(data)]
+              : hackData([...initData, ...data]),
+            pagination
+          })
+        )
+      } catch (e) {
+        setState((s) => ({ ...s, error: e, isLoading: false, loading: false }))
+        onCatch && onCatch(e)
+        console.log({ e })
+      } finally {
+        onFinally && onFinally(more)
+      }
+    },
+    [request, dataPoint, initData, hackData, onCatch, onSuccess]
+  )
+
+  const next = useCallback(
+    async (_params, events) =>
+      current(true, { params: { ...params, ..._params } }, events),
+    [params, current]
+  )
+
+  const refresh = (_params = {}) =>
+    current(false, { params: { ...params, ..._params } })
+
+  const setOrder = (ord) =>
+    setState({ pagination: { order: ord } }, (s, { pagination }) => ({
+      ...s,
+      pagination: { ...s.pagination, ...pagination }
+    }))
+
+  const filter = (fn) => setState((s) => ({ ...s, data: s.data.filter(fn) }))
+
+  const updateData = (fn) => setState((s) => ({ ...s, data: s.data.map(fn) }))
+
+  const prepend = (data) => {
+    setState({ data }, (s, { data }) => {
+      s.data.unshift(data)
+      return { ...s, data: [...s.data] }
+    })
+  }
+
+  const prev = async () => {}
+
+  return {
+    setState,
+    nextable,
+    next,
+    refresh,
+    selector,
+    prev,
+    current,
+    loading,
+    data,
+    loaded,
+    isLoading,
+    pagination,
+    setOrder,
+    filter,
+    prepend,
+    updateData,
+    getState,
+    cleanup,
+    setStateData,
+    ...rest
   }
 }
 
