@@ -3,12 +3,16 @@ import { InertiaLink } from "@inertiajs/inertia-react";
 import { trunc } from "../../func";
 import { useConversations } from "../../func/async/msg";
 import moment from "moment";
+import { Button } from "@windmill/react-ui";
 import Loader from "../Loader.jsx";
 
 export default memo(() => {
   const {
     loading,
-    data: { data: conversations } = { data: [] },
+    isLoading,
+    next,
+    data: conversations,
+    pagination,
   } = useConversations({}, []);
 
   return (
@@ -17,6 +21,13 @@ export default memo(() => {
       {conversations.map((p, i) => (
         <Conversation key={"" + i} {...p} />
       ))}
+      {loading && !isLoading ? (
+        <Loader />
+      ) : (
+        pagination.last_page > pagination.current_page && (
+          <Button onClick={() => next()}>load more</Button>
+        )
+      )}
     </ul>
   );
 });

@@ -36,7 +36,10 @@ const Dashboard = memo(() => {
   const {
     loading,
     setState,
-    data: { data: messages } = { data: [] },
+    isLoading,
+    pagination,
+    next,
+    data: messages,
   } = useMessages(
     {
       params: { conversation_id },
@@ -93,6 +96,21 @@ const Dashboard = memo(() => {
           {messages.map(({ id, ...p }) => (
             <Message key={"" + id} {...p} />
           ))}
+
+          {loading && !isLoading ? (
+            <Loader />
+          ) : (
+            pagination.last_page > pagination.current_page && (
+              <Button
+                style={{
+                  transform: "scaleY(-1)",
+                }}
+                onClick={() => next()}
+              >
+                load more
+              </Button>
+            )
+          )}
         </div>
       </div>
       {/* input */}
