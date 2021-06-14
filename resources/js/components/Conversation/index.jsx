@@ -1,34 +1,25 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import { trunc } from "../../func";
-import { useConversations } from "../../func/async/msg";
+import { conversations as conversationsAsync } from "../../func/async/msg";
 import moment from "moment";
-import { Button } from "@windmill/react-ui";
-import Loader from "../Loader.jsx";
+import Inifinite from "../Infinite.jsx";
 
 export default memo(() => {
-  const {
-    loading,
-    isLoading,
-    next,
-    data: conversations,
-    pagination,
-  } = useConversations({}, []);
+  const RenderItem = useCallback(
+    ({ item, index }) => <Conversation {...item} />,
+    []
+  );
 
   return (
-    <ul className="flex flex-col p-1">
-      {loading && <Loader />}
-      {conversations.map((p, i) => (
-        <Conversation key={"" + i} {...p} />
-      ))}
-      {loading && !isLoading ? (
-        <Loader />
-      ) : (
-        pagination.last_page > pagination.current_page && (
-          <Button onClick={() => next()}>load more</Button>
-        )
-      )}
-    </ul>
+    <div className="">
+      <Inifinite
+        params={{ pageSize: 15 }}
+        RenderItem={RenderItem}
+        name="conversations.order"
+        request={conversationsAsync}
+      />
+    </div>
   );
 });
 

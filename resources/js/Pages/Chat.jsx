@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from "react";
+import { memo, useEffect, useCallback, useMemo } from "react";
 import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
 import {
@@ -14,10 +14,9 @@ import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import useState from "use-react-state";
 import { useRoute, useProps } from "../func/hooks";
-import { useMessages, send } from "../func/async/msg";
-import Loader from "../components/Loader.jsx";
-import { Inertia } from "@inertiajs/inertia";
+import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
+import Inifinite from "../components/Infinite.jsx";
 
 const Dashboard = memo(() => {
   const { params } = useRoute();
@@ -33,21 +32,12 @@ const Dashboard = memo(() => {
     [params.get("conversation_id")]
   );
 
-  const {
-    loading,
-    setState,
-    isLoading,
-    pagination,
-    next,
-    data: messages,
-  } = useMessages(
-    {
-      params: { conversation_id },
-    },
-    [conversation_id]
-  );
-
   const input = useRef();
+
+  const RenderItem = useCallback(
+    ({ item, style }) => <Message {...item} style={style} />,
+    []
+  );
 
   const conversationName = useMemo(
     () =>
@@ -87,31 +77,13 @@ const Dashboard = memo(() => {
         }}
         className="overflow-y-auto py-6"
       >
-        {loading && <Loader />}
-        <div
-          style={{
-            transform: "scaleY(-1)",
-          }}
-        >
-          {messages.map(({ id, ...p }) => (
-            <Message key={"" + id} {...p} />
-          ))}
-
-          {loading && !isLoading ? (
-            <Loader />
-          ) : (
-            pagination.last_page > pagination.current_page && (
-              <Button
-                style={{
-                  transform: "scaleY(-1)",
-                }}
-                onClick={() => next()}
-              >
-                load more
-              </Button>
-            )
-          )}
-        </div>
+        <Inifinite
+          inverted={true}
+          params={{ pageSize: 15, conversation_id }}
+          RenderItem={RenderItem}
+          name="messages.order"
+          request={messagesAsync}
+        />
       </div>
       {/* input */}
       <div className="flex-shrink-0 w-full flex align-center justify-between bg-green-100">
@@ -132,8 +104,8 @@ const Dashboard = memo(() => {
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
 
 export default Dashboard;
-const Message = ({ isSender, message }) => (
-  <div className="clearfix" style={{ clear: "both", transform: "scaleY(-1)" }}>
+const Message = ({ isSender, message, style }) => (
+  <div className="clearfix" style={{ clear: "both", ...style }}>
     <div
       className={` w-3/4 ${
         isSender ? "float-right bg-green-300" : "bg-gray-300"
