@@ -62,7 +62,7 @@ const Inifinite = memo(
             {loading && !isLoading ? (
               <Loader />
             ) : (
-              pagination.last_page > pagination.current_page && (
+              pagination?.last_page > pagination?.current_page && (
                 <Button
                   style={{
                     transform: inverted && "scaleY(-1)",
@@ -79,8 +79,8 @@ const Inifinite = memo(
           loading,
           inverted,
           isLoading,
-          pagination.last_page,
-          pagination.current_page,
+          pagination?.last_page,
+          pagination?.current_page,
         ]
       );
 
