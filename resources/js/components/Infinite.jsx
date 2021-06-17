@@ -60,7 +60,7 @@ const Inifinite = memo(
       const RenderFooter = useCallback(
         () => (
           <>
-            {loading && !isLoading ? (
+            {loading ? (
               <Loader />
             ) : (
               pagination?.last_page > pagination?.current_page && (
@@ -76,23 +76,18 @@ const Inifinite = memo(
             )}
           </>
         ),
-        [
-          loading,
-          inverted,
-          isLoading,
-          pagination?.last_page,
-          pagination?.current_page,
-        ]
+        [loading, inverted, pagination?.last_page, pagination?.current_page]
       );
 
       if (ref) {
-        if(!ref.current) ref.current = {};
+        if (!ref.current) ref.current = {};
         Object.assign(ref.current, { setState, getState });
       }
 
       return (
         <ListView
           data={data}
+          loading={isLoading}
           inverted={inverted}
           RenderFooter={RenderFooter}
           RenderItem={_RenderItem}
