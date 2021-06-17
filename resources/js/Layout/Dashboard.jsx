@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar/index.jsx";
 import Header from "./Header.jsx";
 import Main from "./Main.jsx";
 import ThemedSuspense from "../components/ThemedSuspense.jsx";
+import FooterSmall from "./FooterSmall.jsx";
 import Head from "../components/Head.jsx";
 import { SidebarContext } from "../context/SidebarContext.jsx";
 import { usePage } from "@inertiajs/inertia-react";
@@ -30,6 +31,7 @@ function Layout({ children, title }) {
         <Main>
           <Suspense fallback={<ThemedSuspense />}>{children}</Suspense>
         </Main>
+        <FooterSmall />
       </div>
     </div>
   );
