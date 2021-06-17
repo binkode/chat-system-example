@@ -55,9 +55,11 @@ const Conversation = memo(({ id: conversation_id }) => {
           </div>
           <div className="flex-grow">
             <div className="font-medium text-sm">{name}</div>
-            <div className="text-gray-600 text-xs">
-              {trunc(last_message.message, 20)}
-            </div>
+            {last_message && (
+              <div className="text-gray-600 text-xs">
+                {trunc(last_message.message, 20)}
+              </div>
+            )}
           </div>
           <div className="text-gray-600 text-xs">
             {moment(created_at).calendar(null, {
