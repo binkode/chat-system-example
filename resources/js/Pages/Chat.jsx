@@ -83,7 +83,7 @@ const Messages = memo(({ conversationId }) => {
       const { data: message } = await send({
         token: unique,
         message: text,
-        conversationId,
+        conversation_id: conversationId,
       });
       dispatch(addMsg({ msg: message }));
       setMessagesOrderData((data = []) => [message.id, ...data]);
