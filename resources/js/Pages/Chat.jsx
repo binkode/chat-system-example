@@ -8,6 +8,9 @@ import {
   Dropdown,
   DropdownItem,
   Badge,
+  Avatar,
+  Card,
+  CardBody,
 } from "@windmill/react-ui";
 import { SearchIcon, MenuDotX, Send } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
@@ -19,13 +22,9 @@ import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
 import { addMsgs, addMsg } from "../redux/msg";
+import chatsLogo from "../assets/img/chats.png";
 
 const Dashboard = memo(() => {
-  const msgRequestRef = useRef();
-  const input = useRef();
-
-  const dispatch = useDispatch();
-
   const { params } = useRoute();
 
   useProps();
@@ -35,21 +34,44 @@ const Dashboard = memo(() => {
     [params.get("conversation_id")]
   );
 
+  return (
+    <div className="flex-1 bg-gray-200">
+      {conversation_id ? (
+        <Messages conversationId={conversation_id} />
+      ) : (
+        <div className="flex flex-col m-4 items-center justify-center mb-6">
+          <img className="drop-shadow-md w-1/5 h-1/5 mb-6" src={chatsLogo} />
+          <p className="p-3 border-2 border-purple-500 hover:border-gray-500 animate-pulse mb-4 tracking-wide text-center text-purple-700 font-bold text-6xl dark:text-gray-300">
+            Laravel Chat System
+          </p>
+          <Button>New Chat</Button>
+        </div>
+      )}
+    </div>
+  );
+});
+
+const Messages = memo(({ conversationId }) => {
+  const msgRequestRef = useRef();
+  const input = useRef();
+
+  const dispatch = useDispatch();
+
   const setMessagesOrderData = useSetState(
-    `messages.${conversation_id}.order.data`
+    `messages.${conversationId}.order.data`
   );
 
-  const setMessage = useSetState(`messages.${conversation_id}`);
+  const setMessage = useSetState(`messages.${conversationId}`);
 
   const RenderItem = useCallback(
     ({ item, style }) => (
-      <Message id={item} conversation_id={conversation_id} style={style} />
+      <Message id={item} conversationId={conversationId} style={style} />
     ),
-    [conversation_id]
+    [conversationId]
   );
 
   const conversationName = useRootMemoSelector(
-    `msg.conversations.${conversation_id}`,
+    `msg.conversations.${conversationId}`,
     (conv = {}) => conv.name
   );
 
@@ -61,18 +83,18 @@ const Dashboard = memo(() => {
       const { data: message } = await send({
         token: unique,
         message: text,
-        conversation_id,
+        conversationId,
       });
       dispatch(addMsg({ msg: message }));
       setMessagesOrderData((data = []) => [message.id, ...data]);
     }
-  }, [conversation_id]);
+  }, [conversationId]);
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
   const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
 
   return (
-    <div className="flex-1 bg-gray-200">
+    <>
       {/* Header */}
       <div className="flex-shrink-0 w-full bg-purple-600 h-16 pt-2 text-white flex justify-between shadow-md">
         <div className="ml-3 my-3 text-purple-100 font-bold text-lg tracking-wide">
@@ -84,16 +106,16 @@ const Dashboard = memo(() => {
       <div
         style={{
           // transform: "scaleY(-1)",
-          height: "calc(100vh - 155px - 4rem)",
+          height: "calc(100vh - 182px - 4rem)",
         }}
         className="overflow-y-auto py-6"
       >
         <Inifinite
           ref={msgRequestRef}
           inverted={true}
-          params={{ pageSize: 15, conversation_id }}
+          params={{ pageSize: 15, conversation_id: conversationId }}
           RenderItem={RenderItem}
-          name={`messages.${conversation_id}.order`}
+          name={`messages.${conversationId}.order`}
           request={messagesAsync}
           setData={setData}
           onSuccess={onSuccess}
@@ -111,16 +133,13 @@ const Dashboard = memo(() => {
           <Send />
         </Button>
       </div>
-    </div>
+    </>
   );
 });
 
-Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
-
-export default Dashboard;
-const Message = memo(({ id, conversation_id, style }) => {
+const Message = memo(({ id, conversationId, style }) => {
   const { isSender, message, id: id_ } = useRootMemoSelector(
-    `msg.msgs.${conversation_id}.${id}`,
+    `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
   );
 
@@ -174,3 +193,7 @@ const Menu = () => {
     </div>
   );
 };
+
+Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
+
+export default Dashboard;
