@@ -12,41 +12,48 @@ import {
 import { SearchIcon, MenuDotX, Send } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import useState from "use-react-state";
-import { useRoute, useProps } from "../func/hooks";
+import { useRoute, useProps, useRootMemoSelector } from "../func/hooks";
 import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
+import { addMsgs, addMsg } from "../redux/msg";
 
 const Dashboard = memo(() => {
-  const { params } = useRoute();
-  useProps();
+  const msgRequestRef = useRef();
+  const input = useRef();
 
-  const getConversationsStateData = useGetState(
-    "conversations.order.data.data"
-  );
-  const setMessagesStateData = useSetState("messages.order.data.data");
+  const dispatch = useDispatch();
+
+  const { params } = useRoute();
+
+  useProps();
 
   const conversation_id = useMemo(
     () => parseInt(params.get("conversation_id")),
     [params.get("conversation_id")]
   );
 
-  const input = useRef();
-
-  const RenderItem = useCallback(
-    ({ item, style }) => <Message {...item} style={style} />,
-    []
+  const setMessagesOrderData = useSetState(
+    `messages.${conversation_id}.order.data`
   );
 
-  const conversationName = useMemo(
-    () =>
-      getConversationsStateData()?.find(({ id }) => id === conversation_id)
-        ?.name,
+  const setMessage = useSetState(`messages.${conversation_id}`);
+
+  const RenderItem = useCallback(
+    ({ item, style }) => (
+      <Message id={item} conversation_id={conversation_id} style={style} />
+    ),
     [conversation_id]
   );
 
-  const sendMessage = async () => {
+  const conversationName = useRootMemoSelector(
+    `msg.conversations.${conversation_id}`,
+    (conv = {}) => conv.name
+  );
+
+  const sendMessage = useCallback(async () => {
     const text = input.current.value;
     if (text?.length) {
       input.current.value = "";
@@ -56,9 +63,13 @@ const Dashboard = memo(() => {
         message: text,
         conversation_id,
       });
-      setMessagesStateData((data = []) => [message, ...data]);
+      dispatch(addMsg({ msg: message }));
+      setMessagesOrderData((data = []) => [message.id, ...data]);
     }
-  };
+  }, [conversation_id]);
+
+  const setData = useCallback((data) => data.map(({ id }) => id), []);
+  const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
 
   return (
     <div className="flex-1 bg-gray-200">
@@ -78,11 +89,14 @@ const Dashboard = memo(() => {
         className="overflow-y-auto py-6"
       >
         <Inifinite
+          ref={msgRequestRef}
           inverted={true}
           params={{ pageSize: 15, conversation_id }}
           RenderItem={RenderItem}
-          name="messages.order"
+          name={`messages.${conversation_id}.order`}
           request={messagesAsync}
+          setData={setData}
+          onSuccess={onSuccess}
         />
       </div>
       {/* input */}
@@ -93,7 +107,7 @@ const Dashboard = memo(() => {
           rows="2"
           placeholder="Enter some long form content."
         />
-        <Button onClick={() => sendMessage()} className="m-2">
+        <Button onClick={sendMessage} className="m-2">
           <Send />
         </Button>
       </div>
@@ -104,17 +118,24 @@ const Dashboard = memo(() => {
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
 
 export default Dashboard;
-const Message = ({ isSender, message, style }) => (
-  <div className="clearfix" style={{ clear: "both", ...style }}>
-    <div
-      className={` w-3/4 ${
-        isSender ? "float-right bg-green-300" : "bg-gray-300"
-      } mx-4 my-2 p-2 rounded-lg`}
-    >
-      {message}
+const Message = memo(({ id, conversation_id, style }) => {
+  const { isSender, message, id: id_ } = useRootMemoSelector(
+    `msg.msgs.${conversation_id}.${id}`,
+    (msg = {}) => msg
+  );
+
+  return (
+    <div className="clearfix" style={{ clear: "both", ...style }}>
+      <div
+        className={` w-3/4 ${
+          isSender ? "float-right bg-green-300" : "bg-gray-300"
+        } mx-4 my-2 p-2 rounded-lg`}
+      >
+        {message}
+      </div>
     </div>
-  </div>
-);
+  );
+});
 
 const Menu = () => {
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);

@@ -4,13 +4,20 @@ import { trunc } from "../../func";
 import { conversations as conversationsAsync } from "../../func/async/msg";
 import moment from "moment";
 import Inifinite from "../Infinite.jsx";
+import { useDispatch } from "react-redux";
+import { addConvers } from "../../redux/msg";
+import { useRootMemoSelector } from "../../func/hooks";
 
 export default memo(() => {
+  const dispatch = useDispatch();
+
+  const setData = useCallback((data) => data.map(({ id }) => id), []);
+  const onSuccess = useCallback((data) => dispatch(addConvers(data)), []);
+
   const RenderItem = useCallback(
-    ({ item, index }) => <Conversation {...item} />,
+    ({ item, index }) => <Conversation id={item} />,
     []
   );
-
   return (
     <div className="">
       <Inifinite
@@ -18,13 +25,20 @@ export default memo(() => {
         RenderItem={RenderItem}
         name="conversations.order"
         request={conversationsAsync}
+        setData={setData}
+        onSuccess={onSuccess}
       />
     </div>
   );
 });
 
-const Conversation = memo(
-  ({ id, conversation_id, name, image, created_at, last_message }) => (
+const Conversation = memo(({ id: conversation_id }) => {
+  const { id, name, image, created_at, last_message } = useRootMemoSelector(
+    `msg.conversations.${conversation_id}`,
+    (conv = {}) => conv
+  );
+
+  return (
     <li className="border-gray-400 flex flex-row mb-2">
       <InertiaLink
         only={["messages"]}
@@ -58,5 +72,5 @@ const Conversation = memo(
         </div>
       </InertiaLink>
     </li>
-  )
-);
+  );
+});
