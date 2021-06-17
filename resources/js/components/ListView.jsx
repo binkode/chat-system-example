@@ -1,8 +1,8 @@
-import { memo } from "react";
+import { memo, forwardRef } from "react";
 import Loader from "./Loader.jsx";
 
 const ListView = memo(
-  ({ data, RenderFooter, RenderItem, inverted, loading }) => {
+  forwardRef(({ data, RenderFooter, RenderItem, inverted, loading }, ref) => {
     return (
       <div
         style={{
@@ -17,7 +17,7 @@ const ListView = memo(
         {RenderFooter && <RenderFooter />}
       </div>
     );
-  }
+  })
 );
 
 export default ListView;

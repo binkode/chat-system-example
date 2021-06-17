@@ -30,6 +30,7 @@ const Inifinite = memo(
         next,
         refresh,
         setState,
+        getState,
         cleanup,
         pagination,
       } = usePagination(
@@ -83,6 +84,11 @@ const Inifinite = memo(
           pagination?.current_page,
         ]
       );
+
+      if (ref) {
+        if(!ref.current) ref.current = {};
+        Object.assign(ref.current, { setState, getState });
+      }
 
       return (
         <ListView
