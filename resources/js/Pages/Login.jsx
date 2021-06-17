@@ -73,14 +73,14 @@ const Login = memo(() => {
                   </Select>
                 </Label>
 
-                <Label className="mt-4">
+                {/*<Label className="mt-4">
                   <span>Password</span>
                   <Input
                     className="mt-1"
                     type="password"
                     placeholder="***************"
                   />
-                </Label>
+                </Label>*/}
 
                 <Button type="submit" className="mt-4" block>
                   Log in
