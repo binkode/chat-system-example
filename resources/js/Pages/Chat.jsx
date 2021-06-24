@@ -12,7 +12,7 @@ import {
   Card,
   CardBody,
 } from "@windmill/react-ui";
-import { SearchIcon, MenuDotX, Send } from "../icons";
+import { SearchIcon, MenuDotX, Send, Delivered, Attachment } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -21,8 +21,11 @@ import { useRoute, useProps, useRootMemoSelector } from "../func/hooks";
 import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
+import DateTime from "../components/DateTime.jsx";
 import { addMsgs, addMsg } from "../redux/msg";
 import chatsLogo from "../assets/img/chats.png";
+import { team } from "../icons/images";
+import moment from "moment";
 
 const Dashboard = memo(() => {
   const { params } = useRoute();
@@ -105,6 +108,7 @@ const Messages = memo(({ conversationId }) => {
       {/* conversation */}
       <div
         style={{
+          backgroundColor: "#f0f3fb",
           // transform: "scaleY(-1)",
           height: "calc(100vh - 182px - 4rem)",
         }}
@@ -122,7 +126,12 @@ const Messages = memo(({ conversationId }) => {
         />
       </div>
       {/* input */}
-      <div className="flex-shrink-0 w-full flex align-center justify-between bg-green-100">
+      <div className="flex-shrink-0 w-full flex flex-row align-center justify-between bg-green-100">
+        {!1 && (
+          <Button>
+            <Attachment className="fill-current h-6 w-6" />
+          </Button>
+        )}
         <Textarea
           ref={input}
           className="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
@@ -138,23 +147,49 @@ const Messages = memo(({ conversationId }) => {
 });
 
 const Message = memo(({ id, conversationId, style }) => {
-  const { isSender, message, id: id_ } = useRootMemoSelector(
+  const { isSender, message, id: id_, created_at } = useRootMemoSelector(
     `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
   );
 
   return (
-    <div className="clearfix" style={{ clear: "both", ...style }}>
+    <div className="flex" style={style}>
+      {!isSender && <UserImage />}
       <div
-        className={` w-3/4 ${
-          isSender ? "float-right bg-green-300" : "bg-gray-300"
+        style={{ backgroundColor: isSender ? "#14192d" : "#fff" }}
+        className={`flex flex-col shadow-md w-3/4 ${
+          isSender ? "ml-auto bg-green-300" : "bg-gray-300"
         } mx-4 my-2 p-2 rounded-lg`}
       >
-        {message}
+        <p
+          style={{ color: isSender ? "#fff" : "#60667a" }}
+          className={`text-sm`}
+        >
+          {message}
+        </p>
+
+        <div className="flex ml-auto items-center">
+          <p className="text-xs text-gray-500">
+            <DateTime data={created_at} />
+          </p>
+          {!1 && <Delivered className="w-4 h-4 fill-current text-green-500" />}
+        </div>
       </div>
+      {isSender && <UserImage />}
     </div>
   );
 });
+
+const UserImage = () => (
+  <div className="m-1 py-2 flex">
+    <img
+      src={team}
+      // "https://www.statnews.com/wp-content/uploads/2018/01/AdobeStock_107381486-645x645.jpeg"
+      className="h-12 w-12 rounded-full self-end"
+      alt=""
+    />
+  </div>
+);
 
 const Menu = () => {
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
@@ -165,12 +200,13 @@ const Menu = () => {
   return (
     <div className="relative">
       <button
-        className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple mt-2 mr-2"
+        className="p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring"
         onClick={handleNotificationsClick}
+        type="button"
         aria-label="Notifications"
         aria-haspopup="true"
       >
-        <MenuDotX aria-hidden="true" className="icon-dots-vertical w-5 h-5" />
+        <MenuDotX aria-hidden="true" className="w-6 h-6 fill-current" />
       </button>
 
       <Dropdown
