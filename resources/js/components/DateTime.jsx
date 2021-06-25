@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import moment from "moment";
 
-export default memo(({ render, type, data, style }) => {
+export default memo(({ render, type, data, style, ...props }) => {
   const datetime =
     type === "day"
       ? moment(data).calendar(null, {
@@ -14,7 +14,11 @@ export default memo(({ render, type, data, style }) => {
         })
       : moment(data).format("hh:mm A");
 
-  return <div style={style}>{render ? render({ datetime }) : datetime}</div>;
+  return (
+    <p {...props} style={style}>
+      {render ? render({ datetime }) : datetime}
+    </p>
+  );
 });
 
 const When = () => (

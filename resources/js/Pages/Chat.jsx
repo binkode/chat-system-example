@@ -169,9 +169,7 @@ const Message = memo(({ id, conversationId, style }) => {
         </p>
 
         <div className="flex ml-auto items-center">
-          <p className="text-xs text-gray-500">
-            <DateTime data={created_at} />
-          </p>
+          <DateTime className="text-xs text-gray-500" data={created_at} />
           {!1 && <Delivered className="w-4 h-4 fill-current text-green-500" />}
         </div>
       </div>
