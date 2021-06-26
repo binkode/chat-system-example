@@ -23,10 +23,10 @@ function Layout({ children, title }) {
         isSidebarOpen && "overflow-hidden"
       }`}
     >
+      <Head title={title} />
       <Sidebar />
 
       <div className="flex flex-col flex-1 w-full">
-        <Head title={title} />
         <Header />
         <Main>
           <Suspense fallback={<ThemedSuspense />}>{children}</Suspense>
