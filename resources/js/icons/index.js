@@ -5,7 +5,8 @@ import DropdownIcon from './dropdown.svg'
 import OutlineLogoutIcon from './outlineLogout.svg'
 import MenuDotX from './menu-dot-x.svg'
 import Send from './send.svg'
-import Delivered from './delivered.svg'
+import Sent from './sent.svg'
+import DoubleCheck from './double-check.svg'
 import Attachment from './attachment.svg'
 
 export {
@@ -16,6 +17,7 @@ export {
   OutlineLogoutIcon,
   MenuDotX,
   Send,
-  Delivered,
+  Sent,
+  DoubleCheck,
   Attachment
 }

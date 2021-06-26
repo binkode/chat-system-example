@@ -1,4 +1,4 @@
-import { memo, useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
 import {
@@ -12,12 +12,12 @@ import {
   Card,
   CardBody,
 } from "@windmill/react-ui";
-import { SearchIcon, MenuDotX, Send, Delivered, Attachment } from "../icons";
+import { SearchIcon, MenuDotX, Send, DoubleCheck, Attachment } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import useState from "use-react-state";
-import { useRoute, useProps, useRootMemoSelector } from "../func/hooks";
+import { useRoute, useRootMemoSelector } from "../func/hooks";
 import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
@@ -26,11 +26,11 @@ import { addMsgs, addMsg } from "../redux/msg";
 import chatsLogo from "../assets/img/chats.png";
 import { team } from "../icons/images";
 import moment from "moment";
+import { fastMemo } from "../func";
+import { MessageStatus } from "../components/Conversation/Status.jsx";
 
-const Dashboard = memo(() => {
+const Dashboard = fastMemo(() => {
   const { params } = useRoute();
-
-  useProps();
 
   const conversation_id = useMemo(
     () => parseInt(params.get("conversation_id")),
@@ -38,7 +38,7 @@ const Dashboard = memo(() => {
   );
 
   return (
-    <div className="flex-1 bg-gray-200">
+    <div className="bg-gray-200">
       {conversation_id ? (
         <Messages conversationId={conversation_id} />
       ) : (
@@ -54,7 +54,7 @@ const Dashboard = memo(() => {
   );
 });
 
-const Messages = memo(({ conversationId }) => {
+const Messages = fastMemo(({ conversationId }) => {
   const msgRequestRef = useRef();
   const input = useRef();
 
@@ -95,9 +95,13 @@ const Messages = memo(({ conversationId }) => {
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
   const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
+  const queryParams = useMemo(
+    () => ({ pageSize: 15, conversation_id: conversationId }),
+    [conversationId]
+  );
 
   return (
-    <>
+    <div className="h-full flex-1">
       {/* Header */}
       <div className="flex-shrink-0 w-full bg-purple-600 h-16 pt-2 text-white flex justify-between shadow-md">
         <div className="ml-3 my-3 text-purple-100 font-bold text-lg tracking-wide">
@@ -117,7 +121,7 @@ const Messages = memo(({ conversationId }) => {
         <Inifinite
           ref={msgRequestRef}
           inverted={true}
-          params={{ pageSize: 15, conversation_id: conversationId }}
+          params={queryParams}
           RenderItem={RenderItem}
           name={`messages.${conversationId}.order`}
           request={messagesAsync}
@@ -142,11 +146,11 @@ const Messages = memo(({ conversationId }) => {
           <Send />
         </Button>
       </div>
-    </>
+    </div>
   );
 });
 
-const Message = memo(({ id, conversationId, style }) => {
+const Message = fastMemo(({ id, conversationId, style }) => {
   const { isSender, message, id: id_, created_at } = useRootMemoSelector(
     `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
@@ -169,8 +173,17 @@ const Message = memo(({ id, conversationId, style }) => {
         </p>
 
         <div className="flex ml-auto items-center">
-          <DateTime className="text-xs text-gray-500" data={created_at} />
-          {!1 && <Delivered className="w-4 h-4 fill-current text-green-500" />}
+          {isSender && (
+            <MessageStatus
+              className="text-gray-500"
+              conversationId={conversationId}
+            />
+          )}
+          <DateTime
+            type="day"
+            className="text-xs text-gray-500"
+            data={created_at}
+          />
         </div>
       </div>
       {isSender && <UserImage />}
