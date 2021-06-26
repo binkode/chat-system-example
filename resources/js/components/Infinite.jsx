@@ -1,11 +1,12 @@
-import { memo, forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, useMemo } from "react";
 import { animateScroll, Events } from "react-scroll";
 import { usePagination } from "../func/async";
+import { fastMemo } from "../func";
 import ListView from "./ListView.jsx";
 import Loader from "./Loader.jsx";
 import { Button } from "@windmill/react-ui";
 
-const Inifinite = memo(
+const Inifinite = fastMemo(
   forwardRef(
     (
       {
@@ -46,15 +47,13 @@ const Inifinite = memo(
         [params]
       );
 
+      const _style = useMemo(() => ({ transform: inverted && "scaleY(-1)" }), [
+        inverted,
+      ]);
+
       const _RenderItem = useCallback(
-        (p) => (
-          <RenderItem
-            {...p}
-            refresh={refresh}
-            style={{ transform: inverted && "scaleY(-1)" }}
-          />
-        ),
-        [inverted, RenderItem]
+        ({ item }) => <RenderItem item={item} style={_style} />,
+        [_style, RenderItem]
       );
 
       const RenderFooter = useCallback(
@@ -91,11 +90,7 @@ const Inifinite = memo(
           inverted={inverted}
           RenderFooter={RenderFooter}
           RenderItem={_RenderItem}
-          // style={_style}
-          {...{
-            // inverted,
-            ref,
-          }}
+          ref={ref}
         />
       );
     }

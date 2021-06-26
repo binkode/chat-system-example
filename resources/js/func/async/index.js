@@ -320,14 +320,16 @@ export const usePagination = (
             },
             more
           },
-          (state, { pagination, data, more, ...p }) => ({
-            ...state,
-            ...p,
-            data: more
-              ? [...state.data, ...hackData(data)]
-              : hackData([...initData, ...data]),
-            pagination
-          })
+          (state, { pagination, data, more, ...p }) => {
+            state.pagination = pagination
+            if (more) {
+              state.data.push(...hackData(data))
+            } else {
+              state.data = hackData([...initData, ...data])
+            }
+            Object.assign(state, p)
+            return state
+          }
         )
       } catch (e) {
         setState((s) => ({ ...s, error: e, isLoading: false, loading: false }))
@@ -347,7 +349,10 @@ export const usePagination = (
   )
 
   const refresh = (_params = {}) =>
-    current(false, { params: { ...params, ..._params } })
+    useCallback(current(false, { params: { ...params, ..._params } }), [
+      params,
+      current
+    ])
 
   const setOrder = (ord) =>
     setState({ pagination: { order: ord } }, (s, { pagination }) => ({

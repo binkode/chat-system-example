@@ -1,8 +1,20 @@
-import { memo, forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 import Loader from "./Loader.jsx";
+import { fastMemo } from "../func";
 
-const ListView = memo(
+const ListView = fastMemo(
   forwardRef(({ data, RenderFooter, RenderItem, inverted, loading }, ref) => {
+    const Items = useCallback(
+      ({ RenderItem }) =>
+        data.map((item, key) => (
+          <RenderItem
+            item={item}
+            key={typeof item === "number" ? item : item?.id || key}
+          />
+        )),
+      [data]
+    );
+
     return (
       <div
         style={{
@@ -11,9 +23,7 @@ const ListView = memo(
         className="flex flex-col p-1"
       >
         {loading && <Loader />}
-        {data.map((d, key) => (
-          <RenderItem {...{ item: d, key }} />
-        ))}
+        <Items RenderItem={RenderItem} />
         {RenderFooter && <RenderFooter />}
       </div>
     );
