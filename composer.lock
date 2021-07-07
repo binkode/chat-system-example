@@ -2148,12 +2148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myckhel/laravel-chat-system.git",
-                "reference": "62aacaed481b50424f3b2ad4f1145ae55e386ed2"
+                "reference": "d20c6dde7b49b23886f62eebb9af8a8028ecf7ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/62aacaed481b50424f3b2ad4f1145ae55e386ed2",
-                "reference": "62aacaed481b50424f3b2ad4f1145ae55e386ed2",
+                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/d20c6dde7b49b23886f62eebb9af8a8028ecf7ab",
+                "reference": "d20c6dde7b49b23886f62eebb9af8a8028ecf7ab",
                 "shasum": ""
             },
             "require": {
@@ -2217,7 +2217,7 @@
                 "source": "https://github.com/myckhel/laravel-chat-system/tree/master",
                 "issues": "https://github.com/myckhel/laravel-chat-system/issues"
             },
-            "time": "2021-07-07T09:26:41+00:00"
+            "time": "2021-07-07T16:37:17+00:00"
         },
         {
             "name": "nesbot/carbon",

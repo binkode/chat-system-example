@@ -2,17 +2,17 @@
 
 namespace App\Observers;
 use Myckhel\ChatSystem\Observers\ConversationObserver as BaseConversationObserver;
-use Myckhel\ChatSystem\Models\Conversation;
+use Myckhel\ChatSystem\Contracts\IConversation;
 
 class ConversationObserver extends BaseConversationObserver
 {
   /**
    * Handle the conversation "created" event.
    *
-   * @param  \Myckhel\ChatSystem\Models\Conversation  $conversation
+   * @param  \Myckhel\ChatSystem\Contracts\IConversation  $conversation
    * @return void
    */
-  public function created(Conversation $conversation)
+  public function created(IConversation $conversation)
   {
     $messages = $conversation->messages()->createMany([
       [
