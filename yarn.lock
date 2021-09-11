@@ -3748,6 +3748,11 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+laravel-echo@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/laravel-echo/-/laravel-echo-1.11.2.tgz#64b62f114b98bcc30b96df0addf586022ae827ea"
+  integrity sha512-LiMTeWDLgI/bCTXJ8r96NcwE2sjWhzt3cIPDFri27EfMt9fcc1D/DBfXU5urOHaWrFwDQEHrdNzS16ewEQaWtA==
+
 laravel-vite@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/laravel-vite/-/laravel-vite-0.0.8.tgz#6594099697a432a1b95b2d7f53ac6b20bef5796c"

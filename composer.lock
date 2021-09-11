@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2598d323d60e17f56e8361b19b2e8fc5",
+    "content-hash": "234ca48709c6bf2a5794e9770b007300",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2309,17 +2309,11 @@
         },
         {
             "name": "myckhel/laravel-chat-system",
-            "version": "v1.0.0-alpha.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myckhel/laravel-chat-system.git",
-                "reference": "41129959da7e60d3b4b67bfe9bc4031705d5788d"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/41129959da7e60d3b4b67bfe9bc4031705d5788d",
-                "reference": "41129959da7e60d3b4b67bfe9bc4031705d5788d",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/laravel-chat-system",
+                "reference": "7348afdd7e8c5e6cfeaf237a741eae16f34abaf1"
             },
             "require": {
                 "illuminate/support": "~7|~8",
@@ -2348,7 +2342,19 @@
                     "Myckhel\\ChatSystem\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Myckhel\\ChatSystem\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/phpunit"
+                ],
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2363,13 +2369,12 @@
             "homepage": "https://github.com/myckhel/laravel-chat-system",
             "keywords": [
                 "ChatSystem",
-                "laravel"
+                "Laravel"
             ],
-            "support": {
-                "issues": "https://github.com/myckhel/laravel-chat-system/issues",
-                "source": "https://github.com/myckhel/laravel-chat-system/tree/v1.0.0-alpha.2"
-            },
-            "time": "2021-07-14T14:01:38+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "nesbot/carbon",

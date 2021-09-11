@@ -15,7 +15,7 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes(['middleware' => ['auth:sanctum'], 'prefix' => 'api']);
+        Broadcast::routes(['middleware' => ['api', 'auth:sanctum'], 'prefix' => 'api']);
         ChatSystem::registerBroadcastRoutes();
 
         require base_path('routes/channels.php');
