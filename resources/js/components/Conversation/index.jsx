@@ -15,9 +15,10 @@ import DateTime from "../DateTime.jsx";
 export default memo(() => {
   const dispatch = useDispatch();
   const { params } = useRoute();
-  const currentId = useMemo(() => parseInt(params.get("conversation_id")), [
-    params,
-  ]);
+  const currentId = useMemo(
+    () => parseInt(params.get("conversation_id")),
+    [params]
+  );
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
   const onSuccess = useCallback((data) => dispatch(addConvers(data)), []);

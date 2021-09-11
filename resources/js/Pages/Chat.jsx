@@ -22,7 +22,7 @@ import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
 import DateTime from "../components/DateTime.jsx";
-import { addMsgs, addMsg } from "../redux/msg";
+import { addMsgs, addMsg, readConversation } from "../redux/msg";
 import chatsLogo from "../assets/img/chats.png";
 import { team } from "../icons/images";
 import moment from "moment";
@@ -30,12 +30,17 @@ import { fastMemo } from "../func";
 import { MessageStatus } from "../components/Conversation/Status.jsx";
 
 const Dashboard = fastMemo(() => {
+  const dispatch = useDispatch();
   const { params } = useRoute();
 
   const conversation_id = useMemo(
     () => parseInt(params.get("conversation_id")),
     [params.get("conversation_id")]
   );
+
+  useEffect(() => {
+    dispatch(readConversation({ id: conversation_id }));
+  }, [conversation_id]);
 
   return (
     <div className="bg-gray-200">
@@ -151,7 +156,12 @@ const Messages = fastMemo(({ conversationId }) => {
 });
 
 const Message = fastMemo(({ id, conversationId, style }) => {
-  const { isSender, message, id: id_, created_at } = useRootMemoSelector(
+  const {
+    isSender,
+    message,
+    id: id_,
+    created_at,
+  } = useRootMemoSelector(
     `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
   );
