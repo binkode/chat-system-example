@@ -9,7 +9,7 @@ import { SidebarProvider } from "./context/SidebarContext";
 import { Windmill } from "@windmill/react-ui";
 import { PersistGate } from "redux-persist/integration/react";
 import Loader from "./components/Loader.jsx";
-import {Provider} from 'react-redux';
+import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store";
 
 const el = document.getElementById("app");
