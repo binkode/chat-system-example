@@ -35,6 +35,7 @@
     "camelcase": 0,
     "react-hooks/exhaustive-deps": 0,
     "import/no-cycle": "error",
+    "react/react-in-jsx-scope": 0,
     "jest/no-commented-out-tests": 0
   }
 }
