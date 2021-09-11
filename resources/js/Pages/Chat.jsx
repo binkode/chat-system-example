@@ -83,6 +83,10 @@ const Messages = fastMemo(({ conversationId }) => {
     (conv = {}) => conv.name
   );
 
+  const getConversationsOrder = useGetState("conversations.order");
+
+  const setConversationsOrder = useSetState("conversations.order");
+
   const sendMessage = useCallback(async () => {
     const text = input.current.value;
     if (text?.length) {
@@ -95,6 +99,21 @@ const Messages = fastMemo(({ conversationId }) => {
       });
       dispatch(addMsg({ msg: message }));
       setMessagesOrderData((data = []) => [message.id, ...data]);
+
+      const conversationsOrder = getConversationsOrder(
+        (state) => state?.data || []
+      );
+      if (conversationsOrder[0] && conversationsOrder[0] !== conversationId) {
+        const conversationIndex = conversationsOrder.findIndex(
+          (id) => conversationId === id
+        );
+
+        setConversationsOrder((state) => {
+          conversationIndex && state.data.splice(conversationIndex, 1);
+          state.data?.unshift(conversationId);
+          return state;
+        });
+      }
     }
   }, [conversationId]);
 
