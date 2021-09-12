@@ -45,11 +45,12 @@ function Header() {
           {/* <!-- Profile menu --> */}
           <li className="relative">
             <button
-              className="rounded-full focus:shadow-outline-purple focus:outline-none"
+              className="rounded-full flex focus:shadow-outline-purple focus:outline-none"
               onClick={handleProfileClick}
               aria-label="Account"
               aria-haspopup="true"
             >
+              <p>{auth?.user?.name}</p>
               <Avatar
                 className="align-middle"
                 src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"

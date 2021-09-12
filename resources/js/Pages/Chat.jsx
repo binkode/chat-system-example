@@ -25,13 +25,14 @@ import DateTime from "../components/DateTime.jsx";
 import { addMsgs, addMsg, readConversation } from "../redux/msg";
 import chatsLogo from "../assets/img/chats.png";
 import { team } from "../icons/images";
-import moment from "moment";
 import { fastMemo } from "../func";
 import { MessageStatus } from "../components/Conversation/Status.jsx";
+import { useNewMessage } from "../func/events/message.js";
 
 const Dashboard = fastMemo(() => {
   const dispatch = useDispatch();
   const { params } = useRoute();
+  useNewMessage();
 
   const conversation_id = useMemo(
     () => parseInt(params.get("conversation_id")),
