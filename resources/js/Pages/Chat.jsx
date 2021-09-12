@@ -1,3 +1,4 @@
+import { useEffect, useCallback, useMemo } from "react";
 import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
 import {
@@ -7,139 +8,227 @@ import {
   Dropdown,
   DropdownItem,
   Badge,
+  Avatar,
+  Card,
+  CardBody,
 } from "@windmill/react-ui";
-import { SearchIcon, MenuDotX, Send } from "../icons";
+import { SearchIcon, MenuDotX, Send, DoubleCheck, Attachment } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
-import { useMergeState } from "../func/hooks";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import useState from "use-react-state";
+import { useRoute, useRootMemoSelector } from "../func/hooks";
+import messagesAsync, { send } from "../func/async/msg";
+import { useGetState, useSetState } from "use-redux-states";
+import Inifinite from "../components/Infinite.jsx";
+import DateTime from "../components/DateTime.jsx";
+import { addMsgs, addMsg, readConversation } from "../redux/msg";
+import chatsLogo from "../assets/img/chats.png";
+import { team } from "../icons/images";
+import { fastMemo } from "../func";
+import { MessageStatus } from "../components/Conversation/Status.jsx";
+import { useNewMessage } from "../func/events/message.js";
 
-function Dashboard() {
+const Dashboard = fastMemo(() => {
+  const dispatch = useDispatch();
+  const { params } = useRoute();
+  useNewMessage();
+
+  const conversation_id = useMemo(
+    () => parseInt(params.get("conversation_id")),
+    [params.get("conversation_id")]
+  );
+
+  useEffect(() => {
+    dispatch(readConversation({ id: conversation_id }));
+  }, [conversation_id]);
+
+  return (
+    <div className="bg-gray-200">
+      {conversation_id ? (
+        <Messages conversationId={conversation_id} />
+      ) : (
+        <div className="flex flex-col m-4 items-center justify-center mb-6">
+          <img className="drop-shadow-md w-1/5 h-1/5 mb-6" src={chatsLogo} />
+          <p className="p-3 border-2 border-purple-500 hover:border-gray-500 animate-pulse mb-4 tracking-wide text-center text-purple-700 font-bold text-6xl dark:text-gray-300">
+            Laravel Chat System
+          </p>
+          <Button>New Chat</Button>
+        </div>
+      )}
+    </div>
+  );
+});
+
+const Messages = fastMemo(({ conversationId }) => {
+  const msgRequestRef = useRef();
   const input = useRef();
-  const [{ messages }, setState] = useMergeState({
-    messages: [
-      {
-        id: 1,
-        text: "this is a basic mobile chat layout, build with tailwind css",
-      },
-      {
-        id: 2,
-        text:
-          "It will be used for a full tutorial about building a chat app with vue, tailwind and firebase.",
-      },
-      {
-        id: 3,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 4,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 5,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 6,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 7,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 8,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 9,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-      {
-        id: 10,
-        right: true,
-        text: "check my twitter to see when it will be released.",
-      },
-    ],
-  });
 
-  const send = () => {
+  const dispatch = useDispatch();
+
+  const setMessagesOrderData = useSetState(
+    `messages.${conversationId}.order.data`
+  );
+
+  const setMessage = useSetState(`messages.${conversationId}`);
+
+  const RenderItem = useCallback(
+    ({ item, style }) => (
+      <Message id={item} conversationId={conversationId} style={style} />
+    ),
+    [conversationId]
+  );
+
+  const conversationName = useRootMemoSelector(
+    `msg.conversations.${conversationId}`,
+    (conv = {}) => conv.name
+  );
+
+  const getConversationsOrder = useGetState("conversations.order");
+
+  const setConversationsOrder = useSetState("conversations.order");
+
+  const sendMessage = useCallback(async () => {
     const text = input.current.value;
     if (text?.length) {
       input.current.value = "";
-      setState(({ messages, ...s }) => {
-        return {
-          ...s,
-          messages: [
-            ...messages,
-            {
-              id: (messages.pop()?.id || 0) + 1,
-              text,
-              right: true,
-            },
-          ],
-        };
+      const unique = new Date().getTime();
+      const { data: message } = await send({
+        token: unique,
+        message: text,
+        conversation_id: conversationId,
       });
+      dispatch(addMsg({ msg: message }));
+      setMessagesOrderData((data = []) => [message.id, ...data]);
+
+      const conversationsOrder = getConversationsOrder(
+        (state) => state?.data || []
+      );
+      if (conversationsOrder[0] && conversationsOrder[0] !== conversationId) {
+        const conversationIndex = conversationsOrder.findIndex(
+          (id) => conversationId === id
+        );
+
+        setConversationsOrder((state) => {
+          conversationIndex && state.data.splice(conversationIndex, 1);
+          state.data?.unshift(conversationId);
+          return state;
+        });
+      }
     }
-  };
+  }, [conversationId]);
+
+  const setData = useCallback((data) => data.map(({ id }) => id), []);
+  const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
+  const queryParams = useMemo(
+    () => ({ pageSize: 15, conversation_id: conversationId }),
+    [conversationId]
+  );
 
   return (
-    <div className="flex-1 bg-gray-200">
+    <div className="h-full flex-1">
       {/* Header */}
       <div className="flex-shrink-0 w-full bg-purple-600 h-16 pt-2 text-white flex justify-between shadow-md">
         <div className="ml-3 my-3 text-purple-100 font-bold text-lg tracking-wide">
-          @rallipi
+          @{conversationName}
         </div>
         <Menu />
       </div>
       {/* conversation */}
       <div
         style={{
+          backgroundColor: "#f0f3fb",
           // transform: "scaleY(-1)",
-          height: "calc(100vh - 155px - 4rem)",
+          height: "calc(100vh - 182px - 4rem)",
         }}
-        className="overflow-y-auto"
+        className="overflow-y-auto py-6"
       >
-        {messages.map(({ id, ...p }) => (
-          <Message key={"" + id} {...p} />
-        ))}
+        <Inifinite
+          ref={msgRequestRef}
+          inverted={true}
+          params={queryParams}
+          RenderItem={RenderItem}
+          name={`messages.${conversationId}.order`}
+          request={messagesAsync}
+          setData={setData}
+          onSuccess={onSuccess}
+        />
       </div>
       {/* input */}
-      <div className="flex-shrink-0 w-full flex align-center justify-between bg-green-100">
+      <div className="flex-shrink-0 w-full flex flex-row align-center justify-between bg-green-100">
+        {!1 && (
+          <Button>
+            <Attachment className="fill-current h-6 w-6" />
+          </Button>
+        )}
         <Textarea
           ref={input}
           className="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
           rows="2"
           placeholder="Enter some long form content."
         />
-        <Button onClick={() => send()} className="m-2">
+        <Button onClick={sendMessage} className="m-2">
           <Send />
         </Button>
       </div>
     </div>
   );
-}
+});
 
-Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
+const Message = fastMemo(({ id, conversationId, style }) => {
+  const {
+    isSender,
+    message,
+    id: id_,
+    created_at,
+  } = useRootMemoSelector(
+    `msg.msgs.${conversationId}.${id}`,
+    (msg = {}) => msg
+  );
 
-export default Dashboard;
+  return (
+    <div className="flex" style={style}>
+      {!isSender && <UserImage />}
+      <div
+        style={{ backgroundColor: isSender ? "#14192d" : "#fff" }}
+        className={`flex flex-col shadow-md w-3/4 ${
+          isSender ? "ml-auto bg-green-300" : "bg-gray-300"
+        } mx-4 my-2 p-2 rounded-lg`}
+      >
+        <p
+          style={{ color: isSender ? "#fff" : "#60667a" }}
+          className={`text-sm`}
+        >
+          {message}
+        </p>
 
-const Message = ({ right, text }) => (
-  <div className="clearfix">
-    <div
-      // style={{ transform: "scaleY(-1)" }}
-      className={` w-3/4 ${
-        right ? "float-right bg-green-300" : "bg-gray-300"
-      } mx-4 my-2 p-2 rounded-lg`}
-    >
-      {text}
+        <div className="flex ml-auto items-center">
+          {isSender && (
+            <MessageStatus
+              className="text-gray-500"
+              conversationId={conversationId}
+            />
+          )}
+          <DateTime
+            type="day"
+            className="text-xs text-gray-500"
+            data={created_at}
+          />
+        </div>
+      </div>
+      {isSender && <UserImage />}
     </div>
+  );
+});
+
+const UserImage = () => (
+  <div className="m-1 py-2 flex">
+    <img
+      src={team}
+      // "https://www.statnews.com/wp-content/uploads/2018/01/AdobeStock_107381486-645x645.jpeg"
+      className="h-12 w-12 rounded-full self-end"
+      alt=""
+    />
   </div>
 );
 
@@ -152,12 +241,13 @@ const Menu = () => {
   return (
     <div className="relative">
       <button
-        className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple mt-2 mr-2"
+        className="p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring"
         onClick={handleNotificationsClick}
+        type="button"
         aria-label="Notifications"
         aria-haspopup="true"
       >
-        <MenuDotX aria-hidden="true" className="icon-dots-vertical w-5 h-5" />
+        <MenuDotX aria-hidden="true" className="w-6 h-6 fill-current" />
       </button>
 
       <Dropdown
@@ -180,3 +270,7 @@ const Menu = () => {
     </div>
   );
 };
+
+Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
+
+export default Dashboard;

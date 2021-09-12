@@ -1,17 +1,17 @@
-import { useState, useMemo, createContext } from 'react'
+import { useState, useMemo, createContext, memo, useEffect } from "react";
 
 // create context
-export const SidebarContext = createContext()
+export const SidebarContext = createContext();
 
-export const SidebarProvider = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+export const SidebarProvider = memo(({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   function toggleSidebar() {
-    setIsSidebarOpen(!isSidebarOpen)
+    setIsSidebarOpen(!isSidebarOpen);
   }
 
   function closeSidebar() {
-    setIsSidebarOpen(false)
+    setIsSidebarOpen(false);
   }
 
   const value = useMemo(
@@ -21,7 +21,9 @@ export const SidebarProvider = ({ children }) => {
       closeSidebar,
     }),
     [isSidebarOpen]
-  )
+  );
 
-  return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
-}
+  return (
+    <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
+  );
+});

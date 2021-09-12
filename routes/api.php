@@ -25,4 +25,5 @@ Route::get('/users',                 [UserController::class, 'index']);
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('whoami',                 [UserController::class, 'whoami']);
+  Route::post('/logout',               [AuthController::class, 'logout']);
 });

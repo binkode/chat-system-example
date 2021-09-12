@@ -3,11 +3,15 @@ import "../css/app.css";
 import "./bootstrap";
 
 import { render } from "react-dom";
-import { App, createInertiaApp } from "@inertiajs/inertia-react";
+import { createInertiaApp } from "@inertiajs/inertia-react";
 import { InertiaProgress } from "@inertiajs/progress";
 import { SidebarProvider } from "./context/SidebarContext";
 import { Windmill } from "@windmill/react-ui";
-const el = document.getElementById("app");
+import { PersistGate } from "redux-persist/integration/react";
+import Loader from "./components/Loader.jsx";
+import { Provider } from "react-redux";
+import store, { persistor } from "./redux/store";
+import "./func/Echo";
 
 InertiaProgress.init();
 
@@ -22,11 +26,15 @@ createInertiaApp({
   },
   setup({ el, App, props }) {
     render(
-      <SidebarProvider>
-        <Windmill>
-          <App {...props} />
-        </Windmill>
-      </SidebarProvider>,
+      <Provider store={store}>
+        <PersistGate loading={<Loader />} persistor={persistor}>
+          <SidebarProvider>
+            <Windmill>
+              <App {...props} />
+            </Windmill>
+          </SidebarProvider>
+        </PersistGate>
+      </Provider>,
       el
     );
   },

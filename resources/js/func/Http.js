@@ -1,15 +1,14 @@
 import axios from "axios";
 
-// import env from "react-dotenv";
-
-// axios.defaults.baseURL = env.API_URL;
-
 axios.interceptors.response.use(
-  response => response,
+  (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       // logoutUser()
-    } else if (error.response && (error.response.status === 500 || error.response.status === 405)) {
+    } else if (
+      error.response &&
+      (error.response.status === 500 || error.response.status === 405)
+    ) {
       console.log(error.response.data);
     }
 
@@ -19,11 +18,11 @@ axios.interceptors.response.use(
 );
 
 window.Http = axios.create({
-  // baseURL : env.API_URL,
+  withCredentials: true,
   headers: {
-    'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    // 'X-CSRF-TOKEN': env.CSRF_TOKEN,
+    Accept: "application/json",
+    "X-Requested-With": "XMLHttpRequest",
   },
-})
-export default axios
+});
+
+export default window.Http;
