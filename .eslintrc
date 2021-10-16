@@ -3,8 +3,11 @@
   "extends": [
     "standard",
     "standard-react",
+    "eslint:recommended",
+    "plugin:react/recommended",
     "plugin:jest/recommended",
-    "plugin:jest/style"
+    "plugin:jest/style",
+    "plugin:react/jsx-runtime"
   ],
   "env": {
     "browser": true,
@@ -35,6 +38,7 @@
     "camelcase": 0,
     "react-hooks/exhaustive-deps": 0,
     "import/no-cycle": "error",
+    "react/jsx-uses-react": 0,
     "react/react-in-jsx-scope": 0,
     "jest/no-commented-out-tests": 0
   }
