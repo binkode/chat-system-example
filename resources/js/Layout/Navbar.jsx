@@ -7,7 +7,7 @@ export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const {
     url,
-    props: { auth }
+    props: { auth },
   } = usePage();
 
   const btnValue = auth && auth.user ? "Logout" : "Login";
@@ -63,7 +63,9 @@ export default function Navbar(props) {
                     : "text-gray-800 hover:text-gray-600") +
                   " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                 }
-                href="https://myckhel.github.io/laravel-chat-system-docs"
+                rel="noreferrer"
+                target="_blank"
+                href="https://myckhel.github.io/laravel-chat-system"
               >
                 <i
                   className={
@@ -72,8 +74,31 @@ export default function Navbar(props) {
                       : "text-gray-500") +
                     " far fa-file-alt text-lg leading-lg mr-2"
                   }
-                />{" "}
+                />
                 Docs
+              </a>
+            </li>
+            <li className="flex items-center">
+              <a
+                className={
+                  (props.transparent
+                    ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
+                    : "text-gray-800 hover:text-gray-600") +
+                  " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                }
+                rel="noreferrer"
+                target="_blank"
+                href="https://github.com/myckhel/laravel-chat-system"
+              >
+                <i
+                  className={
+                    (props.transparent
+                      ? "lg:text-gray-300 text-gray-500"
+                      : "text-gray-500") +
+                    " far fa-file-alt text-lg leading-lg mr-2"
+                  }
+                />
+                Github
               </a>
             </li>
             {auth.user && !route().current("chat") && (
