@@ -7,8 +7,8 @@ export default defineConfig({
     reactJsx(),
     reactSvgPlugin({
       memo: true,
-      defaultExport: 'component',
-      expandProps: 'start',
+      defaultExport: "component",
+      expandProps: "start",
     }),
   ],
 });
