@@ -2258,18 +2258,19 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravel-chat-system",
-                "reference": "7348afdd7e8c5e6cfeaf237a741eae16f34abaf1"
+                "reference": "7e45d8cba32b1a1291d7c4284d25b98f21273da0"
             },
             "require": {
                 "illuminate/support": "~7|~8",
-                "nesbot/carbon": "^2.36.0",
+                "nesbot/carbon": "^2.50",
                 "php": "^8.0"
             },
             "require-dev": {
                 "fakerphp/faker": "^1.12",
                 "orchestra/testbench": "~5|~6",
+                "pestphp/pest": "^1.11",
                 "php": "^8",
-                "phpunit/phpunit": "~9.0"
+                "spatie/pest-plugin-test-time": "^1.0"
             },
             "type": "library",
             "extra": {
@@ -2294,10 +2295,7 @@
             },
             "scripts": {
                 "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "post-autoload-dump": [
-                    "@php vendor/bin/testbench package:discover --ansi"
+                    "./vendor/bin/pest"
                 ]
             },
             "license": [

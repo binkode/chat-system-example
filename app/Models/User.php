@@ -9,10 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Myckhel\ChatSystem\Traits\Message\HasMessage;
 use Myckhel\ChatSystem\Traits\ChatEvent\CanMakeChatEvent;
-use Myckhel\ChatSystem\Contracts\ChatEventMaker;
+use Myckhel\ChatSystem\Contracts\IChatEventMaker;
 
 
-class User extends Authenticatable implements ChatEventMaker
+class User extends Authenticatable implements IChatEventMaker
 {
     use HasFactory, Notifiable, HasApiTokens, HasMessage, CanMakeChatEvent;
 
