@@ -1,18 +1,7 @@
 import { useEffect, useCallback, useMemo } from "react";
-import Navbar from "../Layout/Navbar.jsx";
 // import Sidebar from "../Layout/Sidebar.jsx";
-import {
-  Button,
-  Label,
-  Textarea,
-  Dropdown,
-  DropdownItem,
-  Badge,
-  Avatar,
-  Card,
-  CardBody,
-} from "@windmill/react-ui";
-import { SearchIcon, MenuDotX, Send, DoubleCheck, Attachment } from "../icons";
+import { Button, Dropdown, DropdownItem, Badge } from "@windmill/react-ui";
+import { MenuDotX, Send, Attachment, Mic, Camera, Smiley } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -119,11 +108,20 @@ const Messages = fastMemo(({ conversationId }) => {
   }, [conversationId]);
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
+
   const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
+
   const queryParams = useMemo(
     () => ({ pageSize: 15, conversation_id: conversationId }),
     [conversationId]
   );
+
+  const scrollToBottom = () => {
+    const el = document.getElementById("messages");
+    el.scrollTop = el.scrollHeight;
+  };
+
+  useEffect(() => scrollToBottom(), []);
 
   return (
     <div className="h-full flex-1">
@@ -136,6 +134,7 @@ const Messages = fastMemo(({ conversationId }) => {
       </div>
       {/* conversation */}
       <div
+        id="messages"
         style={{
           backgroundColor: "#f0f3fb",
           // transform: "scaleY(-1)",
@@ -155,21 +154,39 @@ const Messages = fastMemo(({ conversationId }) => {
         />
       </div>
       {/* input */}
-      <div className="flex-shrink-0 w-full flex flex-row align-center justify-between bg-green-100">
-        {!1 && (
-          <Button>
-            <Attachment className="fill-current h-6 w-6" />
-          </Button>
-        )}
-        <Textarea
-          ref={input}
-          className="flex-grow m-2 py-2 px-4 mr-1 rounded-full border border-gray-300 bg-gray-200 resize-none"
-          rows="2"
-          placeholder="Enter some long form content."
-        />
-        <Button onClick={sendMessage} className="m-2">
-          <Send />
-        </Button>
+      <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+        <div class="relative flex">
+          <span class="absolute inset-y-0 flex items-center">
+            <Button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
+            >
+              <Mic className="h-6 w-6 text-gray-600" />
+            </Button>
+          </span>
+          <input
+            ref={input}
+            placeholder="Write Something"
+            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
+          />
+          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+              <Attachment className="h-6 w-6 text-gray-600" />
+            </Button>
+            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+              <Camera className="h-6 w-6 text-gray-600" />
+            </Button>
+            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+              <Smiley className="h-6 w-6 text-gray-600" />
+            </Button>
+            <Button
+              onClick={sendMessage}
+              class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
+            >
+              <Send className="h-6 w-6 transform rotate-90" />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
