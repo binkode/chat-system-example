@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dbf6b72f51f3802233236012dbfca75",
+    "content-hash": "c313c732531f1aa512126f2316356536",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2254,16 +2254,16 @@
         },
         {
             "name": "myckhel/laravel-chat-system",
-            "version": "v1.0.0-alpha.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myckhel/laravel-chat-system.git",
-                "reference": "7e45d8cba32b1a1291d7c4284d25b98f21273da0"
+                "reference": "39e87111f0e7b267fd3b9f4c0f4da88c2f75115b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/7e45d8cba32b1a1291d7c4284d25b98f21273da0",
-                "reference": "7e45d8cba32b1a1291d7c4284d25b98f21273da0",
+                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/39e87111f0e7b267fd3b9f4c0f4da88c2f75115b",
+                "reference": "39e87111f0e7b267fd3b9f4c0f4da88c2f75115b",
                 "shasum": ""
             },
             "require": {
@@ -2278,6 +2278,7 @@
                 "php": "^8",
                 "spatie/pest-plugin-test-time": "^1.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -2321,10 +2322,10 @@
                 "Laravel"
             ],
             "support": {
-                "source": "https://github.com/myckhel/laravel-chat-system/tree/v1.0.0-alpha.3",
+                "source": "https://github.com/myckhel/laravel-chat-system/tree/master",
                 "issues": "https://github.com/myckhel/laravel-chat-system/issues"
             },
-            "time": "2021-10-17T00:53:26+00:00"
+            "time": "2021-11-13T10:51:55+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -8923,7 +8924,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "myckhel/laravel-chat-system": 15
+        "myckhel/laravel-chat-system": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
