@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5923dc367c2edde05f02a8dd171907cb",
+    "content-hash": "3dbf6b72f51f3802233236012dbfca75",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2254,11 +2254,17 @@
         },
         {
             "name": "myckhel/laravel-chat-system",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/laravel-chat-system",
+            "version": "v1.0.0-alpha.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myckhel/laravel-chat-system.git",
                 "reference": "7e45d8cba32b1a1291d7c4284d25b98f21273da0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/7e45d8cba32b1a1291d7c4284d25b98f21273da0",
+                "reference": "7e45d8cba32b1a1291d7c4284d25b98f21273da0",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "~7|~8",
@@ -2314,10 +2320,11 @@
                 "ChatSystem",
                 "Laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/myckhel/laravel-chat-system/tree/v1.0.0-alpha.3",
+                "issues": "https://github.com/myckhel/laravel-chat-system/issues"
+            },
+            "time": "2021-10-17T00:53:26+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -8915,7 +8922,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "myckhel/laravel-chat-system": 15
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
