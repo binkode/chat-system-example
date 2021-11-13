@@ -1,11 +1,10 @@
 import { useEffect, useCallback, useMemo } from "react";
 // import Sidebar from "../Layout/Sidebar.jsx";
-import { Button, Dropdown, DropdownItem, Badge } from "@windmill/react-ui";
-import { MenuDotX, Send, Attachment, Mic, Camera, Smiley } from "../icons";
+import { Button } from "@windmill/react-ui";
+import { Send, Attachment, Mic, Camera, Smiley } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import useState from "use-react-state";
 import { useRoute, useRootMemoSelector } from "../func/hooks";
 import messagesAsync, { send } from "../func/async/msg";
 import { useGetState, useSetState } from "use-redux-states";
@@ -121,23 +120,35 @@ const Messages = fastMemo(({ conversationId }) => {
     el.scrollTop = el.scrollHeight;
   };
 
-  useEffect(() => scrollToBottom(), []);
+  useEffect(() => scrollToBottom(), [conversationId]);
 
   return (
-    <div className="h-full flex-1">
+    <div className="h-full flex-1 py:1 sm:px-3">
       {/* Header */}
-      <div className="flex-shrink-0 w-full bg-purple-600 h-16 pt-2 text-white flex justify-between shadow-md">
-        <div className="ml-3 my-3 text-purple-100 font-bold text-lg tracking-wide">
-          @{conversationName}
+      <div class="flex sm:items-center justify-between py-2 border-b-2 border-gray-300">
+        <div class="flex items-center space-x-4">
+          <img
+            src={team}
+            alt={conversationName}
+            class="w-12 sm:w-12 h-12 sm:h-12 rounded-full"
+          />
+          <div class="flex flex-col leading-tight">
+            <div class="text-2xl mt-1 flex items-center">
+              <span class="text-gray-700 mr-3">{conversationName}</span>
+              <span class="text-green-500">
+                <svg width="10" height="10">
+                  <circle cx="5" cy="5" r="5" fill="currentColor"></circle>
+                </svg>
+              </span>
+            </div>
+            <span class="text-lg text-gray-600"></span>
+          </div>
         </div>
-        <Menu />
       </div>
       {/* conversation */}
       <div
         id="messages"
         style={{
-          backgroundColor: "#f0f3fb",
-          // transform: "scaleY(-1)",
           height: "calc(100vh - 182px - 4rem)",
         }}
         className="overflow-y-auto py-6"
@@ -154,13 +165,10 @@ const Messages = fastMemo(({ conversationId }) => {
         />
       </div>
       {/* input */}
-      <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+      <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
           <span class="absolute inset-y-0 flex items-center">
-            <Button
-              type="button"
-              class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
-            >
+            <Button class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
               <Mic className="h-6 w-6 text-gray-600" />
             </Button>
           </span>
@@ -240,53 +248,9 @@ const Message = fastMemo(({ id, conversationId, style }) => {
 
 const UserImage = () => (
   <div className="m-1 py-2 flex">
-    <img
-      src={team}
-      // "https://www.statnews.com/wp-content/uploads/2018/01/AdobeStock_107381486-645x645.jpeg"
-      className="h-12 w-12 rounded-full self-end"
-      alt=""
-    />
+    <img src={team} className="h-12 w-12 rounded-full self-end" alt="" />
   </div>
 );
-
-const Menu = () => {
-  const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
-
-  function handleNotificationsClick() {
-    setIsNotificationsMenuOpen(!isNotificationsMenuOpen);
-  }
-  return (
-    <div className="relative">
-      <button
-        className="p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring"
-        onClick={handleNotificationsClick}
-        type="button"
-        aria-label="Notifications"
-        aria-haspopup="true"
-      >
-        <MenuDotX aria-hidden="true" className="w-6 h-6 fill-current" />
-      </button>
-
-      <Dropdown
-        align="right"
-        isOpen={isNotificationsMenuOpen}
-        onClose={() => setIsNotificationsMenuOpen(false)}
-      >
-        <DropdownItem tag="a" href="#" className="justify-between">
-          <span>Messages</span>
-          <Badge type="danger">13</Badge>
-        </DropdownItem>
-        <DropdownItem tag="a" href="#" className="justify-between">
-          <span>Sales</span>
-          <Badge type="danger">2</Badge>
-        </DropdownItem>
-        <DropdownItem onClick={() => alert("Alerts!")}>
-          <span>Alerts</span>
-        </DropdownItem>
-      </Dropdown>
-    </div>
-  );
-};
 
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
 
