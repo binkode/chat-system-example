@@ -120,7 +120,9 @@ const Messages = fastMemo(({ conversationId }) => {
     el.scrollTop = el.scrollHeight;
   };
 
-  useEffect(() => scrollToBottom(), [conversationId]);
+  useEffect(() => {
+    msgRequestRef.current.shouldScrollToBottom = true;
+  }, [conversationId]);
 
   return (
     <div className="h-full flex-1 py:1 sm:px-3">
@@ -146,24 +148,20 @@ const Messages = fastMemo(({ conversationId }) => {
         </div>
       </div>
       {/* conversation */}
-      <div
-        id="messages"
-        style={{
-          height: "calc(100vh - 182px - 4rem)",
-        }}
+      <Inifinite
+        ref={msgRequestRef}
+        params={queryParams}
+        RenderItem={RenderItem}
+        name={`messages.${conversationId}.order`}
+        request={messagesAsync}
+        setData={setData}
+        onSuccess={onSuccess}
+        style={styles.messages}
         className="overflow-y-auto py-6"
-      >
-        <Inifinite
-          ref={msgRequestRef}
-          inverted={true}
-          params={queryParams}
-          RenderItem={RenderItem}
-          name={`messages.${conversationId}.order`}
-          request={messagesAsync}
-          setData={setData}
-          onSuccess={onSuccess}
-        />
-      </div>
+        id="messages"
+        reversed
+        onDataInit={scrollToBottom}
+      />
       {/* input */}
       <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
@@ -210,6 +208,7 @@ const Message = fastMemo(({ id, conversationId, style }) => {
     `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
   );
+  console.log(id);
 
   return (
     <div className="flex" style={style}>
@@ -253,5 +252,11 @@ const UserImage = () => (
 );
 
 Dashboard.layout = (page) => <Layout title="Chat" children={page} />;
+
+const styles = {
+  messages: {
+    height: "calc(100vh - 182px - 4rem)",
+  },
+};
 
 export default Dashboard;

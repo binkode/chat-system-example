@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useMemo } from "react";
+import { forwardRef, useCallback, useEffect, useMemo } from "react";
 import { animateScroll, Events } from "react-scroll";
 import { usePagination } from "../func/async";
 import { fastMemo } from "../func";
@@ -19,6 +19,10 @@ const Inifinite = fastMemo(
         inverted,
         reducer,
         style,
+        className,
+        id,
+        reversed,
+        onDataInit,
         ...rest
       },
       ref
@@ -47,9 +51,10 @@ const Inifinite = fastMemo(
         [params]
       );
 
-      const _style = useMemo(() => ({ transform: inverted && "scaleY(-1)" }), [
-        inverted,
-      ]);
+      const _style = useMemo(
+        () => ({ transform: inverted && "scaleY(-1)" }),
+        [inverted]
+      );
 
       const _RenderItem = useCallback(
         ({ item }) => <RenderItem item={item} style={_style} />,
@@ -83,6 +88,13 @@ const Inifinite = fastMemo(
         Object.assign(ref.current, { setState, getState });
       }
 
+      useEffect(() => {
+        if (onDataInit && !isLoading && ref.current.shouldScrollToBottom) {
+          onDataInit(data);
+          ref.current.shouldScrollToBottom = false;
+        }
+      }, [isLoading]);
+
       return (
         <ListView
           data={data}
@@ -91,6 +103,10 @@ const Inifinite = fastMemo(
           RenderFooter={RenderFooter}
           RenderItem={_RenderItem}
           ref={ref}
+          style={style}
+          className={className}
+          id={id}
+          reversed={reversed}
         />
       );
     }
