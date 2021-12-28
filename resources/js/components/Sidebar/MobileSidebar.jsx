@@ -1,12 +1,12 @@
-import { useContext } from 'react'
+import { memo, useContext } from "react";
 
-import SidebarContent from './SidebarContent.jsx'
-import { Transition, Backdrop } from '@windmill/react-ui'
+import SidebarContent from "./SidebarContent.jsx";
+import { Transition, Backdrop } from "@windmill/react-ui";
 
-import { SidebarContext } from '../../context/SidebarContext.jsx'
+import { SidebarContext } from "../../context/SidebarContext.jsx";
 
 function MobileSidebar() {
-  const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
+  const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
 
   return (
     <Transition show={isSidebarOpen}>
@@ -36,7 +36,7 @@ function MobileSidebar() {
         </Transition>
       </>
     </Transition>
-  )
+  );
 }
 
-export default MobileSidebar
+export default memo(MobileSidebar);

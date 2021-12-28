@@ -1,5 +1,6 @@
-import DesktopSidebar from './DesktopSidebar.jsx'
-import MobileSidebar from './MobileSidebar.jsx'
+import { memo } from "react";
+import DesktopSidebar from "./DesktopSidebar.jsx";
+import MobileSidebar from "./MobileSidebar.jsx";
 
 function Sidebar() {
   return (
@@ -7,7 +8,7 @@ function Sidebar() {
       <DesktopSidebar />
       <MobileSidebar />
     </>
-  )
+  );
 }
 
-export default Sidebar
+export default memo(Sidebar);

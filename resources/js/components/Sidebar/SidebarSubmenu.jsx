@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { memo, useState } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
-import { DropdownIcon } from '../../icons'
-import { Transition } from '@windmill/react-ui'
+import { DropdownIcon } from "../../icons";
+import { Transition } from "@windmill/react-ui";
 
 function SidebarSubmenu({ route }) {
-  const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false)
+  const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false);
 
   function handleDropdownMenuClick() {
-    setIsDropdownMenuOpen(!isDropdownMenuOpen)
+    setIsDropdownMenuOpen(!isDropdownMenuOpen);
   }
 
   return (
@@ -49,7 +49,7 @@ function SidebarSubmenu({ route }) {
         </ul>
       </Transition>
     </li>
-  )
+  );
 }
 
-export default SidebarSubmenu
+export default memo(SidebarSubmenu);
