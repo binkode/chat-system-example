@@ -2325,12 +2325,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/myckhel/laravel-chat-system.git",
-                "reference": "4e2635ce67acb627d4d1fb77a0cf28eb37b7b948"
+                "reference": "e2f87633922eef936dc2face0cd444cb867491d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/4e2635ce67acb627d4d1fb77a0cf28eb37b7b948",
-                "reference": "4e2635ce67acb627d4d1fb77a0cf28eb37b7b948",
+                "url": "https://api.github.com/repos/myckhel/laravel-chat-system/zipball/e2f87633922eef936dc2face0cd444cb867491d2",
+                "reference": "e2f87633922eef936dc2face0cd444cb867491d2",
                 "shasum": ""
             },
             "require": {
@@ -2389,10 +2389,10 @@
                 "Laravel"
             ],
             "support": {
-                "source": "https://github.com/myckhel/laravel-chat-system/tree/v1.0.0-beta.0",
+                "source": "https://github.com/myckhel/laravel-chat-system/tree/master",
                 "issues": "https://github.com/myckhel/laravel-chat-system/issues"
             },
-            "time": "2021-11-13T22:42:23+00:00"
+            "time": "2021-12-28T17:38:13+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -6971,6 +6971,9 @@
             "require": {
                 "php": "^7.1 || ^8.0"
             },
+            "replace": {
+                "myclabs/deep-copy": "self.version"
+            },
             "require-dev": {
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.6",
@@ -8883,5 +8886,5 @@
         "ext-swoole": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }
