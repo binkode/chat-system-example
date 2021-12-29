@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { usePage } from "@inertiajs/inertia-react";
 import { useSelector } from "react-redux";
-import { get } from "lodash";
+import { get, isEqual, memoize } from "lodash";
 import { createSelector } from "reselect";
-import isEqual from "react-fast-compare";
+// import isEqual from "react-fast-compare";
 import moment from "moment";
 
 export const useProps = () => usePage().props;
@@ -13,10 +13,12 @@ export const useRoute = () => {
   return { url, params: new URLSearchParams(window.location.search) };
 };
 
+const _isEqual = memoize(isEqual);
+
 export const useRootMemoSelector = (
   selectorOrName,
   select = sel,
-  eq = isEqual
+  eq = _isEqual
 ) =>
   useSelector(
     createSelector(
