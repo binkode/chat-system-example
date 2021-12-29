@@ -11,6 +11,7 @@
     "php": "^8.0",
     "ext-pcntl": "*",
     "ext-swoole": "*",
+    "ext-redis": "*",
     "fakerphp/faker": "^1.9.1",
     "fideloper/proxy": "^4.4",
     "fruitcake/laravel-cors": "^2.0",
