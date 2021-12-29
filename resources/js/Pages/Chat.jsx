@@ -199,16 +199,10 @@ const Messages = fastMemo(({ conversationId }) => {
 });
 
 const Message = fastMemo(({ id, conversationId, style }) => {
-  const {
-    isSender,
-    message,
-    id: id_,
-    created_at,
-  } = useRootMemoSelector(
+  const { isSender, message, created_at } = useRootMemoSelector(
     `msg.msgs.${conversationId}.${id}`,
     (msg = {}) => msg
   );
-  console.log(id);
 
   return (
     <div className="flex" style={style}>

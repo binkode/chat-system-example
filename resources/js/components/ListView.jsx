@@ -1,6 +1,7 @@
-import { forwardRef, useCallback } from "react";
+import { forwardRef, useCallback, useMemo } from "react";
 import Loader from "./Loader.jsx";
 import { fastMemo } from "../func";
+import { memoize } from "lodash";
 
 const ListView = fastMemo(
   forwardRef(
@@ -18,15 +19,20 @@ const ListView = fastMemo(
       },
       ref
     ) => {
-      const Items = useCallback(
-        ({ RenderItem }) =>
-          (reversed ? data.slice().reverse() : data).map((item, key) => (
+      const map = useMemo(
+        () =>
+          memoize((item, key) => (
             <RenderItem
               item={item}
               key={typeof item === "number" ? item : item?.id || key}
             />
           )),
-        [data, reversed]
+        [RenderItem]
+      );
+
+      const Items = useCallback(
+        () => (reversed ? data.slice().reverse() : data).map(map),
+        [data, reversed, map]
       );
 
       return (
@@ -40,7 +46,7 @@ const ListView = fastMemo(
           className={"flex flex-col p-1 " + className}
         >
           {loading && <Loader />}
-          <Items RenderItem={RenderItem} />
+          <Items />
           {RenderFooter && <RenderFooter />}
         </div>
       );
