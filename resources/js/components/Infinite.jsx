@@ -64,9 +64,33 @@ const Inifinite = fastMemo(
       const RenderFooter = useCallback(
         () => (
           <>
-            {loading ? (
+            {!reversed && loading ? (
               <Loader />
             ) : (
+              !reversed &&
+              pagination?.last_page > pagination?.current_page && (
+                <Button
+                  style={{
+                    transform: inverted && "scaleY(-1)",
+                  }}
+                  onClick={() => next()}
+                >
+                  load more
+                </Button>
+              )
+            )}
+          </>
+        ),
+        [loading, inverted, pagination?.last_page, pagination?.current_page]
+      );
+
+      const RenderHeader = useCallback(
+        () => (
+          <>
+            {reversed && loading ? (
+              <Loader />
+            ) : (
+              reversed &&
               pagination?.last_page > pagination?.current_page && (
                 <Button
                   style={{
@@ -101,6 +125,7 @@ const Inifinite = fastMemo(
           loading={isLoading}
           inverted={inverted}
           RenderFooter={RenderFooter}
+          RenderHeader={RenderHeader}
           RenderItem={_RenderItem}
           ref={ref}
           style={style}

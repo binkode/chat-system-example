@@ -9,6 +9,7 @@ const ListView = fastMemo(
       {
         data,
         RenderFooter,
+        RenderHeader,
         RenderItem,
         inverted,
         loading,
@@ -45,6 +46,7 @@ const ListView = fastMemo(
           }}
           className={"flex flex-col p-1 " + className}
         >
+          {RenderHeader && <RenderHeader />}
           {loading && <Loader />}
           <Items />
           {RenderFooter && <RenderFooter />}
