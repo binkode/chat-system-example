@@ -1,28 +1,25 @@
 import { useContext, useState } from "react";
 import { SidebarContext } from "../context/SidebarContext";
 import { MenuIcon, OutlineLogoutIcon } from "../icons";
-import {
-  Avatar,
-  Badge,
-  Input,
-  Dropdown,
-  DropdownItem,
-  WindmillContext,
-} from "@windmill/react-ui";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { Avatar, Dropdown, DropdownItem } from "@windmill/react-ui";
 import { usePage, useForm } from "@inertiajs/inertia-react";
+import { logOut } from "../redux/app";
+import { useDispatch } from "react-redux";
 
 function Header() {
-  const { mode, toggleMode } = useContext(WindmillContext);
   const { toggleSidebar } = useContext(SidebarContext);
 
   const {
-    url,
     props: { auth },
   } = usePage();
 
+  const dispatch = useDispatch();
+
   const { post } = useForm();
-  const logout = () => post(route("logout"));
+  const logout = async () => {
+    await post(route("logout"));
+    dispatch(logOut());
+  };
 
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
