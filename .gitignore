@@ -15,4 +15,4 @@ yarn-error.log
 rr
 .rr.yaml
 .yarn/cache
-public/resources/assets
+public/resources/js/assets
