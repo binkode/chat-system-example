@@ -22,7 +22,7 @@
     "laravel/sanctum": "^2.15",
     "laravel/telescope": "^4.8",
     "laravel/tinker": "^2.7",
-    "myckhel/laravel-chat-system": "dev-lar9",
+    "myckhel/laravel-chat-system": "*",
     "predis/predis": "^1.1",
     "pusher/pusher-php-server": "^7.0",
     "tightenco/ziggy": "^1.4"
@@ -70,12 +70,15 @@
     "post-create-project-cmd": [
       "@php artisan key:generate --ansi"
     ],
-    "dev": "php artisan octane:start --workers=1 --task-workers=1 --watch"
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "php artisan octane:start --workers=1 --task-workers=1 --watch"
+    ]
   },
   "repositories": {
     "myckhel/laravel-chat-system": {
-      "type": "vcs",
-      "url": "https://github.com/myckhel/laravel-chat-system.git",
+      "type": "path",
+      "url": "/Users/ace/Desktop/apps/package/chat-system-example/packages/laravel-chat-system",
       "options": {
         "symlink": true
       }
