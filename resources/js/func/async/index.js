@@ -349,11 +349,10 @@ export const usePagination = (
     [params, current]
   );
 
-  const refresh = (_params = {}) =>
-    useCallback(current(false, { params: { ...params, ..._params } }), [
-      params,
-      current,
-    ]);
+  const refresh = useCallback(
+    (_params = {}) => current(false, { params: { ...params, ..._params } }),
+    [params, current]
+  );
 
   const setOrder = (ord) =>
     setState({ pagination: { order: ord } }, (s, { pagination }) => ({

@@ -1,0 +1,36 @@
+{
+  "parser": "@babel/eslint-parser",
+  "root": true,
+  "extends": "react-app",
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "requireConfigFile": false,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "17"
+    }
+  },
+  "globals": { "Echo": true, "Pusher": true },
+  "rules": {
+    "no-eval": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "array-callback-return": 0,
+    "no-extend-native": 0,
+    "jsx-quotes": [2, "prefer-single"],
+    "no-shadow": 0,
+    "camelcase": 0,
+    "import/no-cycle": "error",
+    "react/jsx-uses-react": 0,
+    "react/react-in-jsx-scope": 0,
+    "jest/no-commented-out-tests": 0
+  }
+}

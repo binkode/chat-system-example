@@ -8,6 +8,9 @@
         @inertiaHead
     </head>
     <body>
+        <script>
+            window.__vite_plugin_react_preamble_installed__ = true
+        </script>
         @inertia
     </body>
 </html>
