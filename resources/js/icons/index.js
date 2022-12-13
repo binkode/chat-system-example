@@ -1,16 +1,16 @@
-import HomeIcon from './home.svg'
-import SearchIcon from './search.svg'
-import MenuIcon from './menu.svg'
-import DropdownIcon from './dropdown.svg'
-import OutlineLogoutIcon from './outlineLogout.svg'
-import MenuDotX from './menu-dot-x.svg'
-import Send from './send.svg'
-import Sent from './sent.svg'
-import DoubleCheck from './double-check.svg'
-import Attachment from './attachment.svg'
-import Mic from './mic.svg'
-import Camera from './camera.svg'
-import Smiley from './smiley.svg'
+import { ReactComponent as HomeIcon } from "./home.svg";
+import { ReactComponent as SearchIcon } from "./search.svg";
+import { ReactComponent as MenuIcon } from "./menu.svg";
+import { ReactComponent as DropdownIcon } from "./dropdown.svg";
+import { ReactComponent as OutlineLogoutIcon } from "./outlineLogout.svg";
+import { ReactComponent as MenuDotX } from "./menu-dot-x.svg";
+import { ReactComponent as Send } from "./send.svg";
+import { ReactComponent as Sent } from "./sent.svg";
+import { ReactComponent as DoubleCheck } from "./double-check.svg";
+import { ReactComponent as Attachment } from "./attachment.svg";
+import { ReactComponent as Mic } from "./mic.svg";
+import { ReactComponent as Camera } from "./camera.svg";
+import { ReactComponent as Smiley } from "./smiley.svg";
 
 export {
   HomeIcon,
@@ -25,5 +25,5 @@ export {
   Attachment,
   Mic,
   Camera,
-  Smiley
-}
+  Smiley,
+};

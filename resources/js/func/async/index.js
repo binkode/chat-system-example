@@ -1,14 +1,14 @@
-import Http from '../Http'
-import { useCallback, useLayoutEffect, useEffect } from 'react'
-import useState from 'use-react-state'
-import { EventRegister } from 'react-native-event-listeners'
-import { useReduxState } from 'use-redux-states'
+import Http from "../Http";
+import { useCallback, useLayoutEffect, useEffect } from "react";
+import useState from "use-react-state";
+import { EventRegister } from "react-native-event-listeners";
+import { useReduxState } from "use-redux-states";
 
 export const useEventListener = ({
   names = [],
   params,
   callback,
-  removeCallback
+  removeCallback,
 }) => {
   useLayoutEffect(() => {
     if (names?.length && names.map) {
@@ -17,20 +17,20 @@ export const useEventListener = ({
           name,
           (payload) => callback && callback(name, payload, params)
         )
-      )
+      );
 
       return () =>
         listeners.map((listener, i) => {
-          EventRegister.rm(listener)
-          return removeCallback && removeCallback(names[i], params)
-        })
+          EventRegister.rm(listener);
+          return removeCallback && removeCallback(names[i], params);
+        });
     }
-  }, names)
+  }, names);
 
-  const emit = (...props) => EventRegister.emit(...props)
+  const emit = (...props) => EventRegister.emit(...props);
 
-  return { emit }
-}
+  return { emit };
+};
 
 const useBaseRequest = ({
   setState,
@@ -45,52 +45,52 @@ const useBaseRequest = ({
   eventRemoveCallback,
   eventParams,
   onSuccess,
-  setData = (data) => data
+  setData = (data) => data,
 }) => {
   const { emit } = useEventListener({
     names: eventNames,
     params: eventParams,
     callback: eventCallback,
-    removeCallback: eventRemoveCallback
-  })
+    removeCallback: eventRemoveCallback,
+  });
 
   const request = useCallback(
     async (...p) => {
       try {
-        setState({ loading: true })
-        const { data, status } = await asyncRequest(...p)
+        setState({ loading: true });
+        const { data, status } = await asyncRequest(...p);
 
-        onSuccess && onSuccess(data)
+        onSuccess && onSuccess(data);
 
-        emits.map((event) => emit(event, data))
+        emits.map((event) => emit(event, data));
 
-        setState({ loading: false, status, data: setData(data) })
+        setState({ loading: false, status, data: setData(data) });
       } catch (e) {
-        setState({ error: e, loading: false })
-        console.log({ e })
+        setState({ error: e, loading: false });
+        console.log({ e });
       }
     },
     [asyncRequest]
-  )
+  );
 
   useLayoutEffect(() => {
     if (loadOnMount) {
-      request(...params)
+      request(...params);
     }
-  }, dep)
+  }, dep);
 
-  return { ...state, setState, request }
-}
+  return { ...state, setState, request };
+};
 
 const defaultRequestState = {
   timestamp: new Date().getTime(),
   error: null,
   status: null,
-  loading: false
-}
+  loading: false,
+};
 
 export const useRequest = ({ request, params, ...props }, dep = []) => {
-  const [state, setState] = useState(defaultRequestState)
+  const [state, setState] = useState(defaultRequestState);
 
   return useBaseRequest({
     setState,
@@ -98,11 +98,11 @@ export const useRequest = ({ request, params, ...props }, dep = []) => {
     params: [params],
     state,
     dep,
-    ...props
-  })
-}
+    ...props,
+  });
+};
 
-const stateSelector = (s) => s || defaultRequestState
+const stateSelector = (s) => s || defaultRequestState;
 
 export const useReduxRequest = (
   {
@@ -121,30 +121,30 @@ export const useReduxRequest = (
     name,
     state: reduxState,
     reducer,
-    unmount
-  })
+    unmount,
+  });
 
-  const state = useMemoSelector(selector, resolver)
+  const state = useMemoSelector(selector, resolver);
   const rest = useBaseRequest({
     setState,
     asyncRequest,
     params: [params],
     state,
     dep,
-    ...props
-  })
+    ...props,
+  });
 
-  return { ...rest, selector, getState }
-}
+  return { ...rest, selector, getState };
+};
 
-const request = async (route, data = {}, method = 'get', config = {}) => {
+const request = async (route, data = {}, method = "get", config = {}) => {
   try {
     const params =
-      method === 'post' || method === 'put' ? data : { params: data }
-    console.log(params)
-    const res = await Http[method](route, params, config)
-    console.log(res)
-    return res
+      method === "post" || method === "put" ? data : { params: data };
+    console.log(params);
+    const res = await Http[method](route, params, config);
+    console.log(res);
+    return res;
   } catch (e) {
     if (e.message) {
       // e.message === 'Networ Error' && Notify({ type: 'error', msg: e.message })
@@ -154,10 +154,10 @@ const request = async (route, data = {}, method = 'get', config = {}) => {
         // Notify({type: 'error', msg: e.response.data.message, title: e.message})
       }
     }
-    console.log({ e })
-    return Promise.reject(e)
+    console.log({ e });
+    return Promise.reject(e);
   }
-}
+};
 
 export const usePagination = (
   {
@@ -208,11 +208,11 @@ export const usePagination = (
         loaded: false,
         nextable: false,
         pagination: {
-          order: 'desc',
+          order: "desc",
           page: 0,
           pageSize: 20,
-          ...defaultPagination
-        }
+          ...defaultPagination,
+        },
       },
       unmount,
       reducer,
@@ -222,19 +222,19 @@ export const usePagination = (
         loaded,
         isLoading,
         pagination,
-        nextable
+        nextable,
       }) => ({
         loading,
         data: dataSelector ? dataSelector(data) : data,
         loaded,
         isLoading,
         pagination,
-        nextable
+        nextable,
       }),
-      ...props
+      ...props,
     },
     []
-  )
+  );
 
   const setStateData = useCallback(
     (payload, reducer) =>
@@ -242,38 +242,39 @@ export const usePagination = (
         ...s,
         data: reducer
           ? reducer(s?.data, payload)
-          : typeof payload === 'function'
-            ? payload(s?.data)
-            : payload
+          : typeof payload === "function"
+          ? payload(s?.data)
+          : payload,
       })),
     []
-  )
+  );
 
   useLayoutEffect(() => {
     if (loading || isLoading) {
-      setState({ loading: false, isLoading: false })
+      setState({ loading: false, isLoading: false });
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (loadOnMount) {
-      current(false, { params })
+      current(false, { params });
     }
-  }, [name, ...dep])
+  }, [name, ...dep]);
 
-  const hackData = useCallback((data) => (setData ? setData(data) : data), [
-    setData
-  ])
+  const hackData = useCallback(
+    (data) => (setData ? setData(data) : data),
+    [setData]
+  );
 
   const current = useCallback(
     async (more = false, { params = {} } = {}, events = {}) => {
-      const { isLoading, loading, pagination } = getState()
+      const { isLoading, loading, pagination } = getState();
       if (
         loading ||
         isLoading ||
         (more && pagination?.last_page === pagination?.current_page)
       ) {
-        return
+        return;
       }
 
       try {
@@ -282,27 +283,27 @@ export const usePagination = (
           loading: more ? !!more : s.loading,
           isLoading: more ? s.isLoading : true,
           e: null,
-          status: null
-        }))
+          status: null,
+        }));
 
-        before && before(more, pagination.last_page)
+        before && before(more, pagination.last_page);
 
         const { data: resData, status } = await request({
           page: !more ? 1 : (pagination?.current_page || 0) + 1,
-          ...params
-        })
+          ...params,
+        });
 
         if (!resData) {
-          return
+          return;
         }
 
         const { data, last_page, total, current_page } = dataPoint
           ? resData[dataPoint]
-          : resData
+          : resData;
 
-        onSuccess && onSuccess(data, current_page)
+        onSuccess && onSuccess(data, current_page);
 
-        events.onSuccess && events.onSuccess(data, current_page)
+        events.onSuccess && events.onSuccess(data, current_page);
 
         setState(
           {
@@ -316,62 +317,62 @@ export const usePagination = (
             pagination: {
               last_page,
               total,
-              current_page
+              current_page,
             },
-            more
+            more,
           },
           (state, { pagination, data, more, ...p }) => {
-            state.pagination = pagination
+            state.pagination = pagination;
             if (more) {
-              state.data.push(...hackData(data))
+              state.data.push(...hackData(data));
             } else {
-              state.data = hackData([...initData, ...data])
+              state.data = hackData([...initData, ...data]);
             }
-            Object.assign(state, p)
-            return state
+            Object.assign(state, p);
+            return state;
           }
-        )
+        );
       } catch (e) {
-        setState((s) => ({ ...s, error: e, isLoading: false, loading: false }))
-        onCatch && onCatch(e)
-        console.log({ e })
+        setState((s) => ({ ...s, error: e, isLoading: false, loading: false }));
+        onCatch && onCatch(e);
+        console.log({ e });
       } finally {
-        onFinally && onFinally(more)
+        onFinally && onFinally(more);
       }
     },
     [request, dataPoint, initData, hackData, onCatch, onSuccess]
-  )
+  );
 
   const next = useCallback(
     async (_params, events) =>
       current(true, { params: { ...params, ..._params } }, events),
     [params, current]
-  )
+  );
 
   const refresh = (_params = {}) =>
     useCallback(current(false, { params: { ...params, ..._params } }), [
       params,
-      current
-    ])
+      current,
+    ]);
 
   const setOrder = (ord) =>
     setState({ pagination: { order: ord } }, (s, { pagination }) => ({
       ...s,
-      pagination: { ...s.pagination, ...pagination }
-    }))
+      pagination: { ...s.pagination, ...pagination },
+    }));
 
-  const filter = (fn) => setState((s) => ({ ...s, data: s.data.filter(fn) }))
+  const filter = (fn) => setState((s) => ({ ...s, data: s.data.filter(fn) }));
 
-  const updateData = (fn) => setState((s) => ({ ...s, data: s.data.map(fn) }))
+  const updateData = (fn) => setState((s) => ({ ...s, data: s.data.map(fn) }));
 
   const prepend = (data) => {
     setState({ data }, (s, { data }) => {
-      s.data.unshift(data)
-      return { ...s, data: [...s.data] }
-    })
-  }
+      s.data.unshift(data);
+      return { ...s, data: [...s.data] };
+    });
+  };
 
-  const prev = async () => {}
+  const prev = async () => {};
 
   return {
     setState,
@@ -393,11 +394,11 @@ export const usePagination = (
     getState,
     cleanup,
     setStateData,
-    ...rest
-  }
-}
+    ...rest,
+  };
+};
 
 export const apiRequest = (endpoint, ...args) =>
-  request(`api/${endpoint}`, ...args)
+  request(`api/${endpoint}`, ...args);
 
-export default request
+export default request;
