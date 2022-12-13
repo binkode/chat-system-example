@@ -15,7 +15,7 @@
     "fakerphp/faker": "^1.19",
     "fruitcake/laravel-cors": "^3.0",
     "guzzlehttp/guzzle": "^7.4",
-    "inertiajs/inertia-laravel": "^0.5.4",
+    "inertiajs/inertia-laravel": "^0.6.4",
     "innocenzi/laravel-vite": "^0.1.17",
     "laravel/framework": "^9.43",
     "laravel/octane": "^1.3",

@@ -34,9 +34,9 @@
     },
     "dependencies": {
         "@headlessui/react": "^1.2.0",
-        "@inertiajs/inertia": "^0.9.2",
-        "@inertiajs/inertia-react": "^0.6.2",
-        "@inertiajs/progress": "^0.2.4",
+        "@inertiajs/inertia": "^0.11.1",
+        "@inertiajs/inertia-react": "^0.8.1",
+        "@inertiajs/progress": "^0.2.7",
         "@popperjs/core": "^2.9.2",
         "@windmill/react-ui": "^0.6.0",
         "autoprefixer": "^10.2.5",

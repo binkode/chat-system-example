@@ -127,23 +127,23 @@ const Messages = fastMemo(({ conversationId }) => {
   return (
     <div className="h-full flex-1 py:1 sm:px-3">
       {/* Header */}
-      <div class="flex sm:items-center justify-between py-2 border-b-2 border-gray-300">
-        <div class="flex items-center space-x-4">
+      <div className="flex sm:items-center justify-between py-2 border-b-2 border-gray-300">
+        <div className="flex items-center space-x-4">
           <img
             src={team}
             alt={conversationName}
-            class="w-12 sm:w-12 h-12 sm:h-12 rounded-full"
+            className="w-12 sm:w-12 h-12 sm:h-12 rounded-full"
           />
-          <div class="flex flex-col leading-tight">
-            <div class="text-2xl mt-1 flex items-center">
-              <span class="text-gray-700 mr-3">{conversationName}</span>
-              <span class="text-green-500">
+          <div className="flex flex-col leading-tight">
+            <div className="text-2xl mt-1 flex items-center">
+              <span className="text-gray-700 mr-3">{conversationName}</span>
+              <span className="text-green-500">
                 <svg width="10" height="10">
                   <circle cx="5" cy="5" r="5" fill="currentColor"></circle>
                 </svg>
               </span>
             </div>
-            <span class="text-lg text-gray-600"></span>
+            <span className="text-lg text-gray-600"></span>
           </div>
         </div>
       </div>
@@ -163,31 +163,31 @@ const Messages = fastMemo(({ conversationId }) => {
         onDataInit={scrollToBottom}
       />
       {/* input */}
-      <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
-        <div class="relative flex">
-          <span class="absolute inset-y-0 flex items-center">
-            <Button class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+      <div className="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
+        <div className="relative flex">
+          <span className="absolute inset-y-0 flex items-center">
+            <Button className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
               <Mic className="h-6 w-6 text-gray-600" />
             </Button>
           </span>
           <input
             ref={input}
             placeholder="Write Something"
-            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
+            className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
           />
-          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
-            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+          <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+            <Button className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
               <Attachment className="h-6 w-6 text-gray-600" />
             </Button>
-            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            <Button className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
               <Camera className="h-6 w-6 text-gray-600" />
             </Button>
-            <Button class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+            <Button className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
               <Smiley className="h-6 w-6 text-gray-600" />
             </Button>
             <Button
               onClick={sendMessage}
-              class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
+              className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
             >
               <Send className="h-6 w-6 transform rotate-90" />
             </Button>
