@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@vitejs/plugin-react": "^3.0.0",
+        "autoprefixer": "^10.4.13",
         "axios": "^0.21",
         "chokidar": "^3.5.1",
         "cssnano": "^5.0.5",
@@ -18,7 +19,8 @@
         "eslint-config-react-app": "^7.0.1",
         "jest": "^26.6.3",
         "lodash": "^4.17.19",
-        "postcss": "^8.2.12",
+        "postcss": "^8.4.20",
+        "tailwindcss": "^3.2.4",
         "vite": "^4.0.1",
         "vite-plugin-eslint": "^1.8.1",
         "vite-plugin-laravel": "^0.2.2",
@@ -31,7 +33,6 @@
         "@inertiajs/progress": "^0.2.7",
         "@popperjs/core": "^2.9.2",
         "@windmill/react-ui": "^0.6.0",
-        "autoprefixer": "^10.2.5",
         "laravel-echo": "^1.11.2",
         "moment": "^2.29.1",
         "pusher-js": "^7.0.3",
@@ -44,9 +45,9 @@
         "react-scroll": "^1.8.2",
         "redux-persist": "^6.0.0",
         "runes": "^0.4.3",
-        "tailwindcss": "^2.2.0",
         "use-react-state": "^0.0.1",
         "use-redux-states": "^1.0.1",
+        "windmill-react-ui-kit": "^0.7.4",
         "ziggy-js": "^1.1.0"
     },
     "packageManager": "yarn@3.3.0"
