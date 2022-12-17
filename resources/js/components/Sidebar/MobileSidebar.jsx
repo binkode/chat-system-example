@@ -1,9 +1,10 @@
 import { memo, useContext } from "react";
 
 import SidebarContent from "./SidebarContent.jsx";
-import { Transition, Backdrop } from "@windmill/react-ui";
 
 import { SidebarContext } from "../../context/SidebarContext.jsx";
+import { Transition } from "@headlessui/react";
+import Button from "../UI/Button.jsx";
 
 function MobileSidebar() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
@@ -19,7 +20,7 @@ function MobileSidebar() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Backdrop onClick={closeSidebar} />
+          <Button onClick={closeSidebar} />
         </Transition>
 
         <Transition

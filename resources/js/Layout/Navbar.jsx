@@ -6,7 +6,6 @@ import { usePage } from "@inertiajs/inertia-react";
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const {
-    url,
     props: { auth },
   } = usePage();
 

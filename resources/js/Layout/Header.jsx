@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { SidebarContext } from "../context/SidebarContext";
-import { MenuIcon, OutlineLogoutIcon } from "../icons";
-import { Avatar, Dropdown, DropdownItem } from "@windmill/react-ui";
+import { MenuIcon } from "../icons";
 import { usePage, useForm } from "@inertiajs/inertia-react";
 import { logOut } from "../redux/app";
 import { useDispatch } from "react-redux";
@@ -21,12 +20,6 @@ function Header() {
     dispatch(logOut());
   };
 
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
-  function handleProfileClick() {
-    setIsProfileMenuOpen(!isProfileMenuOpen);
-  }
-
   return (
     <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
@@ -42,32 +35,19 @@ function Header() {
           {/* <!-- Profile menu --> */}
           <li className="relative">
             <button
-              className="rounded-full flex focus:shadow-outline-purple focus:outline-none"
-              onClick={handleProfileClick}
+              className="rounded-full flex focus:shadow-outline-purple focus:outline-none items-center"
+              onClick={logout}
               aria-label="Account"
               aria-haspopup="true"
             >
               <p>{auth?.user?.name}</p>
-              <Avatar
-                className="align-middle"
+              <img
+                className="align-middle rounded-full w-12 h-12 mx-2"
                 src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
                 alt=""
-                aria-hidden="true"
               />
+              <span>Log out</span>
             </button>
-            <Dropdown
-              align="right"
-              isOpen={isProfileMenuOpen}
-              onClose={() => setIsProfileMenuOpen(false)}
-            >
-              <DropdownItem onClick={() => logout()}>
-                <OutlineLogoutIcon
-                  className="w-4 h-4 mr-3"
-                  aria-hidden="true"
-                />
-                <span>Log out</span>
-              </DropdownItem>
-            </Dropdown>
           </li>
         </ul>
       </div>

@@ -33,7 +33,6 @@
     "@inertiajs/inertia-react": "^0.8.1",
     "@inertiajs/progress": "^0.2.7",
     "@popperjs/core": "^2.9.2",
-    "@windmill/react-ui": "^0.6.0",
     "laravel-echo": "^1.11.2",
     "moment": "^2.29.1",
     "pusher-js": "^7.0.3",
@@ -44,11 +43,11 @@
     "react-native-event-listeners": "^1.0.7",
     "react-redux": "^7.2.4",
     "react-scroll": "^1.8.2",
+    "react-select": "^5.7.0",
     "redux-persist": "^6.0.0",
     "runes": "^0.4.3",
     "use-react-state": "^0.0.1",
     "use-redux-states": "^1.0.1",
-    "windmill-react-ui-kit": "^0.7.4",
     "ziggy-js": "^1.1.0"
   },
   "packageManager": "yarn@3.3.0"

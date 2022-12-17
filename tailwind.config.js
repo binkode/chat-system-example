@@ -1,7 +1,6 @@
-const windmill = require("@windmill/react-ui/config");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-module.exports = windmill({
+module.exports = {
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
@@ -19,4 +18,4 @@ module.exports = windmill({
     },
   },
   plugins: [],
-});
+};

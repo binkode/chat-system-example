@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import { DropdownIcon } from "../../icons";
-import { Transition } from "@windmill/react-ui";
+import { Transition } from "@headlessui/react";
 
 function SidebarSubmenu({ route }) {
   const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false);

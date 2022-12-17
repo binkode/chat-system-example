@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/inertia-react";
 import { InertiaProgress } from "@inertiajs/progress";
 import { SidebarProvider } from "./context/SidebarContext";
-import { Windmill } from "@windmill/react-ui";
 import { PersistGate } from "redux-persist/integration/react";
 import Loader from "./components/Loader.jsx";
 import { Provider } from "react-redux";
@@ -28,9 +27,7 @@ createInertiaApp({
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <SidebarProvider>
-            <Windmill>
-              <App {...props} />
-            </Windmill>
+            <App {...props} />
           </SidebarProvider>
         </PersistGate>
       </Provider>

@@ -3,7 +3,7 @@ import { usePagination } from "../func/async";
 import { fastMemo } from "../func";
 import ListView from "./ListView.jsx";
 import Loader from "./Loader.jsx";
-import { Button } from "@windmill/react-ui";
+import Button from "./UI/Button";
 
 const Inifinite = fastMemo(
   forwardRef(

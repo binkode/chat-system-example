@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useMemo } from "react";
 // import Sidebar from "../Layout/Sidebar.jsx";
-import { Button } from "@windmill/react-ui";
 import { Send, Attachment, Mic, Camera, Smiley } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useRef } from "react";
@@ -16,6 +15,7 @@ import { team } from "../icons/images";
 import { fastMemo } from "../func";
 import { MessageStatus } from "../components/Conversation/Status.jsx";
 import { useNewMessage } from "../func/events/message.js";
+import Button from "../components/UI/Button";
 
 const Dashboard = fastMemo(() => {
   const dispatch = useDispatch();
