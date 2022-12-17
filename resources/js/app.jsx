@@ -1,8 +1,7 @@
-// import "vite/dynamic-import-polyfill";
 import "../css/app.css";
 import "./bootstrap";
 
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/inertia-react";
 import { InertiaProgress } from "@inertiajs/progress";
 import { SidebarProvider } from "./context/SidebarContext";
@@ -12,7 +11,6 @@ import Loader from "./components/Loader.jsx";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store";
 import "./func/Echo";
-// import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 InertiaProgress.init();
 
@@ -25,9 +23,8 @@ createInertiaApp({
 
     return (await pages[page]()).default;
   },
-  // resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
   setup({ el, App, props }) {
-    render(
+    createRoot(el).render(
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <SidebarProvider>
@@ -36,8 +33,7 @@ createInertiaApp({
             </Windmill>
           </SidebarProvider>
         </PersistGate>
-      </Provider>,
-      el
+      </Provider>
     );
   },
 });
