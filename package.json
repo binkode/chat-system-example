@@ -18,12 +18,12 @@
         "eslint": "^8.29.0",
         "eslint-config-react-app": "^7.0.1",
         "jest": "^26.6.3",
+        "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.4.20",
         "tailwindcss": "^3.2.4",
         "vite": "^4.0.1",
         "vite-plugin-eslint": "^1.8.1",
-        "vite-plugin-laravel": "^0.2.2",
         "vite-plugin-svgr": "^2.4.0"
     },
     "dependencies": {

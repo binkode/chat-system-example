@@ -12,6 +12,7 @@ import Loader from "./components/Loader.jsx";
 import { Provider } from "react-redux";
 import store, { persistor } from "./redux/store";
 import "./func/Echo";
+// import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 InertiaProgress.init();
 
@@ -24,6 +25,7 @@ createInertiaApp({
 
     return (await pages[page]()).default;
   },
+  // resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
   setup({ el, App, props }) {
     render(
       <Provider store={store}>

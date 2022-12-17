@@ -1,17 +1,8 @@
-import { defineConfig } from 'vite'
-import svgr from 'vite-plugin-svgr'
-import laravel from 'vite-plugin-laravel'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import svgr from "vite-plugin-svgr";
+import react from "@vitejs/plugin-react";
+import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    laravel({
-      // postcss: [
-      //   tailwindcss(),
-      //   autoprefixer(),
-      // ]
-    }),
-    svgr()
-  ]
-})
+  plugins: [react(), laravel(["resources/js/app.jsx"]), svgr()],
+});
