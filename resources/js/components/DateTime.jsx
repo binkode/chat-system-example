@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import moment from "moment";
 
 export default memo(({ render, type, data, style, ...props }) => {
@@ -20,16 +20,3 @@ export default memo(({ render, type, data, style, ...props }) => {
     </p>
   );
 });
-
-const When = () => (
-  <p className="text-xs text-gray-500 ml-auto">
-    {moment(created_at).calendar(null, {
-      sameDay: "[Today]",
-      nextDay: "[Tomorrow]",
-      nextWeek: "dddd",
-      lastDay: "[Yesterday]",
-      lastWeek: "ddd ll",
-      sameElse: "ddd ll",
-    })}
-  </p>
-);

@@ -37,7 +37,11 @@ const Dashboard = fastMemo(() => {
         <Messages conversationId={conversation_id} />
       ) : (
         <div className="flex flex-col m-4 items-center justify-center mb-6">
-          <img className="drop-shadow-md w-1/5 h-1/5 mb-6" src={chatsLogo} />
+          <img
+            alt=""
+            className="drop-shadow-md w-1/5 h-1/5 mb-6"
+            src={chatsLogo}
+          />
           <p className="p-3 border-2 border-purple-500 hover:border-gray-500 animate-pulse mb-4 tracking-wide text-center text-purple-700 font-bold text-6xl dark:text-gray-300">
             Laravel Chat System
           </p>
@@ -57,8 +61,6 @@ const Messages = fastMemo(({ conversationId }) => {
   const setMessagesOrderData = useSetState(
     `messages.${conversationId}.order.data`
   );
-
-  const setMessage = useSetState(`messages.${conversationId}`);
 
   const RenderItem = useCallback(
     ({ item, style }) => (

@@ -1,5 +1,4 @@
 import { forwardRef, useCallback, useEffect, useMemo } from "react";
-import { animateScroll, Events } from "react-scroll";
 import { usePagination } from "../func/async";
 import { fastMemo } from "../func";
 import ListView from "./ListView.jsx";
@@ -29,14 +28,11 @@ const Inifinite = fastMemo(
     ) => {
       const {
         data = [],
-        loaded,
         loading,
         isLoading,
         next,
-        refresh,
         setState,
         getState,
-        cleanup,
         pagination,
       } = usePagination(
         {
