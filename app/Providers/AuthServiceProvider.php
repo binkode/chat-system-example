@@ -8,23 +8,22 @@ use ChatSystem;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /**
-     * The policy mappings for the application.
-     *
-     * @var array
-     */
-    protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
+  /**
+   * The policy mappings for the application.
+   *
+   * @var array
+   */
+  protected $policies = [
+    //
+  ];
 
-    /**
-     * Register any authentication / authorization services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->registerPolicies();
-        ChatSystem::registerPolicies();
-    }
+  /**
+   * Register any authentication / authorization services.
+   *
+   * @return void
+   */
+  public function boot()
+  {
+    ChatSystem::registerPolicies();
+  }
 }
