@@ -1,5 +1,6 @@
 <?php
 
+use App\Service\WebSocketService;
 use Laravel\Octane\Contracts\OperationTerminated;
 use Laravel\Octane\Events\RequestHandled;
 use Laravel\Octane\Events\RequestReceived;
@@ -19,7 +20,7 @@ use Laravel\Octane\Octane;
 
 return [
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Octane Server
     |--------------------------------------------------------------------------
@@ -30,9 +31,9 @@ return [
     |
     */
 
-    'server' => env('OCTANE_SERVER', 'swoole'),
+  'server' => env('OCTANE_SERVER', 'swoole'),
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Force HTTPS
     |--------------------------------------------------------------------------
@@ -43,9 +44,24 @@ return [
     |
     */
 
-    'https' => env('OCTANE_HTTPS', false),
+  'https' => env('OCTANE_HTTPS', false),
 
-    /*
+  /*
+    |--------------------------------------------------------------------------
+    | Enable Websocket Server
+    |--------------------------------------------------------------------------
+    |
+    | When this configuration value is set to "true", Octane will inform the
+    | framework to enable websocket server
+    |
+    */
+
+  'websocket' => [
+    'enable'  => env('OCTANE_WEBSOCKET', false), // Note: set enable to true
+    'handler' => WebSocketService::class,
+  ],
+
+  /*
     |--------------------------------------------------------------------------
     | Octane Listeners
     |--------------------------------------------------------------------------
@@ -56,52 +72,52 @@ return [
     |
     */
 
-    'listeners' => [
-        WorkerStarting::class => [
-            EnsureUploadedFilesAreValid::class,
-        ],
-
-        RequestReceived::class => [
-            ...Octane::prepareApplicationForNextOperation(),
-            ...Octane::prepareApplicationForNextRequest(),
-            //
-        ],
-
-        RequestHandled::class => [
-            //
-        ],
-
-        RequestTerminated::class => [
-            //
-        ],
-
-        TaskReceived::class => [
-            ...Octane::prepareApplicationForNextOperation(),
-            //
-        ],
-
-        TickReceived::class => [
-            ...Octane::prepareApplicationForNextOperation(),
-            //
-        ],
-
-        OperationTerminated::class => [
-            FlushTemporaryContainerInstances::class,
-            // DisconnectFromDatabases::class,
-            // CollectGarbage::class,
-        ],
-
-        WorkerErrorOccurred::class => [
-            ReportException::class,
-            StopWorkerIfNecessary::class,
-        ],
-
-        WorkerStopping::class => [
-            //
-        ],
+  'listeners' => [
+    WorkerStarting::class => [
+      EnsureUploadedFilesAreValid::class,
     ],
 
-    /*
+    RequestReceived::class => [
+      ...Octane::prepareApplicationForNextOperation(),
+      ...Octane::prepareApplicationForNextRequest(),
+      //
+    ],
+
+    RequestHandled::class => [
+      //
+    ],
+
+    RequestTerminated::class => [
+      //
+    ],
+
+    TaskReceived::class => [
+      ...Octane::prepareApplicationForNextOperation(),
+      //
+    ],
+
+    TickReceived::class => [
+      ...Octane::prepareApplicationForNextOperation(),
+      //
+    ],
+
+    OperationTerminated::class => [
+      FlushTemporaryContainerInstances::class,
+      // DisconnectFromDatabases::class,
+      // CollectGarbage::class,
+    ],
+
+    WorkerErrorOccurred::class => [
+      ReportException::class,
+      StopWorkerIfNecessary::class,
+    ],
+
+    WorkerStopping::class => [
+      //
+    ],
+  ],
+
+  /*
     |--------------------------------------------------------------------------
     | Warm / Flush Bindings
     |--------------------------------------------------------------------------
@@ -112,15 +128,15 @@ return [
     |
     */
 
-    'warm' => [
-        ...Octane::defaultServicesToWarm(),
-    ],
+  'warm' => [
+    ...Octane::defaultServicesToWarm(),
+  ],
 
-    'flush' => [
-        //
-    ],
+  'flush' => [
+    //
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Garbage Collection Threshold
     |--------------------------------------------------------------------------
@@ -131,9 +147,9 @@ return [
     |
     */
 
-    'garbage' => 50,
+  'garbage' => 50,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Maximum Execution Time
     |--------------------------------------------------------------------------
@@ -142,9 +158,9 @@ return [
     |
     */
 
-    'max_execution_time' => 30,
+  'max_execution_time' => 30,
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Octane Cache Table
     |--------------------------------------------------------------------------
@@ -155,12 +171,12 @@ return [
     |
     */
 
-    'cache' => [
-        'rows' => 1000,
-        'bytes' => 10000,
-    ],
+  'cache' => [
+    'rows' => 1000,
+    'bytes' => 10000,
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | File Watching
     |--------------------------------------------------------------------------
@@ -171,20 +187,20 @@ return [
     |
     */
 
-    'watch' => [
-        'app',
-        'bootstrap',
-        'config',
-        'database',
-        'public',
-        'resources',
-        'routes',
-        'composer.lock',
-        '.env',
-        'vendor/myckhel/laravel-chat-system/src',
-    ],
+  'watch' => [
+    'app',
+    'bootstrap',
+    'config',
+    'database',
+    'public',
+    'resources',
+    'routes',
+    'composer.lock',
+    '.env',
+    'vendor/myckhel/laravel-chat-system/src',
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Octane Swoole Tables
     |--------------------------------------------------------------------------
@@ -195,11 +211,11 @@ return [
     |
     */
 
-    'tables' => [
-        'example:1000' => [
-            'name' => 'string:1000',
-            'votes' => 'int',
-        ],
+  'tables' => [
+    'example:1000' => [
+      'name' => 'string:1000',
+      'votes' => 'int',
     ],
+  ],
 
 ];

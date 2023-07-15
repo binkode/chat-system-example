@@ -11,12 +11,12 @@
     "php": "^8.1",
     "ext-pcntl": "*",
     "ext-redis": "*",
-    "ext-swoole": "*",
+    "ext-openswoole": "*",
     "fakerphp/faker": "^1.23.0",
     "guzzlehttp/guzzle": "^7.4",
     "inertiajs/inertia-laravel": "^0.6.9",
     "laravel/framework": "^10.14",
-    "laravel/octane": "^2.0",
+    "laravel/octane": "dev-ws",
     "laravel/sanctum": "^3.2",
     "laravel/telescope": "^4.15",
     "laravel/tinker": "^2.7",
@@ -77,6 +77,13 @@
     "myckhel/laravel-chat-system": {
       "type": "vcs",
       "url": "https://github.com/myckhel/laravel-chat-system.git",
+      "options": {
+        "symlink": true
+      }
+    },
+    "laravel/octane": {
+      "type": "vcs",
+      "url": "https://github.com/myckhel/octane",
       "options": {
         "symlink": true
       }
