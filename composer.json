@@ -20,7 +20,7 @@
     "laravel/sanctum": "^3.2",
     "laravel/telescope": "^4.15",
     "laravel/tinker": "^2.7",
-    "myckhel/laravel-chat-system": "dev-master",
+    "myckhel/laravel-chat-system": "*",
     "predis/predis": "^2.0",
     "pusher/pusher-php-server": "^7.0",
     "tightenco/ziggy": "^1.4"
@@ -73,13 +73,17 @@
       "php artisan octane:start --workers=1 --task-workers=1 --watch"
     ]
   },
-  "repositories": {
-    "myckhel/laravel-chat-system": {
-      "type": "vcs",
-      "url": "https://github.com/myckhel/laravel-chat-system.git",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../chat-system",
       "options": {
         "symlink": true
       }
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/myckhel/laravel-chat-system.git"
     }
-  }
+  ]
 }
