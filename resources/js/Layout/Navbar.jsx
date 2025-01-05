@@ -64,7 +64,7 @@ export default function Navbar(props) {
                 }
                 rel="noreferrer"
                 target="_blank"
-                href="https://myckhel.github.io/laravel-chat-system"
+                href="https://binkode.github.io/laravel-chat-system"
               >
                 <i
                   className={
@@ -87,7 +87,7 @@ export default function Navbar(props) {
                 }
                 rel="noreferrer"
                 target="_blank"
-                href="https://github.com/myckhel/laravel-chat-system"
+                href="https://github.com/binkode/laravel-chat-system"
               >
                 <i
                   className={

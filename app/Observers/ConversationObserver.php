@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Observers;
-use Myckhel\ChatSystem\Observers\ConversationObserver as BaseConversationObserver;
-use Myckhel\ChatSystem\Contracts\IConversation;
+
+use Binkode\ChatSystem\Observers\ConversationObserver as BaseConversationObserver;
+use Binkode\ChatSystem\Contracts\IConversation;
 
 class ConversationObserver extends BaseConversationObserver
 {
   /**
    * Handle the conversation "created" event.
    *
-   * @param  \Myckhel\ChatSystem\Contracts\IConversation  $conversation
+   * @param  \Binkode\ChatSystem\Contracts\IConversation  $conversation
    * @return void
    */
   public function created(IConversation $conversation)

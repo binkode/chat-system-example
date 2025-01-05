@@ -181,7 +181,7 @@ return [
         'routes',
         'composer.lock',
         '.env',
-        'vendor/myckhel/laravel-chat-system/src',
+        'vendor/binkode/laravel-chat-system/src',
     ],
 
     /*

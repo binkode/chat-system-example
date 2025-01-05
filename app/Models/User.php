@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Myckhel\ChatSystem\Traits\Message\HasMessage;
-use Myckhel\ChatSystem\Traits\ChatEvent\CanMakeChatEvent;
-use Myckhel\ChatSystem\Contracts\IChatEventMaker;
+use Binkode\ChatSystem\Traits\Message\HasMessage;
+use Binkode\ChatSystem\Traits\ChatEvent\CanMakeChatEvent;
+use Binkode\ChatSystem\Contracts\IChatEventMaker;
 
 
 class User extends Authenticatable implements IChatEventMaker

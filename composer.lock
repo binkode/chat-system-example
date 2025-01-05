@@ -4,8 +4,74 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf21ff3fc0a6f71c39834c9cb2cca9bf",
+    "content-hash": "5604663731e5c8a65e4477091d3bc000",
     "packages": [
+        {
+            "name": "binkode/laravel-chat-system",
+            "version": "1.0.0-beta3",
+            "dist": {
+                "type": "path",
+                "url": "../chat-system",
+                "reference": "2f972a3e1a8df7e23330df38b74ad107c440db53"
+            },
+            "require": {
+                "illuminate/support": "^10|~11",
+                "nesbot/carbon": "^2.72.2|^3.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.23.0",
+                "orchestra/testbench": "^9",
+                "pestphp/pest": "^2.8",
+                "spatie/pest-plugin-test-time": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Binkode\\ChatSystem\\ChatSystemServiceProvider"
+                    ],
+                    "aliases": {
+                        "ChatSystem": "Binkode\\ChatSystem\\Facades\\ChatSystem"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Binkode\\ChatSystem\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Binkode\\ChatSystem\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "./vendor/bin/pest"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "myckhel",
+                    "email": "myckhel1@hotmail.com",
+                    "homepage": "https://myckhel.com"
+                }
+            ],
+            "description": "laravel chat system",
+            "homepage": "https://github.com/binkode/laravel-chat-system",
+            "keywords": [
+                "ChatSystem",
+                "Laravel"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",
@@ -2375,72 +2441,6 @@
                 }
             ],
             "time": "2024-12-05T17:15:07+00:00"
-        },
-        {
-            "name": "myckhel/laravel-chat-system",
-            "version": "1.0.0-beta3",
-            "dist": {
-                "type": "path",
-                "url": "../chat-system",
-                "reference": "8cb5c5fe3e9f92ea73641d6723ffe2d635159e28"
-            },
-            "require": {
-                "illuminate/support": "^10|~11",
-                "nesbot/carbon": "^2.72.2|^3.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "fakerphp/faker": "^1.23.0",
-                "orchestra/testbench": "^9",
-                "pestphp/pest": "^2.8",
-                "spatie/pest-plugin-test-time": "^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Myckhel\\ChatSystem\\ChatSystemServiceProvider"
-                    ],
-                    "aliases": {
-                        "ChatSystem": "Myckhel\\ChatSystem\\Facades\\ChatSystem"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Myckhel\\ChatSystem\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Myckhel\\ChatSystem\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "./vendor/bin/pest"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "myckhel",
-                    "email": "myckhel1@hotmail.com",
-                    "homepage": "https://myckhel.com"
-                }
-            ],
-            "description": "laravel chat system",
-            "homepage": "https://github.com/myckhel/laravel-chat-system",
-            "keywords": [
-                "ChatSystem",
-                "Laravel"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
         },
         {
             "name": "nesbot/carbon",

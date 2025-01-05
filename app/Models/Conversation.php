@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Myckhel\ChatSystem\Models\Conversation as BaseConversation;
+use Binkode\ChatSystem\Models\Conversation as BaseConversation;
 
-class Conversation extends BaseConversation
-{
-}
+class Conversation extends BaseConversation {}
