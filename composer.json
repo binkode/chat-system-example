@@ -20,7 +20,7 @@
     "laravel/sanctum": "^3.2",
     "laravel/telescope": "^4.15",
     "laravel/tinker": "^2.7",
-    "myckhel/laravel-chat-system": "*",
+    "binkode/laravel-chat-system": "*",
     "predis/predis": "^2.0",
     "pusher/pusher-php-server": "^7.0",
     "tightenco/ziggy": "^1.4"
@@ -83,7 +83,7 @@
     },
     {
       "type": "vcs",
-      "url": "https://github.com/myckhel/laravel-chat-system.git"
+      "url": "https://github.com/binkode/laravel-chat-system.git"
     }
   ]
 }

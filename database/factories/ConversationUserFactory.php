@@ -3,26 +3,26 @@
 namespace Database\Factories;
 
 use App\Models\ConversationUser;
-use Myckhel\ChatSystem\Database\Factories\ConversationUserFactory as Factory;
+use Binkode\ChatSystem\Database\Factories\ConversationUserFactory as Factory;
 
 class ConversationUserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = ConversationUser::class;
+  /**
+   * The name of the factory's corresponding model.
+   *
+   * @var string
+   */
+  protected $model = ConversationUser::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
-    {
-        return [
-            //
-        ];
-    }
+  /**
+   * Define the model's default state.
+   *
+   * @return array
+   */
+  public function definition()
+  {
+    return [
+      //
+    ];
+  }
 }

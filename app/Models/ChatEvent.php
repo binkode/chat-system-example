@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Myckhel\ChatSystem\Models\ChatEvent as BaseChatEvent;
+use Binkode\ChatSystem\Models\ChatEvent as BaseChatEvent;
 
-class ChatEvent extends BaseChatEvent
-{
-}
+class ChatEvent extends BaseChatEvent {}

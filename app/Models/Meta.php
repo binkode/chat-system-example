@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Myckhel\ChatSystem\Models\Meta as BaseMeta;
+use Binkode\ChatSystem\Models\Meta as BaseMeta;
 
-class Meta extends BaseMeta
-{
-}
+class Meta extends BaseMeta {}

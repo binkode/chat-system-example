@@ -1,3 +1,3 @@
 [submodule "laravel-chat-system"]
 	path = packages/laravel-chat-system
-	url = https://github.com/myckhel/laravel-chat-system.git
+	url = https://github.com/binkode/laravel-chat-system.git
