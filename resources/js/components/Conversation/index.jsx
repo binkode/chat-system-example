@@ -11,28 +11,25 @@ import { fastMemo } from "../../func";
 import { MessageStatus } from "./Status.jsx";
 import DateTime from "../DateTime.jsx";
 
-export default memo(() => {
+export default memo(({ closeSidebar }) => {
   const dispatch = useDispatch();
   const { params } = useRoute();
-  const currentId = useMemo(
-    () => parseInt(params.get("conversation_id")),
-    [params],
-  );
+  const currentId = useMemo(() => parseInt(params.get("conversation_id"), 10), [params]);
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
   const onSuccess = useCallback((data) => dispatch(addConvers(data)), []);
 
   const RenderItem = useCallback(
-    ({ item, index }) => (
-      <Conversation selected={item === currentId} id={item} />
+    ({ item }) => (
+      <Conversation closeSidebar={closeSidebar} selected={item === currentId} id={item} />
     ),
-    [currentId],
+    [currentId, closeSidebar],
   );
 
   const queryParams = useMemo(() => ({ pageSize: 15 }), []);
 
   return (
-    <ul className="overflow-y-auto h-full">
+    <ul className="space-y-2 pb-2">
       <Inifinite
         params={queryParams}
         RenderItem={RenderItem}
@@ -45,7 +42,7 @@ export default memo(() => {
   );
 });
 
-const Conversation = fastMemo(({ id: conversation_id, selected }) => {
+const Conversation = fastMemo(({ id: conversation_id, selected, closeSidebar }) => {
   const {
     id,
     name,
@@ -59,46 +56,46 @@ const Conversation = fastMemo(({ id: conversation_id, selected }) => {
 
   return (
     <Link
+      className="block mb-3 last:mb-0"
       only={["messages"]}
       href="chat"
       data={{ conversation_id: id }}
       preserveState
+      onClick={closeSidebar}
     >
       <li
-        className={`${
-          selected && "bg-blue-300"
-        } border-b-2 my-1 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-300 hover:bg-opacity-50`}
+        className={`rounded-2xl border p-3 transition ${
+          selected
+            ? "border-cyan-300/40 bg-cyan-400/15 shadow-[0_8px_24px_rgba(34,211,238,0.18)]"
+            : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
+        }`}
       >
-        <img
-          src={avatar?.thumb || team}
-          className="h-12 w-12 rounded-full mr-4"
-          alt=""
-        />
-        <div className="w-full flex flex-col justify-center">
-          <div className="flex flex-row justify-between items-center">
-            <h2 className="text-xs font-bold">{name}</h2>
-            <div className="text-xs flex flex-row">
-              {last_message?.isSender && (
-                <MessageStatus conversationId={conversation_id} />
-              )}
-              <DateTime
-                type="day"
-                className="text-gray-400"
-                data={last_message?.created_at}
-              />
+        <div className="flex items-start gap-3">
+          <img
+            src={avatar?.thumb || team}
+            className="h-11 w-11 rounded-full border border-white/20 object-cover"
+            alt={name || "Conversation"}
+          />
+
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-2">
+              <h2 className="truncate text-sm font-semibold text-slate-100">{name}</h2>
+              <div className="flex items-center gap-1 text-[11px] text-slate-400">
+                {last_message?.isSender && <MessageStatus conversationId={conversation_id} />}
+                <DateTime type="day" className="text-slate-400" data={last_message?.created_at} />
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row justify-between items-center">
-            {last_message && (
-              <p className="text-xs text-gray-500">
-                {trunc(last_message.message, 20)}
+
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <p className="truncate text-xs text-slate-400">
+                {last_message?.message ? trunc(last_message.message, 34) : "No messages yet"}
               </p>
-            )}
-            {!!unread_count && (
-              <span className="text-sm bg-blue-500 rounded-full w-5 h-5 text-center text-white font-bold">
-                {unread_count}
-              </span>
-            )}
+              {!!unread_count && (
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-cyan-400 px-1.5 text-xs font-bold text-slate-950">
+                  {unread_count}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </li>
