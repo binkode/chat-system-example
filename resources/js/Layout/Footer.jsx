@@ -1,146 +1,63 @@
-import FooterSmall from "./FooterSmall";
+import { Link, usePage } from "@inertiajs/react";
 
 export default function Footer() {
+  const {
+    props: { auth },
+  } = usePage();
+
+  const primaryHref = auth?.user ? route("chat") : route("login");
+  const primaryLabel = auth?.user ? "Open Live Demo" : "Start the Demo";
+
   return (
-    <footer className="relative bg-gray-300 pt-8 pb-6">
-      <div
-        className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
-        style={{ height: "80px" }}
-      >
-        <svg
-          className="absolute bottom-0 overflow-hidden"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          version="1.1"
-          viewBox="0 0 2560 100"
-          x="0"
-          y="0"
-        >
-          <polygon
-            className="text-gray-300 fill-current"
-            points="2560 0 2560 100 0 100"
-          ></polygon>
-        </svg>
-      </div>
-      <div className="container mx-auto px-4">
-        <div className="flex flex-wrap">
-          <div className="w-full lg:w-6/12 px-4">
-            <h4 className="text-3xl font-semibold">Let's keep in touch!</h4>
-            <h5 className="text-lg mt-0 mb-2 text-gray-700">
-              Find us on any of these platforms, we respond 1-2 business days.
-            </h5>
-            <div className="mt-6">
-              <button
-                className="bg-white text-blue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-                type="button"
+    <footer className="relative pb-12">
+      <div className="container mx-auto px-6">
+        <div className="landing-card border-white/10 bg-white/5">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-white/60">
+                ChatSystem
+              </p>
+              <h3 className="text-2xl font-semibold text-white sm:text-3xl">
+                Keep your product conversations fast, searchable, and realtime.
+              </h3>
+              <p className="max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+                Laravel-native chat infrastructure with presence, moderation, and
+                production-ready flows for modern teams.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <Link href={primaryHref} className="landing-btn landing-btn-primary">
+                {primaryLabel}
+              </Link>
+              <a
+                href="https://binkode.github.io/laravel-chat-system"
+                target="_blank"
+                rel="noreferrer"
+                className="landing-btn landing-btn-secondary"
               >
-                <i className="flex fab fa-twitter"></i>
-              </button>
-              <button
-                className="bg-white text-blue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-                type="button"
+                Documentation
+              </a>
+              <a
+                href="https://github.com/binkode/laravel-chat-system"
+                target="_blank"
+                rel="noreferrer"
+                className="landing-btn landing-btn-ghost"
               >
-                <i className="flex fab fa-facebook-square"></i>
-              </button>
-              <button
-                className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-                type="button"
-              >
-                <i className="flex fab fa-dribbble"></i>
-              </button>
-              <button
-                className="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 p-3"
-                type="button"
-              >
-                <i className="flex fab fa-github"></i>
-              </button>
+                GitHub
+              </a>
             </div>
           </div>
-          <div className="w-full lg:w-6/12 px-4">
-            <div className="flex flex-wrap items-top mb-6">
-              <div className="w-full lg:w-4/12 px-4 ml-auto">
-                <span className="block uppercase text-gray-600 text-sm font-semibold mb-2">
-                  Useful Links
-                </span>
-                <ul className="list-unstyled">
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://www.creative-tim.com/presentation"
-                    >
-                      About Us
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://blog.creative-tim.com"
-                    >
-                      Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://www.github.com/creativetimofficial"
-                    >
-                      Github
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://www.creative-tim.com/bootstrap-themes/free"
-                    >
-                      Free Products
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="w-full lg:w-4/12 px-4">
-                <span className="block uppercase text-gray-600 text-sm font-semibold mb-2">
-                  Other Resources
-                </span>
-                <ul className="list-unstyled">
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md"
-                    >
-                      MIT License
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://creative-tim.com/terms"
-                    >
-                      Terms & Conditions
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://creative-tim.com/privacy"
-                    >
-                      Privacy Policy
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-gray-700 hover:text-gray-900 font-semibold block pb-2 text-sm"
-                      href="https://creative-tim.com/contact-us"
-                    >
-                      Contact Us
-                    </a>
-                  </li>
-                </ul>
-              </div>
+
+          <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs uppercase tracking-[0.18em] text-white/50 sm:flex-row sm:items-center sm:justify-between">
+            <span>© {new Date().getFullYear()} ChatSystem by Binkode</span>
+            <div className="flex items-center gap-4">
+              <span>Laravel 8-11</span>
+              <span>Realtime Ready</span>
+              <span>Inertia + React</span>
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-400" />
-        <FooterSmall />
       </div>
     </footer>
   );

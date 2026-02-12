@@ -7,7 +7,7 @@ import ThemedSuspense from "../components/ThemedSuspense.jsx";
 import FooterSmall from "./FooterSmall.jsx";
 import Head from "../components/Head.jsx";
 import { SidebarContext } from "../context/SidebarContext.jsx";
-import { usePage } from "@inertiajs/inertia-react";
+import { usePage } from "@inertiajs/react";
 
 function Layout({ children, title }) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);

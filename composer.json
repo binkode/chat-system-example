@@ -8,30 +8,28 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.1",
-    "ext-pcntl": "*",
+    "php": "^8.2",
     "ext-redis": "*",
-    "ext-swoole": "*",
     "fakerphp/faker": "^1.23.0",
-    "guzzlehttp/guzzle": "^7.4",
-    "inertiajs/inertia-laravel": "^0.6.9",
-    "laravel/framework": "^10.14",
+    "guzzlehttp/guzzle": "^7.8",
+    "inertiajs/inertia-laravel": "^2.0",
+    "laravel/framework": "^12.0",
     "laravel/octane": "^2.0",
-    "laravel/sanctum": "^3.2",
-    "laravel/telescope": "^4.15",
-    "laravel/tinker": "^2.7",
+    "laravel/sanctum": "^4.0",
+    "laravel/telescope": "^5.0",
+    "laravel/tinker": "^2.10",
     "binkode/laravel-chat-system": "*",
-    "predis/predis": "^2.0",
-    "pusher/pusher-php-server": "^7.0",
-    "tightenco/ziggy": "^1.4"
+    "predis/predis": "^2.2",
+    "pusher/pusher-php-server": "^7.2",
+    "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
     "spatie/laravel-ignition": "^2.0",
     "jeroen-g/laravel-packager": "^2.5",
-    "laravel/sail": "^1.0.1",
-    "mockery/mockery": "^1.4.2",
-    "nunomaduro/collision": "^6.1",
-    "phpunit/phpunit": "^10.2"
+    "laravel/sail": "^1.41",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.0",
+    "phpunit/phpunit": "^11.5"
   },
   "config": {
     "optimize-autoloader": true,
@@ -70,7 +68,7 @@
     ],
     "dev": [
       "Composer\\Config::disableProcessTimeout",
-      "php artisan octane:start --workers=1 --task-workers=1 --watch"
+      "php artisan octane:start --server=frankenphp --workers=1 --task-workers=1 --watch"
     ]
   },
   "repositories": [

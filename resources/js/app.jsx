@@ -2,7 +2,7 @@ import "../css/app.css";
 import "./bootstrap";
 
 import { createRoot } from "react-dom/client";
-import { createInertiaApp } from "@inertiajs/inertia-react";
+import { createInertiaApp } from "@inertiajs/react";
 import { InertiaProgress } from "@inertiajs/progress";
 import { SidebarProvider } from "./context/SidebarContext";
 import { PersistGate } from "redux-persist/integration/react";
@@ -17,7 +17,7 @@ createInertiaApp({
   resolve: async (name) => {
     const pages = import.meta.glob("./Pages/**/*.jsx");
     const page = Object.keys(pages).find((page) =>
-      page.endsWith(`${name}.jsx`)
+      page.endsWith(`${name}.jsx`),
     );
 
     return (await pages[page]()).default;
@@ -30,7 +30,7 @@ createInertiaApp({
             <App {...props} />
           </SidebarProvider>
         </PersistGate>
-      </Provider>
+      </Provider>,
     );
   },
 });

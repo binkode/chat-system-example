@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import { DropdownIcon } from "../../icons";
 import { Transition } from "@headlessui/react";
 
@@ -41,9 +41,9 @@ function SidebarSubmenu({ route }) {
               className="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
               key={r.name}
             >
-              <InertiaLink className="w-full" href={r.path}>
+              <Link className="w-full" href={r.path}>
                 {r.name}
-              </InertiaLink>
+              </Link>
             </li>
           ))}
         </ul>

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { SidebarContext } from "../context/SidebarContext";
 import { MenuIcon } from "../icons";
-import { usePage, useForm } from "@inertiajs/inertia-react";
+import { usePage, useForm } from "@inertiajs/react";
 import { logOut } from "../redux/app";
 import { useDispatch } from "react-redux";
 

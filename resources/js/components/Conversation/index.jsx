@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { Link } from "@inertiajs/react";
 import { trunc } from "../../func";
 import { conversations as conversationsAsync } from "../../func/async/msg";
 import Inifinite from "../Infinite.jsx";
@@ -16,7 +16,7 @@ export default memo(() => {
   const { params } = useRoute();
   const currentId = useMemo(
     () => parseInt(params.get("conversation_id")),
-    [params]
+    [params],
   );
 
   const setData = useCallback((data) => data.map(({ id }) => id), []);
@@ -26,7 +26,7 @@ export default memo(() => {
     ({ item, index }) => (
       <Conversation selected={item === currentId} id={item} />
     ),
-    [currentId]
+    [currentId],
   );
 
   const queryParams = useMemo(() => ({ pageSize: 15 }), []);
@@ -54,11 +54,11 @@ const Conversation = fastMemo(({ id: conversation_id, selected }) => {
     unread_count,
   } = useRootMemoSelector(
     `msg.conversations.${conversation_id}`,
-    (conv = {}) => conv
+    (conv = {}) => conv,
   );
 
   return (
-    <InertiaLink
+    <Link
       only={["messages"]}
       href="chat"
       data={{ conversation_id: id }}
@@ -102,6 +102,6 @@ const Conversation = fastMemo(({ id: conversation_id, selected }) => {
           </div>
         </div>
       </li>
-    </InertiaLink>
+    </Link>
   );
 });

@@ -2,26 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --landing-bg: #070b14;
+  --landing-ink: #e2e8f0;
+  --landing-glow: rgba(56, 189, 248, 0.35);
+}
+
+body {
+  font-family:
+    "Space Grotesk",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  background-color: var(--landing-bg);
+  color: var(--landing-ink);
+}
+
+pre,
+code {
+  font-family:
+    "Spline Sans Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.landing-bg {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(14, 116, 144, 0.35),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 30% 10%,
+      rgba(59, 130, 246, 0.25),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(56, 189, 248, 0.25),
+      transparent 45%
+    ),
+    linear-gradient(180deg, #05060a 0%, #0b1220 55%, #06080f 100%);
+  position: relative;
+}
+
+.landing-gradient {
+  background-image: linear-gradient(
+    120deg,
+    #38bdf8 0%,
+    #22d3ee 40%,
+    #818cf8 100%
+  );
+}
+
+.landing-orb {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.55),
+    rgba(56, 189, 248, 0)
+  );
+  filter: blur(8px);
+  opacity: 0.6;
+  animation: floatOrbit 12s ease-in-out infinite;
+}
+
+.landing-orb-left {
+  top: -160px;
+  left: -120px;
+}
+
+.landing-orb-right {
+  bottom: -200px;
+  right: -80px;
+  animation-delay: -4s;
+}
+
+.landing-card {
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(15, 23, 42, 0.55);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.35);
+  padding: 22px;
+  backdrop-filter: blur(14px);
+}
+
+.landing-frame {
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.4);
+  padding: 10px;
+}
+
+.landing-frame-inner {
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: rgba(2, 6, 23, 0.85);
+  padding: 26px;
+}
+
+.landing-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.landing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+}
+
+.landing-btn-primary {
+  background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #818cf8 100%);
+  color: #020617;
+  box-shadow: 0 14px 30px rgba(56, 189, 248, 0.3);
+}
+
+.landing-btn-secondary {
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.landing-btn-ghost {
+  color: #e2e8f0;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+}
+
+.landing-cta {
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(56, 189, 248, 0.2),
+      transparent 40%
+    ),
+    rgba(15, 23, 42, 0.7);
+  box-shadow: 0 40px 120px rgba(8, 47, 73, 0.4);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .landing-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@keyframes floatOrbit {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(24px, -16px, 0);
+  }
+}
+
 .loader {
-	border-top-color: #3498db;
-	-webkit-animation: spinner 1.5s linear infinite;
-	animation: spinner 1.5s linear infinite;
+  border-top-color: #3498db;
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
 }
 
 @-webkit-keyframes spinner {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spinner {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,6 +1,6 @@
 import { memo, useState, useEffect } from "react";
 import Head from "../components/Head.jsx";
-import { useForm, usePage } from "@inertiajs/inertia-react";
+import { useForm, usePage } from "@inertiajs/react";
 import ImageLight from "../assets/img/login-office.jpeg";
 
 import { useUsers } from "../func/async/user";

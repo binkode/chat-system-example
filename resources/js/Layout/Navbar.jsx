@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import { InertiaLink } from "@inertiajs/inertia-react";
-import { usePage } from "@inertiajs/inertia-react";
+import { Link, usePage } from "@inertiajs/react";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -22,7 +21,7 @@ export default function Navbar(props) {
     >
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-          <InertiaLink
+          <Link
             href={route("home")}
             className={
               (props.transparent ? "text-white" : "text-gray-800") +
@@ -30,7 +29,7 @@ export default function Navbar(props) {
             }
           >
             Home
-          </InertiaLink>
+          </Link>
           <button
             className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
             type="button"
@@ -127,7 +126,7 @@ export default function Navbar(props) {
           <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
             {(!!auth.user || !route().current("login")) && (
               <li className="flex items-center">
-                <InertiaLink
+                <Link
                   as="button"
                   type="button"
                   method={auth.user ? "post" : undefined}
@@ -140,7 +139,7 @@ export default function Navbar(props) {
                   }
                 >
                   <i className="fas fa-arrow-alt-circle-down"></i> {btnValue}
-                </InertiaLink>
+                </Link>
               </li>
             )}
           </ul>

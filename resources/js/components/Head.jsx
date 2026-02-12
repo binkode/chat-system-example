@@ -1,11 +1,11 @@
-import { InertiaHead } from "@inertiajs/inertia-react";
+import { Head } from "@inertiajs/react";
 
 const Site = ({ title: title_, children }) => {
   return (
-    <InertiaHead>
+    <Head>
       <title>{title_ ? `${title_} - ChatSystem` : "ChatSystem"}</title>
       {children}
-    </InertiaHead>
+    </Head>
   );
 };
 
