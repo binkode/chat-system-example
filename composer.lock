@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edb48bac6f72f48efafa1262528a99bf",
+    "content-hash": "b64228b6bf46b5a0bc17f28dfc79c7df",
     "packages": [
         {
             "name": "binkode/laravel-chat-system",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../chat-system",
-                "reference": "4f762af587f3ff6a70c013ba2c70c53f79705a2f"
+                "reference": "5bb34829b0caa5b5325cb087210ee7ff823a4b48"
             },
             "require": {
                 "illuminate/support": "^10|^11|^12",
