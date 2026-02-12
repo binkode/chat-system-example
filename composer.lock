@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/binkode/laravel-chat-system.git",
-                "reference": "5bb34829b0caa5b5325cb087210ee7ff823a4b48"
+                "reference": "8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/binkode/laravel-chat-system/zipball/5bb34829b0caa5b5325cb087210ee7ff823a4b48",
-                "reference": "5bb34829b0caa5b5325cb087210ee7ff823a4b48",
+                "url": "https://api.github.com/repos/binkode/laravel-chat-system/zipball/8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57",
+                "reference": "8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "source": "https://github.com/binkode/laravel-chat-system/tree/master",
                 "issues": "https://github.com/binkode/laravel-chat-system/issues"
             },
-            "time": "2026-02-12T12:51:59+00:00"
+            "time": "2026-02-12T14:42:53+00:00"
         },
         {
             "name": "brick/math",
