@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b64228b6bf46b5a0bc17f28dfc79c7df",
+    "content-hash": "740ab5f5b69d5fdc8956028e1f340a9a",
     "packages": [
         {
             "name": "binkode/laravel-chat-system",
-            "version": "1.0.0-beta.4.1",
-            "dist": {
-                "type": "path",
-                "url": "../chat-system",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/binkode/laravel-chat-system.git",
                 "reference": "5bb34829b0caa5b5325cb087210ee7ff823a4b48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/binkode/laravel-chat-system/zipball/5bb34829b0caa5b5325cb087210ee7ff823a4b48",
+                "reference": "5bb34829b0caa5b5325cb087210ee7ff823a4b48",
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "^10|^11|^12",
@@ -25,6 +31,7 @@
                 "pestphp/pest": "^2.8",
                 "spatie/pest-plugin-test-time": "^2.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -67,10 +74,11 @@
                 "ChatSystem",
                 "Laravel"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/binkode/laravel-chat-system/tree/master",
+                "issues": "https://github.com/binkode/laravel-chat-system/issues"
+            },
+            "time": "2026-02-12T12:51:59+00:00"
         },
         {
             "name": "brick/math",
@@ -9498,7 +9506,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {},
+    "stability-flags": {
+        "binkode/laravel-chat-system": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
