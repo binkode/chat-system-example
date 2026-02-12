@@ -73,13 +73,6 @@
   },
   "repositories": [
     {
-      "type": "path",
-      "url": "../chat-system",
-      "options": {
-        "symlink": true
-      }
-    },
-    {
       "type": "vcs",
       "url": "https://github.com/binkode/laravel-chat-system.git"
     }
