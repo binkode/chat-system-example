@@ -1,9 +1,11 @@
-import { useEffect, useCallback, useMemo, useRef } from "react";
+import { useEffect, useCallback, useMemo, useRef, useState } from "react";
 import { Send, Attachment, Mic, Camera, Smiley } from "../icons";
 import Layout from "../Layout/Dashboard.jsx";
 import { useDispatch } from "react-redux";
-import { useRoute, useRootMemoSelector } from "../func/hooks";
+import { router } from "@inertiajs/react";
+import { useRoute, useRootMemoSelector, useProps } from "../func/hooks";
 import messagesAsync, { send } from "../func/async/msg";
+import { useUsers } from "../func/async/user";
 import { useGetState, useSetState } from "use-redux-states";
 import Inifinite from "../components/Infinite.jsx";
 import DateTime from "../components/DateTime.jsx";
@@ -18,6 +20,8 @@ import Button from "../components/UI/Button";
 const Dashboard = fastMemo(() => {
   const dispatch = useDispatch();
   const { params } = useRoute();
+  const [showNewChat, setShowNewChat] = useState(false);
+  const { auth } = useProps();
 
   useNewMessage();
 
@@ -25,25 +29,60 @@ const Dashboard = fastMemo(() => {
     () => parseInt(params.get("conversation_id"), 10),
     [params],
   );
+  const other_user_id = useMemo(() => parseInt(params.get("other_user_id"), 10), [params]);
+
+  const {
+    loading: loadingUsers,
+    data: { data: usersData = [] } = {},
+  } = useUsers({}, []);
+
+  const users = useMemo(
+    () => usersData.filter(({ id }) => id !== auth?.user?.id),
+    [usersData, auth?.user?.id],
+  );
 
   useEffect(() => {
-    dispatch(readConversation({ id: conversation_id }));
+    if (conversation_id) {
+      dispatch(readConversation({ id: conversation_id }));
+    }
   }, [conversation_id]);
+
+  const onStartNewChat = useCallback((userId) => {
+    setShowNewChat(false);
+    router.get(
+      "chat",
+      { other_user_id: userId },
+      { preserveState: true, replace: true, only: ["messages"] },
+    );
+  }, []);
 
   return (
     <section className="landing-bg h-full p-3 sm:p-5">
       <div className="landing-card h-full border-white/10 bg-white/5 p-3 sm:p-5">
-        {conversation_id ? (
-          <Messages conversationId={conversation_id} />
+        {conversation_id || other_user_id ? (
+          <Messages
+            conversationId={conversation_id}
+            otherUserId={other_user_id}
+            users={users}
+            onOpenNewChat={() => setShowNewChat(true)}
+          />
         ) : (
-          <EmptyConversationState />
+          <EmptyConversationState onNewChat={() => setShowNewChat(true)} />
         )}
       </div>
+
+      <NewChatModal
+        open={showNewChat}
+        users={users}
+        loading={loadingUsers}
+        onClose={() => setShowNewChat(false)}
+        onSelect={onStartNewChat}
+      />
     </section>
   );
 });
 
-const EmptyConversationState = fastMemo(() => (
+const EmptyConversationState = fastMemo(({ onNewChat }) => (
   <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
     <img alt="ChatSystem" className="w-24 drop-shadow-md sm:w-32" src={chatsLogo} />
     <div className="space-y-3">
@@ -57,29 +96,84 @@ const EmptyConversationState = fastMemo(() => (
         Realtime updates, delivery status, and message history are already wired.
       </p>
     </div>
-    <Button className="landing-btn landing-btn-primary">New Chat</Button>
+    <Button onClick={onNewChat} className="landing-btn landing-btn-primary">
+      New Chat
+    </Button>
   </div>
 ));
 
-const Messages = fastMemo(({ conversationId }) => {
+const NewChatModal = fastMemo(({ open, loading, users = [], onClose, onSelect }) => {
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-2xl border border-white/15 bg-slate-950/95 p-4 sm:p-5">
+        <div className="mb-4 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+          <h3 className="text-lg font-semibold text-white">Start New Chat</h3>
+          <Button
+            onClick={onClose}
+            className="inline-flex h-8 items-center justify-center rounded-lg px-3 text-xs uppercase tracking-[0.14em] text-slate-300 hover:bg-white/10"
+          >
+            Close
+          </Button>
+        </div>
+
+        <div className="chat-scrollbar max-h-[55vh] space-y-2 overflow-y-auto pr-1">
+          {loading && (
+            <p className="py-4 text-center text-sm text-slate-400">Loading users...</p>
+          )}
+
+          {!loading && !users.length && (
+            <p className="py-4 text-center text-sm text-slate-400">No users found.</p>
+          )}
+
+          {!loading &&
+            users.map((user) => (
+              <Button
+                key={user.id}
+                onClick={() => onSelect(user.id)}
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-cyan-300/40 hover:bg-cyan-400/10"
+              >
+                <p className="truncate text-sm font-semibold text-slate-100">{user.name}</p>
+                <p className="truncate text-xs text-slate-400">{user.email}</p>
+              </Button>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+const Messages = fastMemo(({ conversationId, otherUserId, users = [], onOpenNewChat }) => {
   const msgRequestRef = useRef();
   const input = useRef();
 
   const dispatch = useDispatch();
 
-  const setMessagesOrderData = useSetState(`messages.${conversationId}.order.data`);
+  const messageStateName = useMemo(
+    () => `messages.${conversationId || `other-${otherUserId}`}.order.data`,
+    [conversationId, otherUserId],
+  );
+  const setMessagesOrderData = useSetState(messageStateName);
 
   const RenderItem = useCallback(
     ({ item, style }) => (
-      <Message id={item} conversationId={conversationId} style={style} />
+      <Message id={item?.id} conversationId={item?.conversationId || conversationId} style={style} />
     ),
     [conversationId],
   );
 
-  const conversationName = useRootMemoSelector(
+  const conversation = useRootMemoSelector(
     `msg.conversations.${conversationId}`,
-    (conv = {}) => conv.name,
+    (conv = {}) => conv,
   );
+  const selectedUser = useMemo(
+    () => users.find(({ id }) => id === otherUserId),
+    [users, otherUserId],
+  );
+  const conversationName = conversation?.name || selectedUser?.name;
 
   const getConversationsOrder = useGetState("conversations.order");
   const setConversationsOrder = useSetState("conversations.order");
@@ -97,33 +191,57 @@ const Messages = fastMemo(({ conversationId }) => {
     const { data: message } = await send({
       token: unique,
       message: text,
-      conversation_id: conversationId,
+      conversation_id: conversationId || undefined,
+      other_user_id: !conversationId ? otherUserId : undefined,
     });
 
     dispatch(addMsg({ msg: message }));
-    setMessagesOrderData((data = []) => [message.id, ...data]);
+    setMessagesOrderData((data = []) => [
+      { id: message.id, conversationId: message.conversation_id },
+      ...data,
+    ]);
+
+    if (!conversationId && message?.conversation_id) {
+      router.get(
+        "chat",
+        { conversation_id: message.conversation_id },
+        { preserveState: true, replace: true, only: ["messages"] },
+      );
+    }
 
     const conversationsOrder = getConversationsOrder((state) => state?.data || []);
+    const activeConversationId = message?.conversation_id || conversationId;
 
-    if (conversationsOrder[0] && conversationsOrder[0] !== conversationId) {
+    if (
+      activeConversationId &&
+      conversationsOrder[0] &&
+      conversationsOrder[0] !== activeConversationId
+    ) {
       const conversationIndex = conversationsOrder.findIndex(
-        (id) => conversationId === id,
+        (id) => activeConversationId === id,
       );
 
       setConversationsOrder((state) => {
         conversationIndex && state.data.splice(conversationIndex, 1);
-        state.data?.unshift(conversationId);
+        state.data?.unshift(activeConversationId);
         return state;
       });
     }
-  }, [conversationId]);
+  }, [conversationId, otherUserId]);
 
-  const setData = useCallback((data) => data.map(({ id }) => id), []);
+  const setData = useCallback(
+    (data) => data.map(({ id, conversation_id }) => ({ id, conversationId: conversation_id })),
+    [],
+  );
   const onSuccess = useCallback((data) => dispatch(addMsgs(data)), []);
 
   const queryParams = useMemo(
-    () => ({ pageSize: 15, conversation_id: conversationId }),
-    [conversationId],
+    () => ({
+      pageSize: 15,
+      conversation_id: conversationId || undefined,
+      other_user_id: !conversationId ? otherUserId : undefined,
+    }),
+    [conversationId, otherUserId],
   );
 
   const scrollToBottom = () => {
@@ -143,7 +261,7 @@ const Messages = fastMemo(({ conversationId }) => {
 
   useEffect(() => {
     msgRequestRef.current.shouldScrollToBottom = true;
-  }, [conversationId]);
+  }, [conversationId, otherUserId]);
 
   return (
     <div className="flex h-full min-h-0 flex-col">
@@ -164,9 +282,12 @@ const Messages = fastMemo(({ conversationId }) => {
               </p>
             </div>
           </div>
-          <p className="hidden text-xs uppercase tracking-[0.18em] text-white/50 sm:block">
-            Realtime session
-          </p>
+          <Button
+            onClick={onOpenNewChat}
+            className="hidden rounded-lg border border-white/20 px-3 py-2 text-xs uppercase tracking-[0.14em] text-white/70 transition hover:border-cyan-300/40 hover:text-cyan-200 sm:inline-flex"
+          >
+            New Chat
+          </Button>
         </div>
       </header>
 
@@ -174,7 +295,7 @@ const Messages = fastMemo(({ conversationId }) => {
         ref={msgRequestRef}
         params={queryParams}
         RenderItem={RenderItem}
-        name={`messages.${conversationId}.order`}
+        name={`messages.${conversationId || `other-${otherUserId}`}.order`}
         request={messagesAsync}
         setData={setData}
         onSuccess={onSuccess}
