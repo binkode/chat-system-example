@@ -10,7 +10,7 @@
   "require": {
     "php": "^8.2",
     "ext-redis": "*",
-    "binkode/laravel-chat-system": "dev-master",
+    "binkode/laravel-chat-system": "^1.0",
     "fakerphp/faker": "^1.23.0",
     "guzzlehttp/guzzle": "^7.8",
     "inertiajs/inertia-laravel": "^2.0",
@@ -71,10 +71,5 @@
       "php artisan octane:start --server=frankenphp --workers=1 --task-workers=1 --watch"
     ]
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/binkode/laravel-chat-system.git"
-    }
-  ]
+  "repositories": []
 }

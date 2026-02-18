@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "740ab5f5b69d5fdc8956028e1f340a9a",
+    "content-hash": "d360b117b0a331d54de97f041fc88cac",
     "packages": [
         {
             "name": "binkode/laravel-chat-system",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/binkode/laravel-chat-system.git",
-                "reference": "8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57"
+                "reference": "1033d77b20ed30f8a8d8b00a0c537e1bff20f79f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/binkode/laravel-chat-system/zipball/8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57",
-                "reference": "8a81dfdf4618337b2acbb4f1e1c45e3e1fb02c57",
+                "url": "https://api.github.com/repos/binkode/laravel-chat-system/zipball/1033d77b20ed30f8a8d8b00a0c537e1bff20f79f",
+                "reference": "1033d77b20ed30f8a8d8b00a0c537e1bff20f79f",
                 "shasum": ""
             },
             "require": {
@@ -31,16 +31,15 @@
                 "pestphp/pest": "^2.8",
                 "spatie/pest-plugin-test-time": "^2.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Binkode\\ChatSystem\\ChatSystemServiceProvider"
-                    ],
                     "aliases": {
                         "ChatSystem": "Binkode\\ChatSystem\\Facades\\ChatSystem"
-                    }
+                    },
+                    "providers": [
+                        "Binkode\\ChatSystem\\ChatSystemServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -48,16 +47,7 @@
                     "Binkode\\ChatSystem\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Binkode\\ChatSystem\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "./vendor/bin/pest"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -72,13 +62,13 @@
             "homepage": "https://github.com/binkode/laravel-chat-system",
             "keywords": [
                 "ChatSystem",
-                "Laravel"
+                "laravel"
             ],
             "support": {
-                "source": "https://github.com/binkode/laravel-chat-system/tree/master",
-                "issues": "https://github.com/binkode/laravel-chat-system/issues"
+                "issues": "https://github.com/binkode/laravel-chat-system/issues",
+                "source": "https://github.com/binkode/laravel-chat-system/tree/v1.0.0"
             },
-            "time": "2026-02-12T14:42:53+00:00"
+            "time": "2026-02-18T11:55:48+00:00"
         },
         {
             "name": "brick/math",
@@ -9506,9 +9496,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "binkode/laravel-chat-system": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
